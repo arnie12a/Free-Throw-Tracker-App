@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "FreeThrowTracker",
-    "slug": "FreeThrowTracker",
+    "name": "ftapp",
+    "slug": "ftapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
