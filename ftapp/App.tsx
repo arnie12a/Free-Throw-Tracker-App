@@ -10,18 +10,20 @@ import AddData from './app/screens/AddData';
 import { useEffect, useState } from 'react';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { FIREBASE_AUTH } from './FirebaseConfig';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Stack = createNativeStackNavigator();
 
-const InsideStack = createNativeStackNavigator();
+//const InsideStack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 function InsideLayout() {
   return (
-    <InsideStack.Navigator initialRouteName='Home'>
-      <InsideStack.Screen name='Home' component={Home}/>
-      <InsideStack.Screen name='Add FT Data' component={AddData}/>
-      <InsideStack.Screen name='See FT Statistics' component={FTSummary}/>
-    </InsideStack.Navigator>
+    <Tab.Navigator>
+      <Tab.Screen name='Home' component={Home}/>
+      <Tab.Screen name='Add FT Data' component={AddData}/>
+      <Tab.Screen name='See FT Statistics' component={FTSummary}/>
+    </Tab.Navigator>
   )
 }
 
@@ -40,6 +42,7 @@ export default function App() {
         {user ? (
           <>
             <Stack.Screen name='Inside' component={InsideLayout} options={{headerShown: false}}/>
+            
           </>
           
         ) : (

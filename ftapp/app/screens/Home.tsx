@@ -16,8 +16,7 @@ const Home = ({ navigation }: RouterProps) => {
 
     
 
-            <Button onPress={() => navigation.navigate('Inside', {screen: 'AddData'})} title="Add Free Throw Data" />
-            <Button onPress={() => navigation.navigate('Inside', {screen: 'FTSummary'})} title="See Free Throw Statistics" />
+            
 
             <Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" />
 
