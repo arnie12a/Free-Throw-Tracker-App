@@ -14,13 +14,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Stack = createNativeStackNavigator();
 
-//const InsideStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function InsideLayout() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name='Home' component={Home}/>
       <Tab.Screen name='Add FT Data' component={AddData}/>
       <Tab.Screen name='See FT Statistics' component={FTSummary}/>
     </Tab.Navigator>
