@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
-import DatePicker from 'react-native-date-picker'
-
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { RadioButton } from 'react-native-paper'; 
 const AddData = () => {
     const [ftMade, setFtMade] = useState('');
     const [ftAttempted, setFtAttempted] = useState('');
     const [date, setDate] = useState(new Date())
-    const [open, setOpen] = useState(false)
     const [eventType, setEventType] = useState('Ingame');
+    const [checked, setChecked] = React.useState('first');
 
     const handleSubmit = () => {
         // Handle form submission logic here
@@ -30,14 +30,28 @@ const AddData = () => {
             onChangeText={setFtAttempted}
             keyboardType="numeric"
         />
-        <DatePicker
-            date={date}
-            onDateChange={setDate}
+        <DateTimePicker 
+            mode="date"
+            display='spinner'
+            value={date}
         />
-        <View style={styles.eventTypeContainer}>
-            <Text style={styles.eventTypeLabel}>Event Type:</Text>
-            <Button title="Ingame" onPress={() => setEventType('Ingame')} />
-            <Button title="Practice" onPress={() => setEventType('Practice')} />
+        <View>
+        <View style={styles.radioButtonContainer}>
+            <RadioButton
+            value="first"
+            status={checked === 'first' ? 'checked' : 'unchecked'}
+            onPress={() => setChecked('first')}
+            />
+            <Text style={styles.radioButtonText}>In Game</Text>
+        </View>
+        <View style={styles.radioButtonContainer}>
+                <RadioButton
+                value="second"
+                status={checked === 'second' ? 'checked' : 'unchecked'}
+                onPress={() => setChecked('second')}
+                />
+                <Text style={styles.radioButtonText}>Practice</Text>
+            </View>
         </View>
         <Button title="Submit" onPress={handleSubmit} />
         </View>
@@ -64,6 +78,15 @@ const AddData = () => {
     },
     eventTypeLabel: {
         marginRight: 10,
+    },
+    radioButtonContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 16,
+    },
+    radioButtonText: {
+        marginLeft: 8,
+        fontSize: 16,
     },
 });
 
