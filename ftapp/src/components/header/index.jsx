@@ -15,8 +15,8 @@ const Header = () => {
             <div className="flex items-center space-x-4">
                 {userLoggedIn ? (
                     <>
-                        <Link to="/addFTSession" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Add FT Session</Link>
-                        <Link to="/FTSummary" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Free Throw Summary</Link>
+                        <Link to="/addFTSession" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Add</Link>
+                        <Link to="/FTSummary" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Log</Link>
                         <button
                             onClick={() => {
                                 doSignOut().then(() => {
