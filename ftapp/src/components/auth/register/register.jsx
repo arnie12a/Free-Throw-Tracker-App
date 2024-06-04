@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { Navigate, Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/authContext'
 import { doCreateUserWithEmailAndPassword } from '../../firebase/auth'
+import { doc, setDoc } from "firebase/firestore"
+import { db } from '../../firebase/firebase';
+
 
 export default function Register() {
 
@@ -25,10 +28,9 @@ export default function Register() {
             const user = userCredential.user;
 
             await setDoc(doc(db, 'users', user.uid), {
-                ftMade: ftMade,
-                ftAttempted: ftAttempted,
-                date: date,
-                sessionType: sessionType
+                firstName: firstName,
+                lastName: lastName,
+                email: email
             });
             navigate('/FTSummary')
 

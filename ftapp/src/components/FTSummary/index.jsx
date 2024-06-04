@@ -4,22 +4,15 @@ import { db } from "../firebase/firebase"
 
 export default function FTSummary() {
     
-    const [hikes, setHikes] = useState();
+    const [FTSessions, setFTSessions] = useState();
 
 
-    const handleDelete = (id) => {
-        deleteDoc(doc(db, "hikes", id));
-        const hikeCopy = hikes.filter(hike => hike.id !== id);
-        setHikes(hikeCopy);
-        getHikes();
-    }
 
- 
 
-    const getHikes = async () => {
-        const querySnapshot = await getDocs(collection(db, "hikes"));
-        const hikes = querySnapshot.docs.map(doc => ({id:doc.id, ...doc.data()}))
-        setHikes(hikes)
+    const getFTSession = async () => {
+        const querySnapshot = await getDocs(collection(db, "ftsessions"));
+        const sessions = querySnapshot.docs.map(doc => ({id:doc.id, ...doc.data()}))
+        setFTSessions(sessions)
     }
 
 
@@ -29,13 +22,29 @@ export default function FTSummary() {
     
 
     useEffect(() => {
-        
+        getFTSession();
+        console.log(FTSessions)
     }, [])
 
     
     return (
-        <div>
-            <h1>FT Summary</h1>
+        <div className="bg-gray-100 min-h-screen p-4">
+            <h1 className="text-4xl font-bold underline text-center mb-8">Free Throw Summary</h1>
+            {FTSessions && FTSessions.length > 0 ? (
+                FTSessions.map(ftSession => (
+                    <div key={ftSession.id} className="bg-white p-6 mb-4 rounded-lg shadow-md">
+                        <h2 className="text-2xl font-semibold mb-2">{ftSession.hikeName}</h2>
+                        <p className="text-gray-700 mb-1">Date: {ftSession.date}</p>
+                        <p className="text-gray-700 mb-1">FT Made: {ftSession.ftMade}</p>
+                        <p className="text-gray-700 mb-1">FT Attempted: {ftSession.ftAttempted}</p>
+                        <p className="text-gray-700 mb-4">Session Type: {ftSession.sessionType}</p>
+                        
+                    </div>
+                ))
+            ) : (
+                <p className="text-center text-gray-700">No hikes available</p>
+            )}
         </div>
+
     );
 }
