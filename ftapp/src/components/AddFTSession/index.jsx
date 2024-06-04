@@ -29,7 +29,11 @@ export default function AddFTSession() {
             date,
             sessionType
         };
-        console.log(FTData)
+
+        if(ftMade > ftAttempted) {
+            console.log('impossible try again')
+            return
+        }
         
         try {
             await addDoc(collection(db, 'ftsessions'), {
