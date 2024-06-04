@@ -7,7 +7,8 @@ export default function Register() {
 
     const navigate = useNavigate()
 
-    const [fullName, setFullName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setconfirmPassword] = useState('')
@@ -20,8 +21,18 @@ export default function Register() {
         e.preventDefault()
         if(!isRegistering) {
             setIsRegistering(true)
-            await doCreateUserWithEmailAndPassword(email, password)
-        }
+            const userCredential = await doCreateUserWithEmailAndPassword(email, password)
+            const user = userCredential.user;
+
+            await setDoc(doc(db, 'users', user.uid), {
+                ftMade: ftMade,
+                ftAttempted: ftAttempted,
+                date: date,
+                sessionType: sessionType
+            });
+            navigate('/FTSummary')
+
+        }   
     }
 
     return (
@@ -42,13 +53,25 @@ export default function Register() {
                     >
                         <div>
                             <label className="text-sm text-gray-600 font-bold">
-                                Full Name
+                                First Name
                             </label>
                             <input
                                 type="text"
-                                autoComplete='full name'
+                                autoComplete='first name'
                                 required
-                                value={fullName} onChange={(e) => { setFullName(e.target.value) }}
+                                value={firstName} onChange={(e) => { setFirstName(e.target.value) }}
+                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:indigo-600 shadow-sm rounded-lg transition duration-300"
+                            /> 
+                        </div>
+                        <div>
+                            <label className="text-sm text-gray-600 font-bold">
+                                Last Name
+                            </label>
+                            <input
+                                type="text"
+                                autoComplete='last name'
+                                required
+                                value={lastName} onChange={(e) => { setLastName(e.target.value) }}
                                 className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:indigo-600 shadow-sm rounded-lg transition duration-300"
                             /> 
                         </div>
