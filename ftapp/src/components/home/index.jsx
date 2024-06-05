@@ -10,7 +10,7 @@ const Home = () => {
 
             <div className="container mx-auto p-6">
             <div className="text-2xl font-bold pt-14">
-                Hello {currentUser.displayName ? currentUser.displayName : currentUser.email}, you are now logged in.
+                Welcome {currentUser.displayName ? currentUser.displayName : currentUser.email}!
             </div>
             <img 
                 src="https://www.carlswebgraphics.com/basketball-graphics/free-throw-animation-2018.gif" 

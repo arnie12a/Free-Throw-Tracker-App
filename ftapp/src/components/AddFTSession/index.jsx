@@ -40,7 +40,8 @@ export default function AddFTSession() {
                 ftMade: ftMade,
                 ftAttempted: ftAttempted,
                 date: date,
-                sessionType: sessionType
+                sessionType: sessionType,
+                uid: currentUser.uid
             });
             navigate('/FTSummary')
 

@@ -4,8 +4,8 @@ import Header from "./components/header";
 import Home from "./components/home";
 
 import AddFTSession from "./components/AddFTSession";
+import FTLog from "./components/FTLog";
 import FTSummary from "./components/FTSummary";
-
 
 import { AuthProvider } from "./components/contexts/authContext";
 import { useRoutes } from "react-router-dom";
@@ -32,6 +32,10 @@ function App() {
       path: "/addFTSession",
       element: <AddFTSession />
     }, 
+    {
+      path: "/FTLog",
+      element: <FTLog />
+    },
     {
       path: "/FTSummary",
       element: <FTSummary />

@@ -16,7 +16,9 @@ const Header = () => {
                 {userLoggedIn ? (
                     <>
                         <Link to="/addFTSession" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Add</Link>
-                        <Link to="/FTSummary" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Log</Link>
+                        <Link to="/FTLog" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Log</Link>
+                        <Link to="/FTSummary" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Statistics</Link>
+
                         <button
                             onClick={() => {
                                 doSignOut().then(() => {
