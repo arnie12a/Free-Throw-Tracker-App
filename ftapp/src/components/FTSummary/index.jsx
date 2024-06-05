@@ -8,6 +8,7 @@ export default function FTSummary() {
     
     const [FTSessions, setFTSessions] = useState();
     const { currentUser } = useAuth()
+    let [freeThrowPercentage, setFreeThrowPercentage] = useState(0);
 
 
 
@@ -21,7 +22,17 @@ export default function FTSummary() {
         const sessions = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         //const querySnapshot = await getDocs(collection(db, "ftsessions"));
         //const sessions = querySnapshot.docs.map(doc => ({id:doc.id, ...doc.data()}))
-        setFTSessions(sessions)
+        return sessions
+    }
+
+    const getFTPercentage = (sessions) => {
+        let totalAttempted = 0;
+        let totalMade = 0;
+        for (var i = 0; i < sessions.length; i++) {
+            totalAttempted += sessions[i].ftAttempted;
+            totalMade += sessions[i].ftMade;
+        }
+        return (totalMade/totalAttempted)*100
     }
 
 
@@ -31,7 +42,9 @@ export default function FTSummary() {
     
 
     useEffect(() => {
-        getFTSession();
+        setFTSessions(getFTSession());
+
+        setFreeThrowPercentage(getFTPercentage(getFTSession()));
         console.log(FTSessions)
     }, [])
 
@@ -39,8 +52,9 @@ export default function FTSummary() {
     return (
         
         <div className="bg-gray-100 min-h-screen p-4">
-            {FTSessions && FTSessions.length > 0 ? (
-                <h1>FT Percentage</h1>
+            {FTSessions && FTSessions.length > 0  && freeThrowPercentage ? (
+                
+                <h1>{freeThrowPercentage}%</h1>
             ) : (
                 <p>Not Available</p>
             )
