@@ -25,14 +25,21 @@ export default function FTSummary() {
         return sessions
     }
 
-    const getFTPercentage = (sessions) => {
+    const getFTPercentage = async (sessions) => {
         let totalAttempted = 0;
         let totalMade = 0;
-        for (var i = 0; i < sessions.length; i++) {
-            totalAttempted += sessions[i].ftAttempted;
-            totalMade += sessions[i].ftMade;
-        }
-        return (totalMade/totalAttempted)*100
+        try {
+            const result = await sessions;
+            result.forEach(item => {
+                console.log(item)
+                totalAttempted += item['ftAttempted'];
+                totalMade += item['ftMade'];
+            })
+            setFreeThrowPercentage((totalMade/totalAttempted)*100)
+            console.log((totalMade/totalAttempted)*100)
+        } catch (error) {
+            console.log('Error: ', error);
+        } 
     }
 
 
@@ -44,7 +51,7 @@ export default function FTSummary() {
     useEffect(() => {
         setFTSessions(getFTSession());
 
-        setFreeThrowPercentage(getFTPercentage(getFTSession()));
+        getFTPercentage(getFTSession());
         console.log(FTSessions)
     }, [])
 
