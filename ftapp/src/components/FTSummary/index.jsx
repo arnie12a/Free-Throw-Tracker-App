@@ -36,7 +36,7 @@ export default function FTSummary() {
                 totalMade += item['ftMade'];
             })
             setFreeThrowPercentage((totalMade/totalAttempted)*100)
-            console.log((totalMade/totalAttempted)*100)
+            return((totalMade/totalAttempted)*100)
         } catch (error) {
             console.log('Error: ', error);
         } 
@@ -51,7 +51,7 @@ export default function FTSummary() {
     useEffect(() => {
         setFTSessions(getFTSession());
 
-        getFTPercentage(getFTSession());
+        setFreeThrowPercentage(getFTPercentage(getFTSession()));
         console.log(FTSessions)
     }, [])
 
