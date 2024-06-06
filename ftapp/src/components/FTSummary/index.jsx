@@ -28,18 +28,12 @@ export default function FTSummary() {
     const getFTPercentage = async (sessions) => {
         let totalAttempted = 0;
         let totalMade = 0;
-        try {
-            const result = await sessions;
-            result.forEach(item => {
-                console.log(item)
-                totalAttempted += item['ftAttempted'];
-                totalMade += item['ftMade'];
-            })
-            setFreeThrowPercentage((totalMade/totalAttempted)*100)
-            return((totalMade/totalAttempted)*100)
-        } catch (error) {
-            console.log('Error: ', error);
-        } 
+        const result = await sessions;
+        result.forEach(item => {
+            totalAttempted += item['ftAttempted'];
+            totalMade += item['ftMade'];
+        })
+        return((totalMade/totalAttempted)*100)
     }
 
 
@@ -51,22 +45,29 @@ export default function FTSummary() {
     useEffect(() => {
         setFTSessions(getFTSession());
 
-        setFreeThrowPercentage(getFTPercentage(getFTSession()));
-        console.log(FTSessions)
+        getFTPercentage(getFTSession()).then(result => {
+            setFreeThrowPercentage(Math.round(result))
+        })
+        
     }, [])
 
     
     return (
         
-        <div className="bg-gray-100 min-h-screen p-4">
-            {FTSessions && FTSessions.length > 0  && freeThrowPercentage ? (
-                
-                <h1>{freeThrowPercentage}%</h1>
-            ) : (
-                <p>Not Available</p>
-            )
-        }
+        <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+            <div className="text-center">
+                {freeThrowPercentage ? (
+                    <h1 className="text-4xl font-bold text-blue-500">
+                        Free Throw Percentage: {freeThrowPercentage}%
+                    </h1>
+                ) : (
+                    <p className="text-lg text-gray-600">
+                        Not Available
+                    </p>
+                )}
+            </div>
         </div>
+
 
     );
 }
