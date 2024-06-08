@@ -9,12 +9,13 @@ import FTSummary from "./components/FTSummary";
 
 import { AuthProvider } from "./components/contexts/authContext";
 import { useRoutes } from "react-router-dom";
+import LandingPage from "./components/LandingPage";
 
 function App() {
   const routesArray = [
     {
       path: "*",
-      element: <Login />,
+      element: <LandingPage />,
     },
     {
       path: "/login",

@@ -30,7 +30,8 @@ export default function Register() {
             await setDoc(doc(db, 'users', user.uid), {
                 firstName: firstName,
                 lastName: lastName,
-                email: email
+                email: email,
+                uid: user.uid
             });
             navigate('/FTSummary')
 
@@ -49,74 +50,67 @@ export default function Register() {
                         </div>
 
                     </div>
-                    <form
-                        onSubmit={onSubmit}
-                        className="space-y-4"
-                    >
-                        <div>
-                            <label className="text-sm text-gray-600 font-bold">
-                                First Name
-                            </label>
+                    <form onSubmit={onSubmit} className="space-y-4">
+                        <div className="flex space-x-4">
+                            <div className="w-1/2">
+                            <label className="text-sm text-gray-600 font-bold">First Name</label>
                             <input
                                 type="text"
                                 autoComplete='first name'
                                 required
-                                value={firstName} onChange={(e) => { setFirstName(e.target.value) }}
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
                                 className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:indigo-600 shadow-sm rounded-lg transition duration-300"
-                            /> 
-                        </div>
-                        <div>
-                            <label className="text-sm text-gray-600 font-bold">
-                                Last Name
-                            </label>
+                            />
+                            </div>
+                            <div className="w-1/2">
+                            <label className="text-sm text-gray-600 font-bold">Last Name</label>
                             <input
                                 type="text"
                                 autoComplete='last name'
                                 required
-                                value={lastName} onChange={(e) => { setLastName(e.target.value) }}
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}
                                 className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:indigo-600 shadow-sm rounded-lg transition duration-300"
-                            /> 
+                            />
+                            </div>
                         </div>
                         <div>
-                            <label className="text-sm text-gray-600 font-bold">
-                                Email
-                            </label>
+                            <label className="text-sm text-gray-600 font-bold">Email</label>
                             <input
-                                type="email"
-                                autoComplete='email'
-                                required
-                                value={email} onChange={(e) => { setEmail(e.target.value) }}
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:indigo-600 shadow-sm rounded-lg transition duration-300"
+                            type="email"
+                            autoComplete='email'
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:indigo-600 shadow-sm rounded-lg transition duration-300"
+                            />
+                        </div>
+                        <div>
+                            <label className="text-sm text-gray-600 font-bold">Password</label>
+                            <input
+                            disabled={isRegistering}
+                            type="password"
+                            autoComplete='new-password'
+                            required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg transition duration-300"
+                            />
+                        </div>
+                        <div>
+                            <label className="text-sm text-gray-600 font-bold">Confirm Password</label>
+                            <input
+                            disabled={isRegistering}
+                            type="password"
+                            autoComplete='off'
+                            required
+                            value={confirmPassword}
+                            onChange={(e) => setconfirmPassword(e.target.value)}
+                            className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg transition duration-300"
                             />
                         </div>
 
-                        <div>
-                            <label className="text-sm text-gray-600 font-bold">
-                                Password
-                            </label>
-                            <input
-                                disabled={isRegistering}
-                                type="password"
-                                autoComplete='new-password'
-                                required
-                                value={password} onChange={(e) => { setPassword(e.target.value) }}
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg transition duration-300"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="text-sm text-gray-600 font-bold">
-                                Confirm Password
-                            </label>
-                            <input
-                                disabled={isRegistering}
-                                type="password"
-                                autoComplete='off'
-                                required
-                                value={confirmPassword} onChange={(e) => { setconfirmPassword(e.target.value) }}
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg transition duration-300"
-                            />
-                        </div>
 
                         {errorMessage && (
                             <span className='text-red-600 font-bold'>{errorMessage}</span>
