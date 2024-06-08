@@ -24,6 +24,13 @@ export default function FTLog() {
         setFTSessions(sessions)
     }
 
+    const handleDelete = (id) => {
+        deleteDoc(doc(db, 'ftsessions', id));
+        const ftCopy = FTSessions.filter(ft => ft.id !== id);
+        setFTSessions(ftCopy);
+        getFTSession()
+    }
+
 
 
 
@@ -82,10 +89,12 @@ export default function FTLog() {
                                     {ftSession.sessionType}
                                     </td>
                                     <td class="px-6 py-4">
-                                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+    
+                                        <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
                                         <span> | </span>
-                                        <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
+                                        <button onClick={() => handleDelete(ftSession.id)} className="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
                                     </td>
+
                                 </tr>
                                 
                             ))
