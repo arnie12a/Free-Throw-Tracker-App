@@ -8,8 +8,8 @@ export default function FTLog() {
     
     const [FTSessions, setFTSessions] = useState();
     const { currentUser } = useAuth()
-
-
+    const [deleteModalState, setDeleteModalState] = useState(false);
+    const [deleteId, setDeleteId] = useState('');
 
 
     const getFTSession = async () => {
@@ -27,11 +27,20 @@ export default function FTLog() {
     const handleDelete = (id) => {
         deleteDoc(doc(db, 'ftsessions', id));
         const ftCopy = FTSessions.filter(ft => ft.id !== id);
+        setDeleteModalState(false);
         setFTSessions(ftCopy);
-        getFTSession()
+        getFTSession();
     }
 
+    function openDeleteModal(id) {
+        setDeleteModalState(true);
+        setDeleteId(id);
+    }
 
+    function closeDeleteModal() {
+        setDeleteModalState(false);
+        setDeleteId('');
+    }
 
 
     
@@ -92,7 +101,7 @@ export default function FTLog() {
     
                                         <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
                                         <span> | </span>
-                                        <button onClick={() => handleDelete(ftSession.id)} className="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
+                                        <button onClick={() => openDeleteModal(ftSession.id)} className="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
                                     </td>
 
                                 </tr>
@@ -107,6 +116,20 @@ export default function FTLog() {
                     </tbody>
                 </table>
             </div>
+            { deleteModalState ? (
+                <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
+                <div className="bg-white rounded-lg p-8 shadow-lg">
+                    <h2 className="text-xl font-bold mb-4">Are you sure you want to delete this record?</h2>
+                    <div className="flex justify-end">
+                    <button onClick={() => handleDelete(deleteId)}  className="bg-red-500 text-white px-4 py-2 rounded mr-2">Delete</button>
+                    <button onClick={closeDeleteModal} className="bg-gray-300 text-black px-4 py-2 rounded">Cancel</button>
+                    </div>
+                </div>
+                </div>
+            ): (
+                <></>
+            )}
+            
 
         </div>
 
