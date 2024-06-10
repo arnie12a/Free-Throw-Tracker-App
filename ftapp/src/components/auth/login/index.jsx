@@ -37,7 +37,7 @@ export default function Login () {
                 <div className="w-96 text-gray-600 space-y-5 p-4 shadow-xl border rounded-xl">
                     <div className="text-center">
                         <div className="mt-2">
-                            <h3 className="text-gray-800 text-xl font-semibold sm:text-2xl">Welcome Back</h3>
+                            <h3 className="text-gray-800 text-xl font-semibold sm:text-2xl">Free Throw Tracker</h3>
                         </div>
                     </div>
                     <form

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { collection, getDocs, doc, deleteDoc, setDoc, query, where } from 'firebase/firestore';
 import { db } from "../firebase/firebase"
 import { useAuth } from '../contexts/authContext';
-
+import { Tabs, Tab } from '../custom/Tabs'
 
 export default function FTSummary() {
     
@@ -35,10 +35,6 @@ export default function FTSummary() {
         })
         return((totalMade/totalAttempted)*100)
     }
-
-
-
-
     
     
 
@@ -56,7 +52,26 @@ export default function FTSummary() {
         
         <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4">
             <div className="text-center">
-                {freeThrowPercentage ? (
+                
+                <Tabs>
+                    <Tab label="All Sessions">
+                    <div className="py-4">
+                        <h2 className="text-lg font-medium mb-2">All Sessions</h2>
+                        {freeThrowPercentage ? (
+                            <h1 className="text-4xl font-bold text-blue-500">
+                                Free Throw Percentage: {freeThrowPercentage}%
+                            </h1>
+                        ) : (
+                            <p className="text-lg text-gray-600">
+                                Not Available
+                            </p>
+                        )}
+                    </div>
+                    </Tab>
+                    <Tab label="Game">
+                    <div className="py-4">
+                        <h2 className="text-lg font-medium mb-2">Game</h2>
+                        {freeThrowPercentage ? (
                     <h1 className="text-4xl font-bold text-blue-500">
                         Free Throw Percentage: {freeThrowPercentage}%
                     </h1>
@@ -65,6 +80,24 @@ export default function FTSummary() {
                         Not Available
                     </p>
                 )}
+                    </div>
+                    </Tab>
+                    <Tab label="Practice">
+                    <div className="py-4">
+                        <h2 className="text-lg font-medium mb-2">Practice</h2>
+                        {freeThrowPercentage ? (
+                    <h1 className="text-4xl font-bold text-blue-500">
+                        Free Throw Percentage: {freeThrowPercentage}%
+                    </h1>
+                ) : (
+                    <p className="text-lg text-gray-600">
+                        Not Available
+                    </p>
+                )}
+                    </div>
+                    </Tab>
+                </Tabs>
+                
             </div>
         </div>
 
