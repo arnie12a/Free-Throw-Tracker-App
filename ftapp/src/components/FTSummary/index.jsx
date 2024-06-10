@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { collection, getDocs, doc, deleteDoc, setDoc, query, where } from 'firebase/firestore';
 import { db } from "../firebase/firebase"
 import { useAuth } from '../contexts/authContext';
-import { Tabs, Tab } from '../custom/Tabs'
 
 export default function FTSummary() {
     
@@ -11,7 +10,11 @@ export default function FTSummary() {
     let [freeThrowPercentage, setFreeThrowPercentage] = useState(0);
 
 
+    const [activeTab, setActiveTab] = useState('Tab1');
 
+    const handleTabClick = (tab) => {
+        setActiveTab(tab);
+    };
 
     const getFTSession = async () => {
         const specificUID = currentUser.uid;
@@ -25,10 +28,11 @@ export default function FTSummary() {
         return sessions
     }
 
-    const getFTPercentage = async (sessions) => {
+    const getFTPercentage = async (sessions, sessionType) => {
         let totalAttempted = 0;
         let totalMade = 0;
         const result = await sessions;
+        
         result.forEach(item => {
             totalAttempted += item['ftAttempted'];
             totalMade += item['ftMade'];
@@ -41,65 +45,82 @@ export default function FTSummary() {
     useEffect(() => {
         setFTSessions(getFTSession());
 
-        getFTPercentage(getFTSession()).then(result => {
+        getFTPercentage(getFTSession(), activeTab).then(result => {
             setFreeThrowPercentage(Math.round(result))
         })
+
+
         
-    }, [])
+    }, [activeTab])
 
     
     return (
         
         <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4">
-            <div className="text-center">
-                
-                <Tabs>
-                    <Tab label="All Sessions">
-                    <div className="py-4">
-                        <h2 className="text-lg font-medium mb-2">All Sessions</h2>
+        <div className="w-full max-w-lg mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+            <div className="text-center border-b border-gray-200">
+                <div className="flex space-x-1 justify-center">
+                    <button
+                        className={`py-2 px-4 w-1/3 focus:outline-none ${activeTab === 'Tab1' ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300'} rounded-t-lg`}
+                        onClick={() => handleTabClick('Tab1')}
+                    >
+                        All Sessions
+                    </button>
+                    <button
+                        className={`py-2 px-4 w-1/3 focus:outline-none ${activeTab === 'Tab2' ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300'} rounded-t-lg`}
+                        onClick={() => handleTabClick('Tab2')}
+                    >
+                        Practice
+                    </button>
+                    <button
+                        className={`py-2 px-4 w-1/3 focus:outline-none ${activeTab === 'Tab3' ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300'} rounded-t-lg`}
+                        onClick={() => handleTabClick('Tab3')}
+                    >
+                        Game
+                    </button>
+                </div>
+            </div>
+            <div className="p-6 bg-gray-50 rounded-b-lg">
+                {activeTab === 'Tab1' && (
+                    <div>
+                        <h2 className="text-lg font-semibold mb-4">All</h2>
                         {freeThrowPercentage ? (
-                            <h1 className="text-4xl font-bold text-blue-500">
+                            <h1 className="text-4xl font-bold text-blue-600">
                                 Free Throw Percentage: {freeThrowPercentage}%
                             </h1>
                         ) : (
-                            <p className="text-lg text-gray-600">
-                                Not Available
-                            </p>
+                            <p className="text-lg text-gray-600">Not Available</p>
                         )}
                     </div>
-                    </Tab>
-                    <Tab label="Game">
-                    <div className="py-4">
-                        <h2 className="text-lg font-medium mb-2">Game</h2>
-                        {freeThrowPercentage ? (
-                    <h1 className="text-4xl font-bold text-blue-500">
-                        Free Throw Percentage: {freeThrowPercentage}%
-                    </h1>
-                ) : (
-                    <p className="text-lg text-gray-600">
-                        Not Available
-                    </p>
                 )}
-                    </div>
-                    </Tab>
-                    <Tab label="Practice">
-                    <div className="py-4">
-                        <h2 className="text-lg font-medium mb-2">Practice</h2>
+                {activeTab === 'Tab2' && (
+                    <div>
+                        <h2 className="text-lg font-semibold mb-4">Practice</h2>
                         {freeThrowPercentage ? (
-                    <h1 className="text-4xl font-bold text-blue-500">
-                        Free Throw Percentage: {freeThrowPercentage}%
-                    </h1>
-                ) : (
-                    <p className="text-lg text-gray-600">
-                        Not Available
-                    </p>
-                )}
+                            <h1 className="text-4xl font-bold text-blue-600">
+                                Free Throw Percentage: {freeThrowPercentage}%
+                            </h1>
+                        ) : (
+                            <p className="text-lg text-gray-600">Not Available</p>
+                        )}
                     </div>
-                    </Tab>
-                </Tabs>
-                
+                )}
+                {activeTab === 'Tab3' && (
+                    <div>
+                        <h2 className="text-lg font-semibold mb-4">Game</h2>
+                        {freeThrowPercentage ? (
+                            <h1 className="text-4xl font-bold text-blue-600">
+                                Free Throw Percentage: {freeThrowPercentage}%
+                            </h1>
+                        ) : (
+                            <p className="text-lg text-gray-600">Not Available</p>
+                        )}
+                    </div>
+                )}
             </div>
         </div>
+    </div>
+    
 
 
     );
