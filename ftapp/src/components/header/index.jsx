@@ -17,6 +17,8 @@ const Header = () => {
                     <>
                         <Link to="/addFTSession" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Add</Link>
                         <Link to="/FTLog" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Log</Link>
+                        <Link to="/leaderboard" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Leaderboard</Link>
+
                         <Link to="/FTSummary" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Statistics</Link>
 
                         <button
@@ -25,10 +27,11 @@ const Header = () => {
                                     navigate('/login');
                                 });
                             }}
-                            className="text-sm text-blue-600 hover:underline focus:outline-none"
+                            className="px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition ease-in-out duration-150"
                         >
                             Logout
                         </button>
+
                     </>
                     
                 ) : (

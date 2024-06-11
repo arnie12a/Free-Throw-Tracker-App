@@ -10,6 +10,7 @@ import FTSummary from "./components/FTSummary";
 import { AuthProvider } from "./components/contexts/authContext";
 import { useRoutes } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
+import Leaderboard from "./components/Leaderboard";
 
 function App() {
   const routesArray = [
@@ -40,6 +41,10 @@ function App() {
     {
       path: "/FTSummary",
       element: <FTSummary />
+    },
+    {
+      path: "/leaderboard",
+      element: <Leaderboard />
     }
   ];
   let routesElement = useRoutes(routesArray);

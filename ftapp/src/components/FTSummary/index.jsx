@@ -70,25 +70,26 @@ export default function FTSummary() {
                 <div className="text-center border-b border-gray-200">
                     <div className="flex space-x-1 justify-center">
                         <button
-                            className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300'} rounded-t-lg`}
+                            className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'all' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition ease-in-out duration-150`}
                             onClick={() => handleTabClick('all')}
                         >
                             All Sessions
                         </button>
                         <button
-                            className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'practice' ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300'} rounded-t-lg`}
+                            className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'practice' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition ease-in-out duration-150`}
                             onClick={() => handleTabClick('practice')}
                         >
                             Practice
                         </button>
                         <button
-                            className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'game' ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300'} rounded-t-lg`}
+                            className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'game' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition ease-in-out duration-150`}
                             onClick={() => handleTabClick('game')}
                         >
                             Game
                         </button>
                     </div>
                 </div>
+
                 <div className="p-10 bg-gray-50 rounded-b-lg h-full overflow-y-auto">
                     {activeTab === 'all' && (
                         <div>
