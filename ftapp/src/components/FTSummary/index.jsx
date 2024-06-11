@@ -8,6 +8,8 @@ export default function FTSummary() {
     const [FTSessions, setFTSessions] = useState();
     const { currentUser } = useAuth()
     let [freeThrowPercentage, setFreeThrowPercentage] = useState(0);
+    const [totalFTMade, setTotalFTMade] = useState(0);
+    const [totalFTAttempted, setTotalFTAttempted] = useState(0);
 
 
     const [activeTab, setActiveTab] = useState('all');
@@ -42,6 +44,9 @@ export default function FTSummary() {
             totalAttempted += item['ftAttempted'];
             totalMade += item['ftMade'];
         })
+
+        setTotalFTMade(totalMade);
+        setTotalFTAttempted(totalAttempted);
         return((totalMade/totalAttempted)*100)
     }
     
@@ -88,10 +93,17 @@ export default function FTSummary() {
                     {activeTab === 'all' && (
                         <div>
                             <h2 className="text-2xl font-semibold mb-4">All</h2>
-                            {freeThrowPercentage ? (
-                                <h1 className="text-5xl font-bold text-blue-600">
-                                    Free Throw Percentage: {freeThrowPercentage}%
-                                </h1>
+                            {freeThrowPercentage && totalFTAttempted && totalFTMade ? (
+                                <>
+                                    <h1 className="text-5xl font-bold text-blue-600">
+                                        Free Throw Percentage: {freeThrowPercentage}%
+                                    </h1>
+                                    <p>
+                                        {totalFTMade} / {totalFTAttempted}
+                                    </p>
+                                </>
+                                
+                                
                             ) : (
                                 <p className="text-xl text-gray-600">Not Available</p>
                             )}
@@ -100,10 +112,17 @@ export default function FTSummary() {
                     {activeTab === 'practice' && (
                         <div>
                             <h2 className="text-2xl font-semibold mb-4">Practice</h2>
-                            {freeThrowPercentage ? (
-                                <h1 className="text-5xl font-bold text-blue-600">
-                                    Free Throw Percentage: {freeThrowPercentage}%
-                                </h1>
+                            {freeThrowPercentage && totalFTAttempted && totalFTMade ? (
+                                <>
+                                    <h1 className="text-5xl font-bold text-blue-600">
+                                        Free Throw Percentage: {freeThrowPercentage}%
+                                    </h1>
+                                    <p>
+                                        {totalFTMade} / {totalFTAttempted}
+                                    </p>
+                                </>
+                                
+                                
                             ) : (
                                 <p className="text-xl text-gray-600">Not Available</p>
                             )}
@@ -112,10 +131,17 @@ export default function FTSummary() {
                     {activeTab === 'game' && (
                         <div>
                             <h2 className="text-2xl font-semibold mb-4">Game</h2>
-                            {freeThrowPercentage ? (
-                                <h1 className="text-5xl font-bold text-blue-600">
-                                    Free Throw Percentage: {freeThrowPercentage}%
-                                </h1>
+                            {freeThrowPercentage && totalFTAttempted && totalFTMade ? (
+                                <>
+                                    <h1 className="text-5xl font-bold text-blue-600">
+                                        Free Throw Percentage: {freeThrowPercentage}%
+                                    </h1>
+                                    <p>
+                                        {totalFTMade} / {totalFTAttempted}
+                                    </p>
+                                </>
+                                
+                                
                             ) : (
                                 <p className="text-xl text-gray-600">Not Available</p>
                             )}
