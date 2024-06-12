@@ -36,8 +36,19 @@ const Header = () => {
                     
                 ) : (
                     <>
-                        <Link className="text-sm text-blue-600 hover:underline" to="/login">Login</Link>
-                        <Link className="text-sm text-blue-600 hover:underline" to="/register">Register</Link>
+                        <Link
+                            className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                            to="/login"
+                            >
+                            Login
+                        </Link>
+                        <Link
+                            className="px-4 py-2 ml-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                            to="/register"
+                            >
+                            Register
+                        </Link>
+
                     </>
                 )}
             </div>
