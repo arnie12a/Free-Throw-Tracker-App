@@ -31,7 +31,9 @@ export default function Register() {
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
-                uid: user.uid
+                uid: user.uid,
+                ftGoalPercentage: 80,
+                position: 'None'
             });
             navigate('/FTSummary')
 
