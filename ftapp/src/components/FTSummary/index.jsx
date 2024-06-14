@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { collection, getDocs, doc, deleteDoc, setDoc, query, where } from 'firebase/firestore';
 import { db } from "../firebase/firebase"
 import { useAuth } from '../contexts/authContext';
+import FTChart from '../FTChart';
 
 export default function FTSummary() {
     
@@ -10,14 +11,88 @@ export default function FTSummary() {
     let [freeThrowPercentage, setFreeThrowPercentage] = useState(0);
     const [totalFTMade, setTotalFTMade] = useState(0);
     const [totalFTAttempted, setTotalFTAttempted] = useState(0);
-
-
+    const ss = require('simple-statistics');
+    const [bestSession, setBestSession] = useState([]);
+    const [worstSession, setWorstSession] = useState([]);
     const [activeTab, setActiveTab] = useState('all');
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
         console.log(activeTab)
     };
+
+    const calculateShootingPercentage = (made, attempted) => (made/attempted) * 100;
+
+    const tTest = (sessions) => {
+        const practiceSessions = []
+        const gameSessions = []
+        for (let i = 0; i < sessions.length; i++) {
+            const percentage = calculateShootingPercentage(sessions[i].ftMade, sessions[i].ftAttempted);
+            if (sessions[i].sessionType === 'practice') {
+                practiceSessions.push(percentage);
+            }
+            else if (sessions[i].sessionType === 'game') {
+                gameSessions.push(percentage);
+            }
+        }
+
+        const tValue = ss.tTestTwoSample(practiceSessions, gameSessions, { variance: 'unequal' });
+        const degreesOfFreedom = practiceSessions.length + gameSessions.length - 2;
+        const criticalValue = ss.probit(0.975); // 95% confidence interval
+        console.log(tValue, degreesOfFreedom, criticalValue);
+        return {
+            tValue, 
+            degreesOfFreedom, 
+            criticalValue, 
+            isSignificant: Math.abs(tValue) > criticalValue
+        }
+    }
+
+    const getBestWorstSessions = (sessions, tab) => {
+        let bestMade = 0;
+        let bestAttempted = 0;
+        let bestPercentage = 0;
+        let worstMade = 100;
+        let worstAttempted = 100;
+        let worstPercentage = 100;
+        if(tab === 'all'){
+            for(let i=0;i<sessions.length;i++) {
+                const percentage = calculateShootingPercentage(sessions[i].ftMade, sessions[i].ftAttempted);
+                if(bestPercentage < percentage) {
+                    bestPercentage = percentage;
+                    bestMade = sessions[i].ftMade;
+                    bestAttempted = sessions[i].ftAttempted;
+                }
+                if(worstPercentage > percentage) {
+                    worstAttempted = sessions[i].ftAttempted;
+                    worstMade = sessions[i].ftMade;
+                    worstPercentage = percentage;
+                }
+            }
+        }
+        else {
+            for(let i=0;i<sessions.length;i++) {
+                if(sessions.sessionType === tab) {
+                    const percentage = calculateShootingPercentage(sessions[i].ftMade, sessions[i].ftAttempted);
+                    if(bestPercentage < percentage) {
+                        bestPercentage = percentage;
+                        bestMade = sessions[i].ftMade;
+                        bestAttempted = sessions[i].ftAttempted;
+                    }
+                    if(worstPercentage > percentage) {
+                        worstAttempted = sessions[i].ftAttempted;
+                        worstMade = sessions[i].ftMade;
+                        worstPercentage = percentage;
+                    }
+                }
+                
+            }
+        }
+       
+        setBestSession([bestMade, bestAttempted, bestPercentage]);
+        setWorstSession([worstMade, worstAttempted, worstPercentage]);
+        return;
+    }
 
     const getFTSession = async () => {
         const specificUID = currentUser.uid;
@@ -49,15 +124,24 @@ export default function FTSummary() {
         setTotalFTAttempted(totalAttempted);
         return((totalMade/totalAttempted)*100)
     }
+
+    
     
     
 
     useEffect(() => {
-        setFTSessions(getFTSession());
+        const tempFTSessions = getFTSession();
+        setFTSessions(tempFTSessions);
 
         getFTPercentage(getFTSession(), activeTab).then(result => {
             setFreeThrowPercentage(Math.round(result))
         })
+
+        if(activeTab === 'all'){
+            tTest(tempFTSessions);
+        }
+
+        getBestWorstSessions(tempFTSessions, activeTab);
 
 
         
@@ -94,14 +178,18 @@ export default function FTSummary() {
                     {activeTab === 'all' && (
                         <div>
                             <h2 className="text-2xl font-semibold mb-4">All</h2>
-                            {freeThrowPercentage && totalFTAttempted && totalFTMade ? (
+                            {freeThrowPercentage && totalFTAttempted && totalFTMade && worstSession && bestSession ? (
                                 <>
                                     <h1 className="text-5xl font-bold text-blue-600">
                                         Free Throw Percentage: {freeThrowPercentage}%
                                     </h1>
                                     <p>
-                                        {totalFTMade} / {totalFTAttempted}
+                                    Total Made: {totalFTMade} |||  Total Attempted: {totalFTAttempted}
                                     </p>
+                                    <h4>
+                                        { worstSession[2] } |||  {bestSession[2]}
+                                    </h4>
+                                    <FTChart />
                                 </>
                                 
                                 
@@ -113,14 +201,19 @@ export default function FTSummary() {
                     {activeTab === 'practice' && (
                         <div>
                             <h2 className="text-2xl font-semibold mb-4">Practice</h2>
-                            {freeThrowPercentage && totalFTAttempted && totalFTMade ? (
+                            {freeThrowPercentage && totalFTAttempted && totalFTMade && worstSession && bestSession ? (
                                 <>
                                     <h1 className="text-5xl font-bold text-blue-600">
                                         Free Throw Percentage: {freeThrowPercentage}%
                                     </h1>
                                     <p>
-                                        {totalFTMade} / {totalFTAttempted}
+                                    Total Made: {totalFTMade} |||  Total Attempted: {totalFTAttempted}
                                     </p>
+                                    <h4>
+                                        { worstSession } |||  {bestSession}
+                                    </h4>
+                                    <FTChart />
+
                                 </>
                                 
                                 
@@ -132,14 +225,19 @@ export default function FTSummary() {
                     {activeTab === 'game' && (
                         <div>
                             <h2 className="text-2xl font-semibold mb-4">Game</h2>
-                            {freeThrowPercentage && totalFTAttempted && totalFTMade ? (
+                            {freeThrowPercentage && totalFTAttempted && totalFTMade && worstSession && bestSession ? (
                                 <>
                                     <h1 className="text-5xl font-bold text-blue-600">
                                         Free Throw Percentage: {freeThrowPercentage}%
                                     </h1>
                                     <p>
-                                        {totalFTMade} / {totalFTAttempted}
+                                        Total Made: {totalFTMade} |||  Total Attempted: {totalFTAttempted}
                                     </p>
+                                    <h4>
+                                        { worstSession } |||  {bestSession}
+                                    </h4>
+                                    <FTChart />
+
                                 </>
                                 
                                 
