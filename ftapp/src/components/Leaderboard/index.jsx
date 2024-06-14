@@ -30,32 +30,33 @@ export default function Leaderboard() {
 
     return (
         <div className="container mx-auto p-6">
-            <h1 className="text-3xl font-bold mb-6">Leaderboard</h1>
+            <h1 className="text-3xl font-bold mb-8 text-gray-800">Leaderboard</h1>
             <input
                 type="text"
                 placeholder="Search users..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="mb-6 p-2 border border-gray-300 rounded w-full"
+                className="mb-6 p-4 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <div className="grid gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredUsers.length > 0 ? (
-                    filteredUsers.map(user => (
-                        <div key={user.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
-                            <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-4">
-                                <h2 className="text-xl font-semibold mb-2 text-white">{user.firstName} {user.lastName}</h2>
-                            </div>
-                            <div className="p-6">
-                                <p className="text-gray-700 mb-1"><span className="font-semibold">Email:</span> {user.email}</p>
-                                <p className="text-gray-700 mb-1"><span className="font-semibold">Position:</span> {user.position}</p>
-                                <p className="text-gray-700 mb-1"><span className="font-semibold">Goal FT Percentage:</span> {user.ftPercentageGoal}</p>
-                            </div>
-                        </div>
-                    ))
+                filteredUsers.map(user => (
+                    <div key={user.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
+                    <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-4">
+                        <h2 className="text-xl font-semibold text-white">{user.firstName} {user.lastName}</h2>
+                    </div>
+                    <div className="p-6">
+                        <p className="text-gray-700 mb-2"><span className="font-semibold">Email:</span> {user.email}</p>
+                        <p className="text-gray-700 mb-2"><span className="font-semibold">Position:</span> {user.position}</p>
+                        <p className="text-gray-700 mb-2"><span className="font-semibold">Goal FT Percentage:</span> {user.ftPercentageGoal}%</p>
+                    </div>
+                    </div>
+                ))
                 ) : (
-                    <p className="text-gray-700">No users found</p>
+                <p className="text-gray-700 text-center">No users found</p>
                 )}
             </div>
-        </div>
+            </div>
+
     )
 }
