@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { collection, getDocs, doc, deleteDoc, setDoc, query, where } from 'firebase/firestore';
+import { collection, getDocs, doc, deleteDoc, orderBy, setDoc, query, where } from 'firebase/firestore';
 import { db } from "../firebase/firebase"
 
 export default function Leaderboard() {
@@ -13,13 +13,9 @@ export default function Leaderboard() {
     );
 
     const getLeaderboardInfo = async () => {
-        const q = query(collection(db, "users"));
-
+        const q = query(collection(db, "users"), orderBy("ftPercentage", "desc"));
         const querySnapshot = await getDocs(q);
-
         const usersData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        //const querySnapshot = await getDocs(collection(db, "ftsessions"));
-        //const sessions = querySnapshot.docs.map(doc => ({id:doc.id, ...doc.data()}))
         setTotalSessions(usersData);
         return 
     }
@@ -48,7 +44,7 @@ export default function Leaderboard() {
                     <div className="p-6">
                         <p className="text-gray-700 mb-2"><span className="font-semibold">Email:</span> {user.email}</p>
                         <p className="text-gray-700 mb-2"><span className="font-semibold">Position:</span> {user.position}</p>
-                        <p className="text-gray-700 mb-2"><span className="font-semibold">Goal FT Percentage:</span> {user.ftPercentageGoal}%</p>
+                        <p className="text-gray-700 mb-2"><span className="font-semibold">FT Percentage:</span> {user.ftPercentage}%</p>
                     </div>
                     </div>
                 ))

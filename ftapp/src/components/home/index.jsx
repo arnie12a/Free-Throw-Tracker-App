@@ -13,6 +13,7 @@ const Home = () => {
     const [formVisible, setFormVisible] = useState(false);
     const [position, setPosition] = useState('');
     const [goal, setGoal] = useState('');
+    const [ftPercentage, setFTPercentage] = useState(0);
     const [submitted, setSubmitted] = useState(false);
     
     useEffect(() => {
@@ -57,19 +58,21 @@ const Home = () => {
             setEmail(userData[0].email);
             setFormVisible(true)
         }
+        setFTPercentage(userData[0].ftPercentage);
         return 
     }
 
     return (
         <div className="container mx-auto p-6">
     <div className="text-3xl font-extrabold pt-14 text-center text-gray-800">
-        Welcome {currentUser.displayName ? currentUser.displayName : currentUser.email}!
+        Welcome, {currentUser.displayName ? currentUser.displayName : currentUser.email}!
     </div>
     { fullName && goal && position ? (
         <div className="mt-8 text-center">
             <h1 className="text-2xl font-semibold text-gray-800">{fullName}</h1>
-            <h2 className="text-xl text-gray-600">Position: {position}</h2>
-            <h3 className="text-xl text-gray-600">FT Percentage Goal: {goal}%</h3>
+            <h2 className="text-xl text-gray-600 mt-2">Position: {position}</h2>
+            <h3 className="text-xl text-gray-600 mt-2">FT Percentage Goal: {goal}%</h3>
+            <h3 className="text-xl text-gray-600 mt-2">FT Percentage: {ftPercentage}%</h3>
         </div>
     ) : (
         <div className="mt-8 text-center">
@@ -80,7 +83,7 @@ const Home = () => {
     {formVisible && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
-                <h2 className="text-2xl font-bold mb-6 text-gray-800">Add Your Info</h2>
+                <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">Add Your Info</h2>
                 <form onSubmit={handleFormSubmit}>
                     <div className="mb-6">
                         <label className="block text-gray-700 font-medium mb-2">Position:</label>
@@ -129,6 +132,7 @@ const Home = () => {
         </div>
     )}
 </div>
+
 
         
     )

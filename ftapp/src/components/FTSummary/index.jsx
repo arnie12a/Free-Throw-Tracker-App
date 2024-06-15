@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs, doc, deleteDoc, setDoc, query, where } from 'firebase/firestore';
+import { collection, getDocs, doc, deleteDoc, updateDoc, query, where } from 'firebase/firestore';
 import { db } from "../firebase/firebase"
 import { useAuth } from '../contexts/authContext';
 import FTChart from '../FTChart';
@@ -105,7 +105,7 @@ export default function FTSummary() {
         setWorstAttempted(Math.round(worstAttempted));
         setWorstPercentage(Math.round(worstPercentage));
 
-        return ([bestMade, bestAttempted, bestPercentage, worstMade, worstAttempted, worstPercentage]);
+        return //([bestMade, bestAttempted, bestPercentage, worstMade, worstAttempted, worstPercentage]);
     }
 
     const getFTSession = async () => {
@@ -138,6 +138,18 @@ export default function FTSummary() {
         return((totalMade/totalAttempted)*100)
     }
 
+    const updateFTPercentage = async (ftPercentage, uid) => {
+        try {
+            const userRef = doc(db, 'users', uid); // Adjust the collection name as needed
+            await updateDoc(userRef, {
+                ['ftPercentage']: ftPercentage
+        });
+            console.log('Document successfully updated!');
+        } catch (error) {
+            console.error('Error updating document: ', error);
+        }
+    }
+
     
     
     
@@ -145,9 +157,12 @@ export default function FTSummary() {
     useEffect(() => {
         const tempFTSessions = getFTSession();
         setFTSessions(tempFTSessions);
+        const specificUID = currentUser.uid;
 
         getFTPercentage(getFTSession(), activeTab).then(result => {
-            setFreeThrowPercentage(Math.round(result))
+            setFreeThrowPercentage(Math.round(result));
+            updateFTPercentage(Math.round(result), );
+            updateFTPercentage(Math.round(result), specificUID);
         })
 
         if(activeTab === 'all'){
