@@ -22,13 +22,6 @@ export default function AddFTSession() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Here you can handle the form submission
-        const FTData = {
-            ftMade, 
-            ftAttempted,
-            date,
-            sessionType
-        };
 
         if(ftMade > ftAttempted) {
             console.log('impossible try again')
@@ -36,9 +29,11 @@ export default function AddFTSession() {
         }
         
         try {
+            const percentage = Math.round((ftMade/ftAttempted)*100)
             await addDoc(collection(db, 'ftsessions'), {
                 ftMade: ftMade,
                 ftAttempted: ftAttempted,
+                percentage: percentage,
                 date: date,
                 sessionType: sessionType,
                 uid: currentUser.uid

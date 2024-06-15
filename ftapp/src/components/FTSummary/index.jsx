@@ -23,7 +23,6 @@ export default function FTSummary() {
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
-        console.log(activeTab)
     };
 
     const calculateShootingPercentage = (made, attempted) => (made/attempted) * 100;
@@ -44,7 +43,6 @@ export default function FTSummary() {
         const tValue = ss.tTestTwoSample(practiceSessions, gameSessions, { variance: 'unequal' });
         const degreesOfFreedom = practiceSessions.length + gameSessions.length - 2;
         const criticalValue = ss.probit(0.975); // 95% confidence interval
-        console.log(tValue, degreesOfFreedom, criticalValue);
         return {
             tValue, 
             degreesOfFreedom, 
@@ -62,7 +60,6 @@ export default function FTSummary() {
         let worstAttempted = 112;
         let worstPercentage = 112;
         if(tab === 'all'){
-            console.log("We are in the all")
             for(let i=0;i<sessions.length;i++) {
                 const percentage = (parseInt(sessions[i].ftMade) / parseInt(sessions[i].ftAttempted)) * 100;
                 if(parseInt(bestPercentage) < parseInt(percentage)) {
@@ -150,164 +147,184 @@ export default function FTSummary() {
         }
     }
 
+    const filterPracticeOrGame = async (result, tab) => {
+        let data = await result;
+        if(tab=='practice'){
+            const temp = data.filter(session => session.sessionType === 'practice');
+            console.log(temp)
+            return(temp)
+        } else {
+            const temp = data.filter(session => session.sessionType === 'game');
+            console.log(temp)
+            return(temp)
+        }
+    }
+
     
     
     
 
     useEffect(() => {
         const tempFTSessions = getFTSession();
-        setFTSessions(tempFTSessions);
-        const specificUID = currentUser.uid;
+        //setFTSessions(tempFTSessions);
 
         getFTPercentage(getFTSession(), activeTab).then(result => {
             setFreeThrowPercentage(Math.round(result));
             updateFTPercentage(Math.round(result), );
-            updateFTPercentage(Math.round(result), specificUID);
+            updateFTPercentage(Math.round(result), currentUser.uid);
         })
 
         if(activeTab === 'all'){
             tTest(tempFTSessions);
+            setFTSessions(tempFTSessions);
+
+        }
+        else{
+            setFTSessions(filterPracticeOrGame(tempFTSessions, activeTab))
         }
 
         getBestWorstSessions(tempFTSessions, activeTab);
-        
-
         
     }, [activeTab])
 
     
     return (
         <div className="bg-gray-100 flex items-center justify-center p-4">
-    <div className="w-full max-w-5xl mx-auto bg-white shadow-2xl rounded-lg overflow-hidden" style={{ height: '80vh' }}>
-        <div className="text-center border-b border-gray-200">
-            <div className="flex space-x-1 justify-center">
-                <button
-                    className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'all' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition ease-in-out duration-150`}
-                    onClick={() => handleTabClick('all')}
-                >
-                    All Sessions
-                </button>
-                <button
-                    className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'practice' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition ease-in-out duration-150`}
-                    onClick={() => handleTabClick('practice')}
-                >
-                    Practice
-                </button>
-                <button
-                    className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'game' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition ease-in-out duration-150`}
-                    onClick={() => handleTabClick('game')}
-                >
-                    Game
-                </button>
+        <div className="w-full max-w-5xl mx-auto bg-white shadow-2xl rounded-lg overflow-hidden" style={{ height: '80vh' }}>
+            <div className="text-center border-b border-gray-200">
+                <div className="flex space-x-1 justify-center">
+                    <button
+                        className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'all' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition ease-in-out duration-150`}
+                        onClick={() => handleTabClick('all')}
+                    >
+                        All Sessions
+                    </button>
+                    <button
+                        className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'practice' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition ease-in-out duration-150`}
+                        onClick={() => handleTabClick('practice')}
+                    >
+                        Practice
+                    </button>
+                    <button
+                        className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'game' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition ease-in-out duration-150`}
+                        onClick={() => handleTabClick('game')}
+                    >
+                        Game
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <div className="p-10 bg-gray-50 h-full overflow-y-auto">
-            {activeTab === 'all' && (
-                <div className="space-y-6">
-                    <h2 className="text-3xl font-bold mb-6 text-gray-800">All Sessions</h2>
-                    {freeThrowPercentage && totalFTAttempted && totalFTMade && worstPercentage && bestPercentage && worstMade && worstAttempted && bestMade && bestAttempted ? (
+            <div className="flex justify-center items-center h-full bg-gray-50 overflow-y-auto p-10">
+                <div className="space-y-6 bg-white p-6 rounded-lg shadow-md w-full max-w-3xl">
+                    {activeTab === 'all' && (
+                    <div className="space-y-6 text-center">
+                        {freeThrowPercentage && totalFTAttempted && totalFTMade && worstPercentage && bestPercentage && worstMade && worstAttempted && bestMade && bestAttempted ? (
                         <div className="space-y-6">
                             <h1 className="text-5xl font-bold text-blue-600">
-                                Free Throw Percentage: {freeThrowPercentage}%
+                            Free Throw Percentage: {freeThrowPercentage}%
                             </h1>
-                            <p className="text-lg">
-                                <span className="font-semibold">Total Made:</span> {totalFTMade} <span className="mx-3"></span> <span className="font-semibold">Total Attempted:</span> {totalFTAttempted}
+                            <p className="text-lg text-gray-800">
+                            <span className="font-semibold">Total Made:</span> {totalFTMade} <span className="mx-3"></span> <span className="font-semibold">Total Attempted:</span> {totalFTAttempted}
                             </p>
-                            <div className="text-lg">
-                                <h4 className="font-semibold">
-                                    Worst Session: <span className="text-red-600">{worstPercentage}%</span>
-                                </h4>
-                                <p>
-                                    <span className="font-semibold">Made:</span> {worstMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {worstAttempted}
-                                </p>
+                            <div className="text-lg text-gray-800">
+                            <h4 className="font-semibold">
+                                Worst Session: <span className="text-red-600">{worstPercentage}%</span>
+                            </h4>
+                            <p>
+                                <span className="font-semibold">Made:</span> {worstMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {worstAttempted}
+                            </p>
                             </div>
-                            <div className="text-lg">
-                                <h4 className="font-semibold">
-                                    Best Session: <span className="text-green-600">{bestPercentage}%</span>
-                                </h4>
-                                <p>
-                                    <span className="font-semibold">Made:</span> {bestMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {bestAttempted}
-                                </p>
-                            </div>
+                            <div className="text-lg text-gray-800">
+                            <h4 className="font-semibold">
+                                Best Session: <span className="text-green-600">{bestPercentage}%</span>
+                            </h4>
+                            <p>
+                                <span className="font-semibold">Made:</span> {bestMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {bestAttempted}
+                            </p>
                             <FTChart />
+
+                            </div>
+
                         </div>
-                    ) : (
+                        ) : (
                         <p className="text-xl text-gray-600">Not Available</p>
+                        )}
+                    </div>
                     )}
-                </div>
-            )}
-            {activeTab === 'practice' && (
-                <div className="space-y-6">
-                    <h2 className="text-3xl font-bold mb-6 text-gray-800">Practice Sessions</h2>
-                    {freeThrowPercentage && totalFTAttempted && totalFTMade && worstPercentage && bestPercentage && worstMade && worstAttempted && bestMade && bestAttempted ? (
+                    {activeTab === 'practice' && (
+                    <div className="space-y-6 text-center">
+                        {freeThrowPercentage && totalFTAttempted && totalFTMade && worstPercentage && bestPercentage && worstMade && worstAttempted && bestMade && bestAttempted ? (
                         <div className="space-y-6">
                             <h1 className="text-5xl font-bold text-blue-600">
-                                Free Throw Percentage: {freeThrowPercentage}%
+                            Free Throw Percentage: {freeThrowPercentage}%
                             </h1>
-                            <p className="text-lg">
-                                <span className="font-semibold">Total Made:</span> {totalFTMade} <span className="mx-3"></span> <span className="font-semibold">Total Attempted:</span> {totalFTAttempted}
+                            <p className="text-lg text-gray-800">
+                            <span className="font-semibold">Total Made:</span> {totalFTMade} <span className="mx-3"></span> <span className="font-semibold">Total Attempted:</span> {totalFTAttempted}
                             </p>
-                            <div className="text-lg">
-                                <h4 className="font-semibold">
-                                    Worst Session: <span className="text-red-600">{worstPercentage}%</span>
-                                </h4>
-                                <p>
-                                    <span className="font-semibold">Made:</span> {worstMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {worstAttempted}
-                                </p>
+                            <div className="text-lg text-gray-800">
+                            <h4 className="font-semibold">
+                                Worst Session: <span className="text-red-600">{worstPercentage}%</span>
+                            </h4>
+                            <p>
+                                <span className="font-semibold">Made:</span> {worstMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {worstAttempted}
+                            </p>
                             </div>
-                            <div className="text-lg">
-                                <h4 className="font-semibold">
-                                    Best Session: <span className="text-green-600">{bestPercentage}%</span>
-                                </h4>
-                                <p>
-                                    <span className="font-semibold">Made:</span> {bestMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {bestAttempted}
-                                </p>
-                            </div>
+                            <div className="text-lg text-gray-800">
+                            <h4 className="font-semibold">
+                                Best Session: <span className="text-green-600">{bestPercentage}%</span>
+                            </h4>
+                            <p>
+                                <span className="font-semibold">Made:</span> {bestMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {bestAttempted}
+                            </p>
                             <FTChart />
+
+                            </div>
+
                         </div>
-                    ) : (
+                        ) : (
                         <p className="text-xl text-gray-600">Not Available</p>
+                        )}
+                    </div>
                     )}
-                </div>
-            )}
-            {activeTab === 'game' && (
-                <div className="space-y-6">
-                    <h2 className="text-3xl font-bold mb-6 text-gray-800">Game Sessions</h2>
-                    {freeThrowPercentage && totalFTAttempted && totalFTMade && worstPercentage && bestPercentage && worstMade && worstAttempted && bestMade && bestAttempted ? (
+                    {activeTab === 'game' && (
+                    <div className="space-y-6 text-center">
+                        {freeThrowPercentage && totalFTAttempted && totalFTMade && worstPercentage && bestPercentage && worstMade && worstAttempted && bestMade && bestAttempted ? (
                         <div className="space-y-6">
                             <h1 className="text-5xl font-bold text-blue-600">
-                                Free Throw Percentage: {freeThrowPercentage}%
+                            Free Throw Percentage: {freeThrowPercentage}%
                             </h1>
-                            <p className="text-lg">
-                                <span className="font-semibold">Total Made:</span> {totalFTMade} <span className="mx-3"></span> <span className="font-semibold">Total Attempted:</span> {totalFTAttempted}
+                            <p className="text-lg text-gray-800">
+                            <span className="font-semibold">Total Made:</span> {totalFTMade} <span className="mx-3"></span> <span className="font-semibold">Total Attempted:</span> {totalFTAttempted}
                             </p>
-                            <div className="text-lg">
-                                <h4 className="font-semibold">
-                                    Worst Session: <span className="text-red-600">{worstPercentage}%</span>
-                                </h4>
-                                <p>
-                                    <span className="font-semibold">Made:</span> {worstMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {worstAttempted}
-                                </p>
+                            <div className="text-lg text-gray-800">
+                            <h4 className="font-semibold">
+                                Worst Session: <span className="text-red-600">{worstPercentage}%</span>
+                            </h4>
+                            <p>
+                                <span className="font-semibold">Made:</span> {worstMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {worstAttempted}
+                            </p>
                             </div>
-                            <div className="text-lg">
-                                <h4 className="font-semibold">
-                                    Best Session: <span className="text-green-600">{bestPercentage}%</span>
-                                </h4>
-                                <p>
-                                    <span className="font-semibold">Made:</span> {bestMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {bestAttempted}
-                                </p>
-                            </div>
+                            <div className="text-lg text-gray-800">
+                            <h4 className="font-semibold">
+                                Best Session: <span className="text-green-600">{bestPercentage}%</span>
+                            </h4>
+                            <p>
+                                <span className="font-semibold">Made:</span> {bestMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {bestAttempted}
+                            </p>
                             <FTChart />
+
+                            </div>
+
                         </div>
-                    ) : (
+                        ) : (
                         <p className="text-xl text-gray-600">Not Available</p>
+                        )}
+                    </div>
                     )}
                 </div>
-            )}
-        </div>
+                </div>
+       </div>
     </div>
-</div>
 
 
 
