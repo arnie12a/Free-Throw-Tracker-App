@@ -38,7 +38,7 @@ export default function Leaderboard() {
                 {filteredUsers.length > 0 ? (
                 filteredUsers.map(user => (
                     <div key={user.id} className="bg-white shadow-lg rounded-lg overflow-hidden">
-                    <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-4">
+                    <div className="bg-gradient-to-r from-orange-500 to-gray-500 p-4">
                         <h2 className="text-xl font-semibold text-white">{user.firstName} {user.lastName}</h2>
                     </div>
                     <div className="p-6">

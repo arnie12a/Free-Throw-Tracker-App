@@ -8,25 +8,25 @@ const FTChart = () => {
     const chartRef = useRef(null);
 
     const yearlyData = [
-        { year: 2020, percentage: 75 },
-        { year: 2021, percentage: 78 },
-        { year: 2022, percentage: 80 },
+        { year: 2020, percentage: 81 },
+        { year: 2021, percentage: 69 },
+        { year: 2022, percentage: 85 },
         { year: 2023, percentage: 82 },
     ];
 
     const monthlyData = [
         { month: '2023-01', percentage: 70 },
-        { month: '2023-02', percentage: 72 },
+        { month: '2023-02', percentage: 66 },
         { month: '2023-03', percentage: 74 },
-        { month: '2023-04', percentage: 76 },
+        { month: '2023-04', percentage: 87 },
         { month: '2023-05', percentage: 78 },
         { month: '2023-06', percentage: 80 },
-        { month: '2023-07', percentage: 82 },
+        { month: '2023-07', percentage: 65 },
         { month: '2023-08', percentage: 84 },
         { month: '2023-09', percentage: 86 },
-        { month: '2023-10', percentage: 88 },
-        { month: '2023-11', percentage: 90 },
-        { month: '2023-12', percentage: 92 },
+        { month: '2023-10', percentage: 90 },
+        { month: '2023-11', percentage: 84 },
+        { month: '2023-12', percentage: 77},
     ];
 
     useEffect(() => {
@@ -58,8 +58,9 @@ const FTChart = () => {
             .domain(d3.extent(data, d => parseTime(view === 'yearly' ? d.year : d.month)))
             .range([0, width]);
 
+        const minY = Math.min(...data.map(d => d.percentage)) - 10;
         const y = d3.scaleLinear()
-            .domain([0, 100])
+            .domain([minY, 100])
             .range([height, 0]);
 
         const line = d3.line()
