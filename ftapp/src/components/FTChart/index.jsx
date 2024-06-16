@@ -26,7 +26,41 @@ const FTChart = () => {
         { month: '2023-09', percentage: 86 },
         { month: '2023-10', percentage: 90 },
         { month: '2023-11', percentage: 84 },
-        { month: '2023-12', percentage: 77},
+        { month: '2023-12', percentage: 77 },
+    ];
+
+    const dailyData = [
+        { day: '2023-05-01', percentage: 71 },
+        { day: '2023-05-02', percentage: 73 },
+        { day: '2023-05-03', percentage: 75 },
+        { day: '2023-05-04', percentage: 72 },
+        { day: '2023-05-05', percentage: 74 },
+        { day: '2023-05-06', percentage: 76 },
+        { day: '2023-05-07', percentage: 78 },
+        { day: '2023-05-08', percentage: 77 },
+        { day: '2023-05-09', percentage: 79 },
+        { day: '2023-05-10', percentage: 80 },
+        { day: '2023-05-11', percentage: 82 },
+        { day: '2023-05-12', percentage: 81 },
+        { day: '2023-05-13', percentage: 83 },
+        { day: '2023-05-14', percentage: 85 },
+        { day: '2023-05-15', percentage: 84 },
+        { day: '2023-05-16', percentage: 86 },
+        { day: '2023-05-17', percentage: 88 },
+        { day: '2023-05-18', percentage: 87 },
+        { day: '2023-05-19', percentage: 89 },
+        { day: '2023-05-20', percentage: 90 },
+        { day: '2023-05-21', percentage: 88 },
+        { day: '2023-05-22', percentage: 89 },
+        { day: '2023-05-23', percentage: 91 },
+        { day: '2023-05-24', percentage: 93 },
+        { day: '2023-05-25', percentage: 92 },
+        { day: '2023-05-26', percentage: 94 },
+        { day: '2023-05-27', percentage: 95 },
+        { day: '2023-05-28', percentage: 93 },
+        { day: '2023-05-29', percentage: 92 },
+        { day: '2023-05-30', percentage: 94 },
+        { day: '2023-05-31', percentage: 95 },
     ];
 
     useEffect(() => {
@@ -34,9 +68,9 @@ const FTChart = () => {
     }, [view]);
 
     const drawChart = () => {
-        const data = view === 'yearly' ? yearlyData : monthlyData;
-        const parseTime = d3.timeParse(view === 'yearly' ? '%Y' : '%Y-%m');
-        const formatTime = d3.timeFormat(view === 'yearly' ? '%Y' : '%b %Y');
+        const data = view === 'yearly' ? yearlyData : view === 'monthly' ? monthlyData : dailyData;
+        const parseTime = d3.timeParse(view === 'yearly' ? '%Y' : view === 'monthly' ? '%Y-%m' : '%Y-%m-%d');
+        const formatTime = d3.timeFormat(view === 'yearly' ? '%Y' : view === 'monthly' ? '%b %Y' : '%d %b');
 
         d3.select(chartRef.current).select('svg').remove();
 
@@ -55,7 +89,7 @@ const FTChart = () => {
         const height = svgHeight - margin.top - margin.bottom;
 
         const x = d3.scaleTime()
-            .domain(d3.extent(data, d => parseTime(view === 'yearly' ? d.year : d.month)))
+            .domain(d3.extent(data, d => parseTime(view === 'yearly' ? d.year : view === 'monthly' ? d.month : d.day)))
             .range([0, width]);
 
         const minY = Math.min(...data.map(d => d.percentage)) - 10;
@@ -64,14 +98,14 @@ const FTChart = () => {
             .range([height, 0]);
 
         const line = d3.line()
-            .x(d => x(parseTime(view === 'yearly' ? d.year : d.month)))
+            .x(d => x(parseTime(view === 'yearly' ? d.year : view === 'monthly' ? d.month : d.day)))
             .y(d => y(d.percentage));
 
         const xAxis = svg.append('g')
             .attr('transform', `translate(0,${height})`)
             .call(d3.axisBottom(x).ticks(data.length).tickFormat(d => formatTime(d)));
 
-        if (view === 'monthly') {
+        if (view !== 'yearly') {
             xAxis.selectAll('text')
                 .attr('transform', 'rotate(-45)')
                 .style('text-anchor', 'end');
@@ -85,15 +119,23 @@ const FTChart = () => {
             .attr('fill', 'none')
             .attr('stroke', 'steelblue')
             .attr('stroke-width', 1.5)
-            .attr('d', line);
+            .attr('d', line)
+            .attr('opacity', 0)
+            .transition()
+            .duration(1000)
+            .attr('opacity', 1);
 
         svg.selectAll('.dot')
             .data(data)
             .enter().append('circle')
-            .attr('cx', d => x(parseTime(view === 'yearly' ? d.year : d.month)))
+            .attr('cx', d => x(parseTime(view === 'yearly' ? d.year : view === 'monthly' ? d.month : d.day)))
             .attr('cy', d => y(d.percentage))
             .attr('r', 4)
-            .attr('fill', 'steelblue');
+            .attr('fill', 'steelblue')
+            .attr('opacity', 0)
+            .transition()
+            .duration(1000)
+            .attr('opacity', 1);
     };
 
     return (
@@ -103,6 +145,7 @@ const FTChart = () => {
             <div className="flex justify-center mb-4">
                 <button onClick={() => setView('yearly')} className="mx-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition">Yearly</button>
                 <button onClick={() => setView('monthly')} className="mx-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition">Monthly</button>
+                <button onClick={() => setView('daily')} className="mx-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition">Daily</button>
             </div>
         </div>
     );
