@@ -110,9 +110,21 @@ export default function FTSummary() {
         const fetchData = async () => {
             const sessions = await getFTSession();
             setFTSessions(sessions);
-            const percentage = await getFTPercentage(sessions, activeTab);
+            //const percentage = await getFTPercentage(sessions, activeTab);
+            //setFreeThrowPercentage(Math.round(percentage));
+            //getBestWorstSessions(sessions, activeTab);
+        };
+
+        fetchData();
+    }, [])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            //const sessions = await getFTSession();
+            //setFTSessions(sessions);
+            const percentage = await getFTPercentage(FTSessions, activeTab);
             setFreeThrowPercentage(Math.round(percentage));
-            getBestWorstSessions(sessions, activeTab);
+            getBestWorstSessions(FTSessions, activeTab);
         };
 
         fetchData();
