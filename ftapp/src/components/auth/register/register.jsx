@@ -24,6 +24,7 @@ export default function Register() {
         e.preventDefault()
         if(!isRegistering) {
             setIsRegistering(true)
+            
             const userCredential = await doCreateUserWithEmailAndPassword(email, password)
             const user = userCredential.user;
 
