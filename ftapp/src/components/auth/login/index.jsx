@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
 import { doSignInWithEmailAndPassword, doSignInWithGoogle } from '../../firebase/auth'
 import { useAuth } from '../../contexts/authContext'
+import ErrorModal from '../../ErrorModal'
 
 export default function Login () {
     const { userLoggedIn } = useAuth()
@@ -9,14 +10,27 @@ export default function Login () {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [isSigningIn, setIsSigningIn] = useState(false)
-    const [errorMessage, setErrorMessage] = useState('')
+    const [errorModal, setErrorModal] = useState(false); // State to control modal visibility
+    const [errorMessage, setErrorMessage] = useState(""); // Example error message
+
+    const handleCloseModal = () => {
+        setErrorModal(false);
+    };
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        if(!isSigningIn) {
-            setIsSigningIn(true)
-            await doSignInWithEmailAndPassword(email, password)
+
+        try {
+            if(!isSigningIn) {
+                setIsSigningIn(true)
+                await doSignInWithEmailAndPassword(email, password)
+            }
+
+        } catch {
+            setErrorMessage('Wrong email or password! Try again')
+            setErrorModal(true);
         }
+        
     }
 
     const onGoogleSignIn = (e) => {
@@ -108,6 +122,8 @@ export default function Login () {
                     </button>
                 </div>
             </main>
+            <ErrorModal isOpen={errorModal} errorMessage={errorMessage} onClose={handleCloseModal} />
+
         </div>
     )
 }

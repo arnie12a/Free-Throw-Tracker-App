@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDoc, getDocs, query, where } from 'firebase/firestore';
 import { db } from "../firebase/firebase";
 import { useAuth } from '../contexts/authContext';
 import FTChart from '../FTChart';
@@ -17,6 +17,10 @@ export default function FTSummary() {
     const [worstAttempted, setWorstAttempted] = useState(0);
     const [worstPercentage, setWorstPercentage] = useState(0);
     const [activeTab, setActiveTab] = useState('all');
+    const [userData, setUserData] = useState(null);
+    const [goalPercentage, setGoalPercentage] = useState(0);
+    const [difference, setDifference] = useState(0);
+
     const ss = require('simple-statistics');
 
     const handleTabClick = (tab) => {
@@ -87,6 +91,13 @@ export default function FTSummary() {
         return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     };
 
+    const getCurrentUser = async () => {
+        const specificUID = currentUser.uid;
+        const q = query(collection(db, 'users'), where('uid', '==', specificUID));
+        const querySnapshot = await getDocs(q);
+        return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    }
+
     const getFTPercentage = async (sessions, sessionType) => {
         let totalAttempted = 0;
         let totalMade = 0;
@@ -109,10 +120,9 @@ export default function FTSummary() {
     useEffect(() => {
         const fetchData = async () => {
             const sessions = await getFTSession();
+            const user = await getCurrentUser();
             setFTSessions(sessions);
-            //const percentage = await getFTPercentage(sessions, activeTab);
-            //setFreeThrowPercentage(Math.round(percentage));
-            //getBestWorstSessions(sessions, activeTab);
+            setUserData(user);
         };
 
         fetchData();
@@ -120,11 +130,11 @@ export default function FTSummary() {
 
     useEffect(() => {
         const fetchData = async () => {
-            //const sessions = await getFTSession();
-            //setFTSessions(sessions);
             const percentage = await getFTPercentage(FTSessions, activeTab);
             setFreeThrowPercentage(Math.round(percentage));
             getBestWorstSessions(FTSessions, activeTab);
+            setGoalPercentage(userData[0].ftGoalPercentage);
+            setDifference(freeThrowPercentage - goalPercentage)
         };
 
         fetchData();
@@ -158,11 +168,14 @@ export default function FTSummary() {
 
                 <div className="flex justify-center items-center h-full bg-gray-50 overflow-y-auto p-10">
                     <div className="space-y-6 bg-white p-6 rounded-lg shadow-md w-full max-w-3xl">
-                        {FTSessions.length > 0 && (
+                        {FTSessions.length > 0 && freeThrowPercentage && (
                             <div className="space-y-6 text-center">
                                 <h1 className="text-5xl font-bold text-blue-600">
                                     Free Throw Percentage: {freeThrowPercentage}%
                                 </h1>
+                                <h2 className={`text-2xl font-bold ${difference > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                                    {difference}
+                                    </h2>
                                 <p className="text-lg text-gray-800">
                                     <span className="font-semibold">Total Made:</span> {totalFTMade} <span className="mx-3"></span> <span className="font-semibold">Total Attempted:</span> {totalFTAttempted}
                                 </p>

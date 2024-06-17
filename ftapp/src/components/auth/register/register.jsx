@@ -4,6 +4,7 @@ import { useAuth } from '../../contexts/authContext'
 import { doCreateUserWithEmailAndPassword } from '../../firebase/auth'
 import { doc, setDoc } from "firebase/firestore"
 import { db } from '../../firebase/firebase';
+import ErrorModal from '../../ErrorModal'
 
 
 export default function Register() {
@@ -16,29 +17,47 @@ export default function Register() {
     const [password, setPassword] = useState('')
     const [confirmPassword, setconfirmPassword] = useState('')
     const [isRegistering, setIsRegistering] = useState(false)
-    const [errorMessage, setErrorMessage] = useState('')
+    const [errorModal, setErrorModal] = useState(false); // State to control modal visibility
+    const [errorMessage, setErrorMessage] = useState(""); // Example error message
+
+    const handleCloseModal = () => {
+        setErrorModal(false);
+    };
 
     const { userLoggedIn } = useAuth()
 
     const onSubmit = async (e) => {
-        e.preventDefault()
-        if(!isRegistering) {
-            setIsRegistering(true)
-            
-            const userCredential = await doCreateUserWithEmailAndPassword(email, password)
-            const user = userCredential.user;
+        try{
+            e.preventDefault()
+            if(!isRegistering) {
+                setIsRegistering(true)
 
-            await setDoc(doc(db, 'users', user.uid), {
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                uid: user.uid,
-                ftGoalPercentage: 80,
-                position: 'None'
-            });
-            navigate('/FTSummary')
+                if(password !== confirmPassword){
+                    setErrorMessage('Passwords do not match');
+                    setErrorModal(true);
+                    return;
+                }
+                
+                const userCredential = await doCreateUserWithEmailAndPassword(email, password)
+                const user = userCredential.user;
 
-        }   
+                await setDoc(doc(db, 'users', user.uid), {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    uid: user.uid,
+                    ftGoalPercentage: 0,
+                    position: 'None'
+                });
+                navigate('/FTSummary');
+
+            }   
+        }
+        catch {
+            setErrorMessage('Error when trying to register your account? Try again')
+            setErrorModal(true);
+        }
+        
     }
 
     return (
@@ -133,6 +152,8 @@ export default function Register() {
                     </form>
                 </div>
             </main>
+            <ErrorModal isOpen={errorModal} errorMessage={errorMessage} onClose={handleCloseModal} />
+
         </>
     )
 }
