@@ -117,6 +117,10 @@ export default function FTSummary() {
         return (totalMade / totalAttempted) * 100;
     };
 
+    const getLast5Sessions = () => {
+        
+    }
+
     useEffect(() => {
         const fetchData = async () => {
             const sessions = await getFTSession();
@@ -134,7 +138,6 @@ export default function FTSummary() {
             setFreeThrowPercentage(Math.round(percentage));
             getBestWorstSessions(FTSessions, activeTab);
             setGoalPercentage(userData[0].ftGoalPercentage);
-            setDifference(freeThrowPercentage - goalPercentage)
         };
 
         fetchData();
@@ -173,9 +176,7 @@ export default function FTSummary() {
                                 <h1 className="text-5xl font-bold text-blue-600">
                                     Free Throw Percentage: {freeThrowPercentage}%
                                 </h1>
-                                <h2 className={`text-2xl font-bold ${difference > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                                    {difference}
-                                    </h2>
+                                
                                 <p className="text-lg text-gray-800">
                                     <span className="font-semibold">Total Made:</span> {totalFTMade} <span className="mx-3"></span> <span className="font-semibold">Total Attempted:</span> {totalFTAttempted}
                                 </p>
