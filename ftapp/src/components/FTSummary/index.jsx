@@ -17,9 +17,11 @@ export default function FTSummary() {
     const [worstAttempted, setWorstAttempted] = useState(0);
     const [worstPercentage, setWorstPercentage] = useState(0);
     const [activeTab, setActiveTab] = useState('all');
-    const [userData, setUserData] = useState(null);
-    const [goalPercentage, setGoalPercentage] = useState(0);
+    //const [userData, setUserData] = useState(null);
+    const [last5SessionsPercentage, setLast5SessionPercentage] = useState(0);
     const [difference, setDifference] = useState(0);
+    const [goal, setGoal] = useState(0);
+    const [totalSessions, setTotalSessions] = useState('');
 
     const ss = require('simple-statistics');
 
@@ -117,28 +119,37 @@ export default function FTSummary() {
         return (totalMade / totalAttempted) * 100;
     };
 
-    const getLast5Sessions = () => {
-        
+    const getLast5Sessions = (arr) => {
+        if(arr.length >= 5) {
+            return arr.slice(1).slice(-5);
+        }
+        return arr;
     }
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchDataLoad = async () => {
             const sessions = await getFTSession();
             const user = await getCurrentUser();
             setFTSessions(sessions);
-            setUserData(user);
+            //setUserData(user);
+            setGoal(user[0].ftGoalPercentage)
         };
 
-        fetchData();
+        fetchDataLoad();
     }, [])
 
     useEffect(() => {
         const fetchData = async () => {
+            
             const percentage = await getFTPercentage(FTSessions, activeTab);
             setFreeThrowPercentage(Math.round(percentage));
             getBestWorstSessions(FTSessions, activeTab);
-            setGoalPercentage(userData[0].ftGoalPercentage);
+            const last5 = await getFTPercentage(getLast5Sessions(FTSessions), activeTab);
+            setLast5SessionPercentage(Math.round(last5))
+            setDifference(freeThrowPercentage - goal)
+            setTotalSessions(FTSessions.length);
         };
+
 
         fetchData();
     }, [activeTab]);
@@ -176,6 +187,23 @@ export default function FTSummary() {
                                 <h1 className="text-5xl font-bold text-blue-600">
                                     Free Throw Percentage: {freeThrowPercentage}%
                                 </h1>
+                                {activeTab == 'all' && difference? (
+                                    <>
+                                    <button>T-Test</button>
+                                    <h1>
+                                        {difference}
+                                    </h1>
+                                    <h5>
+                                    Total Shooting Sessions: {totalSessions}
+                                </h5>
+                                    </>
+                                    
+                                ):(
+                                    <></>
+                                )}
+                                <h4>
+                                    Past 5 Sessions Average Percentage: { last5SessionsPercentage }
+                                </h4>
                                 
                                 <p className="text-lg text-gray-800">
                                     <span className="font-semibold">Total Made:</span> {totalFTMade} <span className="mx-3"></span> <span className="font-semibold">Total Attempted:</span> {totalFTAttempted}
@@ -195,7 +223,7 @@ export default function FTSummary() {
                                     <p>
                                         <span className="font-semibold">Made:</span> {bestMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {bestAttempted}
                                     </p>
-                                    <FTChart />
+                                    <FTChart data={FTSessions}/>
                                 </div>
                             </div>
                         )}
