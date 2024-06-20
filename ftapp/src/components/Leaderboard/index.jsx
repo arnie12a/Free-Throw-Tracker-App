@@ -16,6 +16,7 @@ export default function Leaderboard() {
         const q = query(collection(db, "users"), orderBy("ftPercentage", "desc"));
         const querySnapshot = await getDocs(q);
         const usersData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        console.log(usersData)
         setTotalSessions(usersData);
         return 
     }

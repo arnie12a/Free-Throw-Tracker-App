@@ -47,7 +47,8 @@ export default function Register() {
                     email: email,
                     uid: user.uid,
                     ftGoalPercentage: 0,
-                    position: 'None'
+                    position: 'None',
+                    ftPercentage: 0
                 });
                 navigate('/FTSummary');
 

@@ -47,7 +47,7 @@ const Home = () => {
         //const querySnapshot = await getDocs(collection(db, "ftsessions"));
         //const sessions = querySnapshot.docs.map(doc => ({id:doc.id, ...doc.data()}))
         setFullName(userData[0].firstName + " " + userData[0].lastName);
-        if(userData[0].position){
+        if(userData[0].position!=="None"){
             setGoal(userData[0].ftGoalPercentage);
             setPosition(userData[0].position);
             setFormVisible(false);
@@ -64,21 +64,21 @@ const Home = () => {
 
     return (
         <div className="container mx-auto p-6">
-    <div className="text-3xl font-extrabold pt-14 text-center text-gray-800">
-        Welcome, {currentUser.displayName ? currentUser.displayName : currentUser.email}!
-    </div>
-    { fullName && goal && position ? (
-        <div className="mt-8 text-center">
-            <h1 className="text-2xl font-semibold text-gray-800">{fullName}</h1>
-            <h2 className="text-xl text-gray-600 mt-2">Position: {position}</h2>
-            <h3 className="text-xl text-gray-600 mt-2">FT Percentage Goal: {goal}%</h3>
-            <h3 className="text-xl text-gray-600 mt-2">FT Percentage: {ftPercentage}%</h3>
-        </div>
-    ) : (
-        <div className="mt-8 text-center">
-            <h1 className="text-xl text-gray-600">No Data yet</h1>
-        </div>
-    )}
+            <div className="text-3xl font-extrabold pt-14 text-center text-gray-800">
+                Welcome, {currentUser.displayName ? currentUser.displayName : currentUser.email}!
+            </div>
+            { fullName && goal && position ? (
+                <div className="mt-8 text-center">
+                    <h1 className="text-2xl font-semibold text-gray-800">{fullName}</h1>
+                    <h2 className="text-xl text-gray-600 mt-2">Position: {position}</h2>
+                    <h3 className="text-xl text-gray-600 mt-2">FT Percentage Goal: {goal}%</h3>
+                    <h3 className="text-xl text-gray-600 mt-2">FT Percentage: {ftPercentage}%</h3>
+                </div>
+            ) : (
+                <div className="mt-8 text-center">
+                    <h1 className="text-xl text-gray-600">No Data yet</h1>
+                </div>
+            )}
     
     {formVisible && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">

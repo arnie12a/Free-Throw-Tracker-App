@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { collection, getDoc, getDocs, query, where } from 'firebase/firestore';
+import { collection, setDoc, doc, getDocs, query, where } from 'firebase/firestore';
 import { db } from "../firebase/firebase";
 import { useAuth } from '../contexts/authContext';
 import FTChart from '../FTChart';
@@ -17,7 +17,7 @@ export default function FTSummary() {
     const [worstMade, setWorstMade] = useState(0);
     const [worstAttempted, setWorstAttempted] = useState(0);
     const [worstPercentage, setWorstPercentage] = useState(0);
-    const [activeTab, setActiveTab] = useState('all');
+    const [activeTab, setActiveTab] = useState('12');
     //const [userData, setUserData] = useState(null);
     const [last5SessionsPercentage, setLast5SessionPercentage] = useState(0);
     const [totalSessions, setTotalSessions] = useState('');
@@ -99,7 +99,7 @@ export default function FTSummary() {
         return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     }
 
-    const getFTPercentage = async (sessions, sessionType) => {
+    const getFTPercentage = async (sessions, sessionType='all') => {
         let totalAttempted = 0;
         let totalMade = 0;
         let result = sessions;
@@ -125,12 +125,25 @@ export default function FTSummary() {
         return arr;
     }
 
+    const setUserShootingPercentage = async (user, percentage) => {
+        await setDoc(doc(db, 'users', currentUser.uid), {
+            firstName: user[0].firstName,
+            lastName: user[0].lastName,
+            email: user[0].email,
+            uid: user[0].uid,
+            ftGoalPercentage: user[0].ftGoalPercentage,
+            position: user[0].position,
+            ftPercentage: percentage
+        });
+    }
+
     useEffect(() => {
         const fetchDataLoad = async () => {
             const sessions = await getFTSession();
             const user = await getCurrentUser();
             setFTSessions(sessions);
-            //setUserData(user);
+            const percentage = await getFTPercentage(sessions)
+            setUserShootingPercentage(user, percentage)
         };
 
         fetchDataLoad();
