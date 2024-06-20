@@ -3,6 +3,7 @@ import { collection, getDoc, getDocs, query, where } from 'firebase/firestore';
 import { db } from "../firebase/firebase";
 import { useAuth } from '../contexts/authContext';
 import FTChart from '../FTChart';
+import { active } from 'd3';
 
 export default function FTSummary() {
     const [FTSessions, setFTSessions] = useState([]);
@@ -19,8 +20,6 @@ export default function FTSummary() {
     const [activeTab, setActiveTab] = useState('all');
     //const [userData, setUserData] = useState(null);
     const [last5SessionsPercentage, setLast5SessionPercentage] = useState(0);
-    const [difference, setDifference] = useState(0);
-    const [goal, setGoal] = useState(0);
     const [totalSessions, setTotalSessions] = useState('');
 
     const ss = require('simple-statistics');
@@ -132,7 +131,6 @@ export default function FTSummary() {
             const user = await getCurrentUser();
             setFTSessions(sessions);
             //setUserData(user);
-            setGoal(user[0].ftGoalPercentage)
         };
 
         fetchDataLoad();
@@ -146,7 +144,6 @@ export default function FTSummary() {
             getBestWorstSessions(FTSessions, activeTab);
             const last5 = await getFTPercentage(getLast5Sessions(FTSessions), activeTab);
             setLast5SessionPercentage(Math.round(last5))
-            setDifference(freeThrowPercentage - goal)
             setTotalSessions(FTSessions.length);
         };
 
@@ -184,47 +181,54 @@ export default function FTSummary() {
                     <div className="space-y-6 bg-white p-6 rounded-lg shadow-md w-full max-w-3xl">
                         {FTSessions.length > 0 && freeThrowPercentage && (
                             <div className="space-y-6 text-center">
-                                <h1 className="text-5xl font-bold text-blue-600">
-                                    Free Throw Percentage: {freeThrowPercentage}%
-                                </h1>
-                                {activeTab == 'all' && difference? (
+                                {activeTab == 'all' ? (
                                     <>
-                                    <button>T-Test</button>
-                                    <h1>
-                                        {difference}
-                                    </h1>
-                                    <h5>
-                                    Total Shooting Sessions: {totalSessions}
-                                </h5>
-                                    </>
+                                        <h1 className="text-5xl font-bold text-blue-600">
+                                            Free Throw Percentage: {freeThrowPercentage}%
+                                        </h1>
+                                        <button>T-Test</button>
                                     
-                                ):(
-                                    <></>
-                                )}
-                                <h4>
-                                    Past 5 Sessions Average Percentage: { last5SessionsPercentage }
-                                </h4>
-                                
-                                <p className="text-lg text-gray-800">
-                                    <span className="font-semibold">Total Made:</span> {totalFTMade} <span className="mx-3"></span> <span className="font-semibold">Total Attempted:</span> {totalFTAttempted}
-                                </p>
-                                <div className="text-lg text-gray-800">
-                                    <h4 className="font-semibold">
-                                        Worst Session: <span className="text-red-600">{worstPercentage}%</span>
-                                    </h4>
-                                    <p>
-                                        <span className="font-semibold">Made:</span> {worstMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {worstAttempted}
-                                    </p>
-                                </div>
-                                <div className="text-lg text-gray-800">
-                                    <h4 className="font-semibold">
-                                        Best Session: <span className="text-green-600">{bestPercentage}%</span>
-                                    </h4>
-                                    <p>
-                                        <span className="font-semibold">Made:</span> {bestMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {bestAttempted}
-                                    </p>
-                                    <FTChart data={FTSessions}/>
-                                </div>
+                                        <h5>
+                                            Total Shooting Sessions: {totalSessions}
+                                        </h5>
+
+                                        <FTChart data={FTSessions}/>
+
+                                    </>
+                                    ): (
+                                        <>
+                                             <h1 className="text-5xl font-bold text-blue-600">
+                                                Free Throw Percentage: {freeThrowPercentage}%
+                                            </h1>
+                                            
+                                            
+                                            <h4>
+                                                Past 5 Sessions Average Percentage: { last5SessionsPercentage }
+                                            </h4>
+                                            
+                                            <p className="text-lg text-gray-800">
+                                                <span className="font-semibold">Total Made:</span> {totalFTMade} <span className="mx-3"></span> <span className="font-semibold">Total Attempted:</span> {totalFTAttempted}
+                                            </p>
+                                            <div className="text-lg text-gray-800">
+                                                <h4 className="font-semibold">
+                                                    Worst Session: <span className="text-red-600">{worstPercentage}%</span>
+                                                </h4>
+                                                <p>
+                                                    <span className="font-semibold">Made:</span> {worstMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {worstAttempted}
+                                                </p>
+                                            </div>
+                                            <div className="text-lg text-gray-800">
+                                                <h4 className="font-semibold">
+                                                    Best Session: <span className="text-green-600">{bestPercentage}%</span>
+                                                </h4>
+                                                <p>
+                                                    <span className="font-semibold">Made:</span> {bestMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {bestAttempted}
+                                                </p>
+                                                
+                                            </div>
+                                        </>
+                                    )}
+                               
                             </div>
                         )}
                         {FTSessions.length === 0 && (
