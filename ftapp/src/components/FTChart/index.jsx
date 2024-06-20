@@ -4,17 +4,46 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 
 const FTChart = ({data}) => {
+    // Helper function to format date
+    const formatDate = (dateStr) => {
+        const date = new Date(dateStr);
+        const year = date.getFullYear();
+        const month = ('0' + (date.getMonth() + 1)).slice(-2); // zero-based month
+        const day = ('0' + date.getDate()).slice(-2);
+        return { year, month, day };
+    };
+    
+    // Function to calculate yearly percentages
+    const calculateYearlyPercentage = (data) => {
+        const yearlyData = data.reduce((acc, { date, ftMade, ftAttempted }) => {
+        const { year } = formatDate(date);
+        if (!acc[year]) {
+            acc[year] = { ftMade: 0, ftAttempted: 0 };
+        }
+        acc[year].ftMade += ftMade;
+        acc[year].ftAttempted += ftAttempted;
+        return acc;
+        }, {});
+    
+        return Object.keys(yearlyData).map((year) => ({
+        year,
+        percentage: Math.round((yearlyData[year].ftMade / yearlyData[year].ftAttempted) * 100),
+        }));
+    };
+
+    
+    
     
 
     const [view, setView] = useState('yearly');
     const chartRef = useRef(null);
-    
+    /*
     const yearlyData = [
         { year: 2020, percentage: 81 },
         { year: 2021, percentage: 69 },
         { year: 2022, percentage: 85 },
         { year: 2023, percentage: 82 },
-    ];
+    ]; */
     
     const monthlyData = [
         { month: '2023-01', percentage: 70 },
@@ -65,6 +94,8 @@ const FTChart = ({data}) => {
         { day: '2023-05-30', percentage: 94 },
         { day: '2023-05-31', percentage: 95 },
     ];
+
+    const yearlyData = calculateYearlyPercentage(data);
     
     
 
