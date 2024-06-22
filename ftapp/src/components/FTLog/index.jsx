@@ -11,10 +11,10 @@ export default function FTLog() {
     const [deleteModalState, setDeleteModalState] = useState(false);
     const [deleteId, setDeleteId] = useState('');
     const [editModalState, setEditModalState] = useState(false);
-    const [editDate, setEditDate] = ('');
     const [editFTMade, setEditFTMade] = useState(0);
     const [editFTAttempted, setEditFTAttempted] = useState(0);
     const [editSessionType, setEditSessionType] = useState('');
+    const [currentSession, setCurrentSession] = useState(null);
 
     const getFTSession = async () => {
         const specificUID = currentUser.uid;
@@ -40,7 +40,10 @@ export default function FTLog() {
         getFTSession();
     }
 
-    function openEditModal(id){
+    function openEditModal(id, data){
+        console.log(data)
+        setCurrentSession(data);
+        
         setEditModalState(true);
     }
 
@@ -60,7 +63,16 @@ export default function FTLog() {
     }
 
     const handleEditSubmit = async () => {
-        console.log("edit being made")
+        await setDoc(doc(db, 'ftsessions', currentSession.id), {
+            date: currentSession.date,
+            ftAttempted: editFTAttempted, 
+            ftMade: editFTMade,
+            percentage: Math.round((editFTMade/editFTAttempted)*100),
+            sessionType: editSessionType,
+            uid: currentSession.uid
+
+        });
+
     }
     
     
@@ -113,7 +125,7 @@ export default function FTLog() {
                                     {ftSession.sessionType}
                                 </td>
                                 <td className="px-6 py-4">
-                                    <button onClick={() => openEditModal(ftSession.id)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
+                                    <button onClick={() => openEditModal(ftSession.id, ftSession)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</button>
                                     <span> | </span>
                                     <button onClick={() => openDeleteModal(ftSession.id)} className="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
                                 </td>
@@ -142,40 +154,76 @@ export default function FTLog() {
             <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center">
                 <div className="bg-white rounded-lg p-8 shadow-lg">
                     <h2 className="text-xl font-bold mb-4">Edit Record</h2>
+                    {currentSession !== null ? (
+                        <>
+                            <div className="overflow-x-auto">
+                                <table className="min-w-full divide-y divide-gray-200">
+                                    <thead className="bg-gray-50">
+                                        <tr>
+                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">FT Made</th>
+                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">FT Attempted</th>
+                                            <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Session Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="bg-white divide-y divide-gray-200">
+                                        <tr>
+                                            <td className="px-6 py-4 whitespace-nowrap">{currentSession.date}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{currentSession.ftMade}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{currentSession.ftAttempted}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">{currentSession.sessionType}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </>
+
+                    ):(
+                        <h2>Loading...</h2>
+                    )}
+                    
                     <form onSubmit={handleEditSubmit} className="space-y-6">
-                        <div>
-                            <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date:</label>
-                            <input 
-                                type="date" 
-                                id="date" 
-                                value={editDate} 
-                                onChange={(e) => setEditDate(e.target.value)} 
-                                required 
-                                className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="ftMade" className="block text-sm font-medium text-gray-700">Free Throws Made:</label>
-                            <input 
-                                type="number" 
-                                id="ftMade" 
-                                value={editFTMade} 
-                                onChange={(e) => setEditFTMade(parseInt(e.target.value))} 
-                                required 
-                                className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="ftAttempted" className="block text-sm font-medium text-gray-700">Free Throws Attempted:</label>
-                            <input 
-                                type="number" 
-                                id="ftAttempted" 
-                                value={editFTAttempted} 
-                                onChange={(e) => setEditFTAttempted(parseInt(e.target.value))} 
-                                required 
-                                className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
-                            />
-                        </div>
+                        
+                    <div>
+                        <label htmlFor="ftMade" className="block text-sm font-medium text-gray-700">Free Throws Made:</label>
+                        <input 
+                            type="number" 
+                            id="ftMade" 
+                            value={editFTMade} 
+                            onChange={(e) => {
+                                const value = parseInt(e.target.value);
+                                if (value >= 0) {
+                                    setEditFTMade(value);
+                                } else {
+                                    setEditFTMade(0);
+                                }
+                            }} 
+                            min="0"
+                            required 
+                            className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="ftAttempted" className="block text-sm font-medium text-gray-700">Free Throws Attempted:</label>
+                        <input 
+                            type="number" 
+                            id="ftAttempted" 
+                            value={editFTAttempted} 
+                            onChange={(e) => {
+                                const value = parseInt(e.target.value);
+                                if (value >= 0) {
+                                    setEditFTAttempted(value);
+                                } else {
+                                    setEditFTAttempted(0);
+                                }
+                            }} 
+                            min="0"
+                            required 
+                            className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
+                        />
+                    </div>
+
                         <div className="mt-4">
                             <span className="block text-sm font-medium text-gray-700">Session Type:</span>
                             <div className="mt-1">
