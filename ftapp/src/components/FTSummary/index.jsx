@@ -33,6 +33,24 @@ export default function FTSummary() {
 
     const calculateShootingPercentage = (made, attempted) => (made / attempted) * 100;
 
+    const calculateTValue = (practiceSessions, gameSessions) => {
+        // Calculate means
+        const mean1 = practiceSessions.reduce((sum, value) => sum + value, 0) / practiceSessions.length;
+        const mean2 = gameSessions.reduce((sum, value) => sum + value, 0) / gameSessions.length;
+    
+        // Calculate variances
+        const variance1 = practiceSessions.reduce((sum, value) => sum + Math.pow(value - mean1, 2), 0) / (practiceSessions.length - 1);
+        const variance2 = gameSessions.reduce((sum, value) => sum + Math.pow(value - mean2, 2), 0) / (gameSessions.length - 1);
+    
+        // Calculate pooled variance
+        const pooledVariance = Math.sqrt((variance1 / practiceSessions.length) + (variance2 / gameSessions.length));
+    
+        // Calculate t-value
+        const tValue = (mean1 - mean2) / pooledVariance;
+    
+        return tValue;
+    };
+
     const tTest = (sessions) => {
         const practiceSessions = [];
         const gameSessions = [];
@@ -44,8 +62,8 @@ export default function FTSummary() {
                 gameSessions.push(percentage);
             }
         }
-
-        const tValue = ss.tTestTwoSample(practiceSessions, gameSessions, { variance: 'unequal' });
+        
+        const tValue = calculateTValue(practiceSessions, gameSessions)
         const degreesOfFreedom = practiceSessions.length + gameSessions.length - 2;
         const criticalValue = ss.probit(0.975); // 95% confidence interval
         return {
@@ -146,10 +164,11 @@ export default function FTSummary() {
             const user = await getCurrentUser();
             setFTSessions(sessions);
             const percentage = await getFTPercentage(sessions)
-            setUserShootingPercentage(user, percentage)
+            setUserShootingPercentage(user, percentage.toFixed(2))
             if(percentage && user){
                 setDifference((percentage - user[0].ftGoalPercentage).toFixed(2))
             }
+            console.log(tTest(sessions))
         };
 
         fetchDataLoad();
