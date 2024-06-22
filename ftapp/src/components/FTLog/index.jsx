@@ -63,15 +63,18 @@ export default function FTLog() {
     }
 
     const handleEditSubmit = async () => {
-        await setDoc(doc(db, 'ftsessions', currentSession.id), {
-            date: currentSession.date,
-            ftAttempted: editFTAttempted, 
-            ftMade: editFTMade,
-            percentage: Math.round((editFTMade/editFTAttempted)*100),
-            sessionType: editSessionType,
-            uid: currentSession.uid
-
-        });
+        if(editFTAttempted >= editFTMade){
+            await setDoc(doc(db, 'ftsessions', currentSession.id), {
+                date: currentSession.date,
+                ftAttempted: editFTAttempted, 
+                ftMade: editFTMade,
+                percentage: Math.round((editFTMade/editFTAttempted)*100),
+                sessionType: editSessionType,
+                uid: currentSession.uid
+    
+            });
+        }
+        
 
     }
     
