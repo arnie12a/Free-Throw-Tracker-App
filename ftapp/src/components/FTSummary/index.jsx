@@ -21,6 +21,9 @@ export default function FTSummary() {
     //const [userData, setUserData] = useState(null);
     const [last5SessionsPercentage, setLast5SessionPercentage] = useState(0);
     const [totalSessions, setTotalSessions] = useState('');
+    const [difference, setDifference] = useState(0);
+    const [Last5Modal, setLast5Modal] = useState(false);
+    const [tTestModal, settTestModal] = useState(false);
 
     const ss = require('simple-statistics');
 
@@ -144,6 +147,9 @@ export default function FTSummary() {
             setFTSessions(sessions);
             const percentage = await getFTPercentage(sessions)
             setUserShootingPercentage(user, percentage)
+            if(percentage && user){
+                setDifference((percentage - user[0].ftGoalPercentage).toFixed(2))
+            }
         };
 
         fetchDataLoad();
@@ -199,25 +205,65 @@ export default function FTSummary() {
                                         <h1 className="text-5xl font-bold text-blue-600">
                                             Free Throw Percentage: {freeThrowPercentage}%
                                         </h1>
-                                        <button>T-Test</button>
-                                    
-                                        <h5>
+                                        <button 
+                                                onClick={() => settTestModal(true)} 
+                                                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-red-600 focus:outline-none"
+                                            >
+                                                See T-Test Statistics
+                                        </button>
+                                        {tTestModal && (
+                                                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+                                                    <div className="relative top-20 mx-auto p-5 border w-1/2 shadow-lg rounded-md bg-white">
+                                                        <div className="mt-3 text-center">
+                                                            <h1>T-Test</h1>
+                                                            <button 
+                                                                onClick={() => settTestModal(false)} 
+                                                                className="mt-4 bg-red-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-red-600 focus:outline-none"
+                                                            >
+                                                                Close
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}                                        <h1 className={`${difference >= 0 ? 'text-green-500' : 'text-red-500'} text-3xl font-bold`}>
+                                            {difference}
+                                        </h1>
+                                        <h5 className="mt-2 text-lg font-medium text-gray-700">
                                             Total Shooting Sessions: {totalSessions}
                                         </h5>
+
 
                                         <FTChart data={FTSessions}/>
 
                                     </>
                                     ): (
                                         <>
-                                             <h1 className="text-5xl font-bold text-blue-600">
+                                            <h1 className="text-5xl font-bold text-blue-600">
                                                 Free Throw Percentage: {freeThrowPercentage}%
                                             </h1>
-                                            
-                                            
-                                            <h4>
-                                                Past 5 Sessions Average Percentage: { last5SessionsPercentage }
-                                            </h4>
+                                            <button 
+                                                onClick={() => setLast5Modal(true)} 
+                                                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-red-600 focus:outline-none"
+                                            >
+                                                See Last 5 Session Statistics
+                                            </button>
+                                            {Last5Modal && (
+                                                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+                                                    <div className="relative top-20 mx-auto p-5 border w-1/2 shadow-lg rounded-md bg-white">
+                                                        <div className="mt-3 text-center">
+                                                            <h4 className={`mt-2 text-lg font-medium ${last5SessionsPercentage >= freeThrowPercentage ? 'text-green-500' : 'text-red-500'}`}>
+                                                                Past 5 Sessions Average Percentage: {last5SessionsPercentage}%
+                                                            </h4>
+                                                            <button 
+                                                                onClick={() => setLast5Modal(false)} 
+                                                                className="mt-4 bg-red-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-red-600 focus:outline-none"
+                                                            >
+                                                                Close
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
                                             
                                             <p className="text-lg text-gray-800">
                                                 <span className="font-semibold">Total Made:</span> {totalFTMade} <span className="mx-3"></span> <span className="font-semibold">Total Attempted:</span> {totalFTAttempted}
