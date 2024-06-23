@@ -258,7 +258,12 @@ export default function FTSummary() {
                                                             <p className="text-lg"><span className="font-medium">T-Value:</span> {tValue}</p>
                                                             <p className="text-lg"><span className="font-medium">Degrees of Freedom:</span> {degreesOfFreedom}</p>
                                                             <p className="text-lg"><span className="font-medium">Critical Value:</span> {criticalValue}</p>
-                                                            <p className="text-lg"><span className="font-medium">Significance:</span> {isSignificant}</p>
+                                                            <p className="text-lg">
+                                                                <span className="font-medium">Significance:</span> 
+                                                                {isSignificant ? 
+                                                                    " The user shoots game and practice free throws differently." : 
+                                                                    " The user shoots game and practice free throws the same."}
+                                                            </p>                                                        
                                                         </div>
                                                         <button 
                                                             onClick={() => settTestModal(false)} 
