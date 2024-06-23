@@ -3,6 +3,7 @@ import { collection, setDoc, doc, getDocs, query, where } from 'firebase/firesto
 import { db } from "../firebase/firebase";
 import { useAuth } from '../contexts/authContext';
 import FTChart from '../FTChart';
+import Last5LineChart from '../Last5LineChart';
 import { active } from 'd3';
 
 export default function FTSummary() {
@@ -24,6 +25,7 @@ export default function FTSummary() {
     const [difference, setDifference] = useState(0);
     const [Last5Modal, setLast5Modal] = useState(false);
     const [tTestModal, settTestModal] = useState(false);
+    const [last5Sessions, setLast5Sessions] = useState([]);
 
     const ss = require('simple-statistics');
 
@@ -180,6 +182,9 @@ export default function FTSummary() {
             const percentage = await getFTPercentage(FTSessions, activeTab);
             setFreeThrowPercentage(Math.round(percentage));
             getBestWorstSessions(FTSessions, activeTab);
+            const temp = getLast5Sessions(FTSessions, activeTab)
+            setLast5Sessions(temp)
+            console.log(temp)
             const last5 = await getFTPercentage(getLast5Sessions(FTSessions), activeTab);
             setLast5SessionPercentage(Math.round(last5))
             setTotalSessions(FTSessions.length);
@@ -244,7 +249,8 @@ export default function FTSummary() {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            )}                                        <h1 className={`${difference >= 0 ? 'text-green-500' : 'text-red-500'} text-3xl font-bold`}>
+                                            )}                                        
+                                        <h1 className={`${difference >= 0 ? 'text-green-500' : 'text-red-500'} text-3xl font-bold`}>
                                             {difference}
                                         </h1>
                                         <h5 className="mt-2 text-lg font-medium text-gray-700">
@@ -273,6 +279,8 @@ export default function FTSummary() {
                                                             <h4 className={`mt-2 text-lg font-medium ${last5SessionsPercentage >= freeThrowPercentage ? 'text-green-500' : 'text-red-500'}`}>
                                                                 Past 5 Sessions Average Percentage: {last5SessionsPercentage}%
                                                             </h4>
+                                                            <Last5LineChart data={last5Sessions} />
+
                                                             <button 
                                                                 onClick={() => setLast5Modal(false)} 
                                                                 className="mt-4 bg-red-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-red-600 focus:outline-none"
