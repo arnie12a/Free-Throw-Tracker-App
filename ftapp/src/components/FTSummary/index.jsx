@@ -141,11 +141,18 @@ export default function FTSummary() {
         return (totalMade / totalAttempted) * 100;
     };
 
-    const getLast5Sessions = (arr) => {
-        if(arr.length >= 5) {
-            return arr.slice(1).slice(-5);
+    const getLast5Sessions = (arr, tab) => {
+
+        let result = arr;
+
+        if (tab === 'practice' || tab === 'game') {
+            result = result.filter(element => element.sessionType === tab);
         }
-        return arr;
+
+        if(result.length >= 5) {
+            return result.slice(1).slice(-5);
+        }
+        return result;
     }
 
     const setUserShootingPercentage = async (user, percentage) => {
@@ -170,7 +177,6 @@ export default function FTSummary() {
             if(percentage && user){
                 setDifference((percentage - user[0].ftGoalPercentage).toFixed(2))
             }
-            console.log(tTest(sessions))
         };
 
         fetchDataLoad();
@@ -184,7 +190,6 @@ export default function FTSummary() {
             getBestWorstSessions(FTSessions, activeTab);
             const temp = getLast5Sessions(FTSessions, activeTab)
             setLast5Sessions(temp)
-            console.log(temp)
             const last5 = await getFTPercentage(getLast5Sessions(FTSessions), activeTab);
             setLast5SessionPercentage(Math.round(last5))
             setTotalSessions(FTSessions.length);

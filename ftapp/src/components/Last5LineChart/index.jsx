@@ -10,8 +10,8 @@ const Last5LineChart = ({ data }) => {
 
         // Set up the SVG and dimensions
         const margin = { top: 20, right: 30, bottom: 50, left: 50 },
-              width = 500 - margin.left - margin.right,
-              height = 300 - margin.top - margin.bottom;
+            width = 500 - margin.left - margin.right,
+            height = 300 - margin.top - margin.bottom;
 
         // Clear previous SVG content before re-rendering
         d3.select(svgRef.current).selectAll("*").remove();
@@ -84,7 +84,7 @@ const Last5LineChart = ({ data }) => {
             .on('mouseover', function(event, d) {
                 d3.select(this).attr('r', 8);
                 tooltip.transition().duration(200).style('opacity', 0.9);
-                tooltip.html(`ftMade: ${d.ftMade}<br/>ftAttempted: ${d.ftAttempted}<br/>percentage: ${d.percentage}%`)
+                tooltip.html(`FT Made: ${d.ftMade}<br/>FT Attempted: ${d.ftAttempted}<br/>Percentage: ${d.percentage}%`)
                     .style('left', (event.pageX + 10) + 'px')
                     .style('top', (event.pageY - 28) + 'px');
             })
