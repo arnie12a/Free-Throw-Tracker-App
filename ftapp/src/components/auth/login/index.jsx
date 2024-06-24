@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Navigate, Link } from 'react-router-dom'
+import { Navigate, Link, useNavigate } from 'react-router-dom'
 import { doSignInWithEmailAndPassword, doSignInWithGoogle } from '../../firebase/auth'
 import { useAuth } from '../../contexts/authContext'
 import ErrorModal from '../../ErrorModal'
@@ -12,9 +12,11 @@ export default function Login () {
     const [isSigningIn, setIsSigningIn] = useState(false)
     const [errorModal, setErrorModal] = useState(false); // State to control modal visibility
     const [errorMessage, setErrorMessage] = useState(""); // Example error message
+    const navigate = useNavigate();
 
     const handleCloseModal = () => {
         setErrorModal(false);
+        navigate('/')
     };
 
     const onSubmit = async (e) => {

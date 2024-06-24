@@ -22,6 +22,8 @@ export default function Register() {
 
     const handleCloseModal = () => {
         setErrorModal(false);
+        navigate('/')
+
     };
 
     const { userLoggedIn } = useAuth()
@@ -50,7 +52,7 @@ export default function Register() {
                     position: 'None',
                     ftPercentage: 0
                 });
-                navigate('/FTSummary');
+                navigate('/home');
 
             }   
         }
