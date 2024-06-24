@@ -9,7 +9,12 @@ const Header = () => {
     return (
         <nav className="flex justify-between items-center w-full z-20 fixed top-0 left-0 h-16 border-b bg-gray-200 px-4 shadow-md">
             <div className="flex items-center space-x-4">
-                <Link to="/" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Home</Link>
+                {userLoggedIn ? (
+                    <Link to="/home" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Home</Link>
+
+                ):(
+                    <Link to="/" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Home</Link>
+                )}
                 
             </div>
             <div className="flex items-center space-x-4">
