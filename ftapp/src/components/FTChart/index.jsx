@@ -89,15 +89,68 @@ const FTChart = ({ data }) => {
         return sortedDailyData;
     };
 
+    /*
+    const monthlyData = [
+        { month: '2023-01', percentage: 70 },
+        { month: '2023-02', percentage: 66 },
+        { month: '2023-03', percentage: 74 },
+        { month: '2023-04', percentage: 87 },
+        { month: '2023-05', percentage: 78 },
+        { month: '2023-06', percentage: 80 },
+        { month: '2023-07', percentage: 65 },
+        { month: '2023-08', percentage: 84 },
+        { month: '2023-09', percentage: 86 },
+        { month: '2023-10', percentage: 90 },
+        { month: '2023-11', percentage: 84 },
+        { month: '2023-12', percentage: 77 },
+    ];
+    
+
+    const dailyData = [
+        { day: '2023-05-01', percentage: 71 },
+        { day: '2023-05-02', percentage: 73 },
+        { day: '2023-05-03', percentage: 75 },
+        { day: '2023-05-04', percentage: 72 },
+        { day: '2023-05-05', percentage: 74 },
+        { day: '2023-05-06', percentage: 76 },
+        { day: '2023-05-07', percentage: 78 },
+        { day: '2023-05-08', percentage: 77 },
+        { day: '2023-05-09', percentage: 79 },
+        { day: '2023-05-10', percentage: 80 },
+        { day: '2023-05-11', percentage: 82 },
+        { day: '2023-05-12', percentage: 81 },
+        { day: '2023-05-13', percentage: 83 },
+        { day: '2023-05-14', percentage: 85 },
+        { day: '2023-05-15', percentage: 84 },
+        { day: '2023-05-16', percentage: 86 },
+        { day: '2023-05-17', percentage: 88 },
+        { day: '2023-05-18', percentage: 87 },
+        { day: '2023-05-19', percentage: 89 },
+        { day: '2023-05-20', percentage: 90 },
+        { day: '2023-05-21', percentage: 88 },
+        { day: '2023-05-22', percentage: 89 },
+        { day: '2023-05-23', percentage: 91 },
+        { day: '2023-05-24', percentage: 93 },
+        { day: '2023-05-25', percentage: 92 },
+        { day: '2023-05-26', percentage: 94 },
+        { day: '2023-05-27', percentage: 95 },
+        { day: '2023-05-28', percentage: 93 },
+        { day: '2023-05-29', percentage: 92 },
+        { day: '2023-05-30', percentage: 94 },
+        { day: '2023-05-31', percentage: 95 },
+    ];
+    */
+
     const currentYearData = getCurrentYearData(data);
     const monthlyData = groupByMonth(currentYearData);
     const lastMonthData = getLastMonthData(data);
     const dailyData = groupByDay(lastMonthData);
+    const yearlyData = calculateYearlyPercentage(data);
+
 
     const [view, setView] = useState('yearly');
     const chartRef = useRef(null);
 
-    const yearlyData = calculateYearlyPercentage(data);
 
     useEffect(() => {
         drawChart();
