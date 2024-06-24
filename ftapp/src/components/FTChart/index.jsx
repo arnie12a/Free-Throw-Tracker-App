@@ -31,14 +31,77 @@ const FTChart = ({data}) => {
         }));
     };
 
+    const getCurrentYearData = (data) => {
+        const currentYear = new Date().getFullYear();
+        return data.filter(({ date }) => new Date(date).getFullYear() === currentYear);
+    };
     
+    const groupByMonth = (data) => {
+        const monthlyData = data.reduce((acc, { date, ftMade, ftAttempted }) => {
+            const { year, month } = formatDate(date);
+            const key = `${year}-${month}`;
+            if (!acc[key]) {
+                acc[key] = { ftMade: 0, ftAttempted: 0 };
+            }
+            acc[key].ftMade += ftMade;
+            acc[key].ftAttempted += ftAttempted;
+            return acc;
+        }, {});
+    
+        const sortedMonthlyData = Object.keys(monthlyData).sort((a, b) => new Date(a) - new Date(b)).map((key) => ({
+            month: key,
+            percentage: Math.round((monthlyData[key].ftMade / monthlyData[key].ftAttempted) * 100),
+        }));
+    
+        return sortedMonthlyData;
+    };
+
+    const getLastMonthData = (data) => {
+        const now = new Date();
+        const lastMonth = now.getMonth() === 0 ? 11 : now.getMonth() - 1;
+        const lastMonthYear = now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear();
+        
+        return data.filter(({ date }) => {
+            const d = new Date(date);
+            return d.getFullYear() === lastMonthYear && d.getMonth() === lastMonth;
+        });
+    };
+    
+    const groupByDay = (data) => {
+        const dailyData = data.reduce((acc, { date, ftMade, ftAttempted }) => {
+            const { year, month, day } = formatDate(date);
+            const key = `${year}-${month}-${day}`;
+            if (!acc[key]) {
+                acc[key] = { ftMade: 0, ftAttempted: 0 };
+            }
+            acc[key].ftMade += ftMade;
+            acc[key].ftAttempted += ftAttempted;
+            return acc;
+        }, {});
+    
+        const sortedDailyData = Object.keys(dailyData)
+            .sort((a, b) => new Date(a) - new Date(b))
+            .map((key) => ({
+                day: key,
+                percentage: Math.round((dailyData[key].ftMade / dailyData[key].ftAttempted) * 100),
+            }));
+    
+        return sortedDailyData;
+    };
+
+    const currentYearData = getCurrentYearData(data);
+    const monthlyData = groupByMonth(currentYearData);
+    const lastMonthData = getLastMonthData(data);
+    const dailyData = groupByDay(lastMonthData);
+
+    console.log(monthlyData)
     
     
 
     const [view, setView] = useState('yearly');
     const chartRef = useRef(null);
     
-    
+    /*
     const monthlyData = [
         { month: '2023-01', percentage: 70 },
         { month: '2023-02', percentage: 66 },
@@ -88,6 +151,7 @@ const FTChart = ({data}) => {
         { day: '2023-05-30', percentage: 94 },
         { day: '2023-05-31', percentage: 95 },
     ];
+    */
 
     const yearlyData = calculateYearlyPercentage(data);
     
