@@ -33,7 +33,6 @@ const Home = () => {
             ftGoalPercentage: goal,
             position: position
         });
-        console.log(goal, position)
     };
     
 

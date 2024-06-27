@@ -1,0 +1,1032 @@
+[
+    {
+        "PLAYER": "Stephen Curry",
+        "FT%": 91.0,
+        "FTM": 3753,
+        "FTA": 4125,
+        "id": 
+    },
+    {
+        "PLAYER": "Damian Lillard",
+        "FT%": 89.7,
+        "FTM": 4900,
+        "FTA": 5460
+    },
+    {
+        "PLAYER": "Reggie Miller",
+        "FT%": 89.3,
+        "FTM": 770,
+        "FTA": 862
+    },
+    {
+        "PLAYER": "Dirk Nowitzki",
+        "FT%": 89.2,
+        "FTM": 1074,
+        "FTA": 1204
+    },
+    {
+        "PLAYER": "Larry Bird",
+        "FT%": 89.0,
+        "FTM": 901,
+        "FTA": 1012
+    },
+    {
+        "PLAYER": "Kyrie Irving",
+        "FT%": 88.6,
+        "FTM": 2787,
+        "FTA": 3146
+    },
+    {
+        "PLAYER": "Kevin Durant",
+        "FT%": 88.4,
+        "FTM": 6993,
+        "FTA": 7910
+    },
+    {
+        "PLAYER": "Chauncey Billups",
+        "FT%": 88.0,
+        "FTM": 785,
+        "FTA": 892
+    },
+    {
+        "PLAYER": "Desmond Bane",
+        "FT%": 87.9,
+        "FTM": 501,
+        "FTA": 570
+    },
+    {
+        "PLAYER": "Khris Middleton",
+        "FT%": 87.9,
+        "FTM": 2044,
+        "FTA": 2325
+    },
+    {
+        "PLAYER": "Jordan Poole",
+        "FT%": 87.8,
+        "FTM": 999,
+        "FTA": 1138
+    },
+    {
+        "PLAYER": "Danilo Gallinari",
+        "FT%": 87.6,
+        "FTM": 3077,
+        "FTA": 3511
+    },
+    {
+        "PLAYER": "Anfernee Simons",
+        "FT%": 87.3,
+        "FTM": 557,
+        "FTA": 638
+    },
+    {
+        "PLAYER": "Trae Young",
+        "FT%": 87.3,
+        "FTM": 2722,
+        "FTA": 3118
+    },
+    {
+        "PLAYER": "Malcolm Brogdon",
+        "FT%": 87.3,
+        "FTM": 1042,
+        "FTA": 1193
+    },
+    {
+        "PLAYER": "Isaiah Thomas",
+        "FT%": 87.2,
+        "FTM": 2339,
+        "FTA": 2682
+    },
+    {
+        "PLAYER": "Chris Paul",
+        "FT%": 87.0,
+        "FTM": 4772,
+        "FTA": 5487
+    },
+    {
+        "PLAYER": "James Harden",
+        "FT%": 87.0,
+        "FTM": 1088,
+        "FTA": 1250
+    },
+    {
+        "PLAYER": "Devin Booker",
+        "FT%": 87.0,
+        "FTM": 3098,
+        "FTA": 3559
+    },
+    {
+        "PLAYER": "CJ McCollum",
+        "FT%": 86.9,
+        "FTM": 1709,
+        "FTA": 1966
+    },
+    {
+        "PLAYER": "Kawhi Leonard",
+        "FT%": 86.2,
+        "FTM": 2744,
+        "FTA": 3185
+    },
+    {
+        "PLAYER": "Richard Hamilton",
+        "FT%": 86.0,
+        "FTM": 614,
+        "FTA": 714
+    },
+    {
+        "PLAYER": "Bojan Bogdanovic",
+        "FT%": 85.9,
+        "FTM": 1929,
+        "FTA": 2245
+    },
+    {
+        "PLAYER": "Klay Thompson",
+        "FT%": 85.8,
+        "FTM": 1462,
+        "FTA": 1704
+    },
+    {
+        "PLAYER": "Jeremy Lamb",
+        "FT%": 85.7,
+        "FTM": 950,
+        "FTA": 1109
+    },
+    {
+        "PLAYER": "Tyrese Haliburton",
+        "FT%": 85.6,
+        "FTM": 577,
+        "FTA": 674
+    },
+    {
+        "PLAYER": "Cam Thomas",
+        "FT%": 85.5,
+        "FTM": 524,
+        "FTA": 613
+    },
+    {
+        "PLAYER": "Oscar Robertson",
+        "FT%": 85.5,
+        "FTM": 560,
+        "FTA": 655
+    },
+    {
+        "PLAYER": "Austin Reaves",
+        "FT%": 85.5,
+        "FTM": 560,
+        "FTA": 655
+    },
+    {
+        "PLAYER": "Derrick White",
+        "FT%": 85.4,
+        "FTM": 894,
+        "FTA": 1047
+    },
+    {
+        "PLAYER": "Paul George",
+        "FT%": 85.4,
+        "FTM": 3469,
+        "FTA": 4063
+    },
+    {
+        "PLAYER": "Reggie Jackson",
+        "FT%": 85.4,
+        "FTM": 1541,
+        "FTA": 1804
+    },
+    {
+        "PLAYER": "Shai Gilgeous-Alexander",
+        "FT%": 85.2,
+        "FTM": 2193,
+        "FTA": 2574
+    },
+    {
+        "PLAYER": "Coby White",
+        "FT%": 84.8,
+        "FTM": 587,
+        "FTA": 692
+    },
+    {
+        "PLAYER": "Josh Richardson",
+        "FT%": 84.6,
+        "FTM": 850,
+        "FTA": 1005
+    },
+    {
+        "PLAYER": "Mikal Bridges",
+        "FT%": 84.6,
+        "FTM": 1013,
+        "FTA": 1198
+    },
+    {
+        "PLAYER": "Jimmy Butler",
+        "FT%": 84.4,
+        "FTM": 4590,
+        "FTA": 5441
+    },
+    {
+        "PLAYER": "Jayson Tatum",
+        "FT%": 84.4,
+        "FTM": 2302,
+        "FTA": 2727
+    },
+    {
+        "PLAYER": "Donovan Mitchell",
+        "FT%": 84.3,
+        "FTM": 1964,
+        "FTA": 2330
+    },
+    {
+        "PLAYER": "DeMar DeRozan",
+        "FT%": 84.1,
+        "FTM": 6171,
+        "FTA": 7337
+    },
+    {
+        "PLAYER": "Karl-Anthony Towns",
+        "FT%": 83.9,
+        "FTM": 2504,
+        "FTA": 2986
+    },
+    {
+        "PLAYER": "Magic Johnson",
+        "FT%": 83.8,
+        "FTM": 1068,
+        "FTA": 1274
+    },
+    {
+        "PLAYER": "John Havlicek",
+        "FT%": 83.6,
+        "FTM": 874,
+        "FTA": 1046
+    },
+    {
+        "PLAYER": "Dennis Schroder",
+        "FT%": 83.6,
+        "FTM": 1905,
+        "FTA": 2279
+    },
+    {
+        "PLAYER": "Tobias Harris",
+        "FT%": 83.5,
+        "FTM": 2200,
+        "FTA": 2636
+    },
+    {
+        "PLAYER": "LaMelo Ball",
+        "FT%": 83.4,
+        "FTM": 529,
+        "FTA": 634
+    },
+    {
+        "PLAYER": "Zach LaVine",
+        "FT%": 83.4,
+        "FTM": 2118,
+        "FTA": 2540
+    },
+    {
+        "PLAYER": "Kevin Johnson",
+        "FT%": 83.3,
+        "FTM": 594,
+        "FTA": 713
+    },
+    {
+        "PLAYER": "Jordan Clarkson",
+        "FT%": 83.2,
+        "FTM": 1531,
+        "FTA": 1841
+    },
+    {
+        "PLAYER": "Nicolas Batum",
+        "FT%": 83.2,
+        "FTM": 1503,
+        "FTA": 1807
+    },
+    {
+        "PLAYER": "Kristaps Porzingis",
+        "FT%": 83.1,
+        "FTM": 1822,
+        "FTA": 2192
+    },
+    {
+        "PLAYER": "Derrick Rose",
+        "FT%": 83.1,
+        "FTM": 2141,
+        "FTA": 2575
+    },
+    {
+        "PLAYER": "Paul Pierce",
+        "FT%": 83.0,
+        "FTM": 860,
+        "FTA": 1036
+    },
+    {
+        "PLAYER": "Kevin Love",
+        "FT%": 82.9,
+        "FTM": 3583,
+        "FTA": 4323
+    },
+    {
+        "PLAYER": "Michael Jordan",
+        "FT%": 82.8,
+        "FTM": 1463,
+        "FTA": 1766,
+        "id": 893
+    },
+    {
+        "PLAYER": "Nikola Jokic",
+        "FT%": 82.7,
+        "FTM": 2563,
+        "FTA": 3099
+    },
+    {
+        "PLAYER": "Bennedict Mathurin",
+        "FT%": 82.6,
+        "FTM": 560,
+        "FTA": 678
+    },
+    {
+        "PLAYER": "Joel Embiid",
+        "FT%": 82.6,
+        "FTM": 3608,
+        "FTA": 4369
+    },
+    {
+        "PLAYER": "Russell Westbrook",
+        "FT%": 82.5,
+        "FTM": 708,
+        "FTA": 858
+    },
+    {
+        "PLAYER": "Dolph Schayes",
+        "FT%": 82.5,
+        "FTM": 723,
+        "FTA": 876
+    },
+    {
+        "PLAYER": "Wesley Matthews",
+        "FT%": 82.3,
+        "FTM": 1721,
+        "FTA": 2090
+    },
+    {
+        "PLAYER": "Mike Conley",
+        "FT%": 82.3,
+        "FTM": 2891,
+        "FTA": 3512
+    },
+    {
+        "PLAYER": "Gordon Hayward",
+        "FT%": 82.2,
+        "FTM": 2726,
+        "FTA": 3317
+    },
+    {
+        "PLAYER": "Bradley Beal",
+        "FT%": 82.2,
+        "FTM": 2738,
+        "FTA": 3330
+    },
+    {
+        "PLAYER": "Moritz Wagner",
+        "FT%": 82.0,
+        "FTM": 615,
+        "FTA": 750
+    },
+    {
+        "PLAYER": "Gary Trent Jr.",
+        "FT%": 81.9,
+        "FTM": 543,
+        "FTA": 663
+    },
+    {
+        "PLAYER": "Kentavious Caldwell-Pope",
+        "FT%": 81.9,
+        "FTM": 1303,
+        "FTA": 1590
+    },
+    {
+        "PLAYER": "Manu Ginobili",
+        "FT%": 81.7,
+        "FTM": 818,
+        "FTA": 1001
+    },
+    {
+        "PLAYER": "Justin Holiday",
+        "FT%": 81.7,
+        "FTM": 544,
+        "FTA": 666
+    },
+    {
+        "PLAYER": "Kobe Bryant",
+        "FT%": 81.6,
+        "FTM": 1320,
+        "FTA": 1617,
+        "id": 977
+    },
+    {
+        "PLAYER": "Kyle Lowry",
+        "FT%": 81.5,
+        "FTM": 3624,
+        "FTA": 4445
+    },
+    {
+        "PLAYER": "Devonte' Graham",
+        "FT%": 81.2,
+        "FTM": 588,
+        "FTA": 724
+    },
+    {
+        "PLAYER": "Tim Hardaway Jr.",
+        "FT%": 81.2,
+        "FTM": 1463,
+        "FTA": 1802
+    },
+    {
+        "PLAYER": "Eric Gordon",
+        "FT%": 81.1,
+        "FTM": 2372,
+        "FTA": 2926
+    },
+    {
+        "PLAYER": "Robert Covington",
+        "FT%": 81.1,
+        "FTM": 904,
+        "FTA": 1114
+    },
+    {
+        "PLAYER": "Taurean Prince",
+        "FT%": 81.1,
+        "FTM": 634,
+        "FTA": 782
+    },
+    {
+        "PLAYER": "Sam Jones",
+        "FT%": 81.1,
+        "FTM": 611,
+        "FTA": 753
+    },
+    {
+        "PLAYER": "Harrison Barnes",
+        "FT%": 81.0,
+        "FTM": 2471,
+        "FTA": 3051
+    },
+    {
+        "PLAYER": "John Stockton",
+        "FT%": 81.0,
+        "FTM": 615,
+        "FTA": 759
+    },
+    {
+        "PLAYER": "Doug McDermott",
+        "FT%": 80.6,
+        "FTM": 515,
+        "FTA": 639
+    },
+    {
+        "PLAYER": "Alec Burks",
+        "FT%": 80.6,
+        "FTM": 1821,
+        "FTA": 2260
+    },
+    {
+        "PLAYER": "Delon Wright",
+        "FT%": 80.6,
+        "FTM": 605,
+        "FTA": 751
+    },
+    {
+        "PLAYER": "Danny Green",
+        "FT%": 80.5,
+        "FTM": 535,
+        "FTA": 665
+    },
+    {
+        "PLAYER": "Jerry West",
+        "FT%": 80.5,
+        "FTM": 1213,
+        "FTA": 1506
+    },
+    {
+        "PLAYER": "Jeff Green",
+        "FT%": 80.4,
+        "FTM": 2785,
+        "FTA": 3464
+    },
+    {
+        "PLAYER": "Dennis Johnson",
+        "FT%": 80.2,
+        "FTM": 756,
+        "FTA": 943
+    },
+    {
+        "PLAYER": "Bob Cousy",
+        "FT%": 80.1,
+        "FTM": 640,
+        "FTA": 799
+    },
+    {
+        "PLAYER": "Evan Fournier",
+        "FT%": 79.9,
+        "FTM": 1354,
+        "FTA": 1694
+    },
+    {
+        "PLAYER": "Rudy Gay",
+        "FT%": 79.9,
+        "FTM": 3116,
+        "FTA": 3898
+    },
+    {
+        "PLAYER": "Kelly Olynyk",
+        "FT%": 79.8,
+        "FTM": 1312,
+        "FTA": 1644
+    },
+    {
+        "PLAYER": "Otto Porter Jr.",
+        "FT%": 79.7,
+        "FTM": 559,
+        "FTA": 701
+    },
+    {
+        "PLAYER": "Spencer Dinwiddie",
+        "FT%": 79.6,
+        "FTM": 1666,
+        "FTA": 2094
+    },
+    {
+        "PLAYER": "Brook Lopez",
+        "FT%": 79.6,
+        "FTM": 2968,
+        "FTA": 3727
+    },
+    {
+        "PLAYER": "Anthony Davis",
+        "FT%": 79.5,
+        "FTM": 4117,
+        "FTA": 5177
+    },
+    {
+        "PLAYER": "Jalen Green",
+        "FT%": 79.4,
+        "FTM": 835,
+        "FTA": 1051
+    },
+    {
+        "PLAYER": "D'Angelo Russell",
+        "FT%": 79.2,
+        "FTM": 1355,
+        "FTA": 1710
+    },
+    {
+        "PLAYER": "Jonas Valanciunas",
+        "FT%": 78.9,
+        "FTM": 2104,
+        "FTA": 2668
+    },
+    {
+        "PLAYER": "Kevin McHale",
+        "FT%": 78.8,
+        "FTM": 766,
+        "FTA": 972
+    },
+    {
+        "PLAYER": "Clyde Drexler",
+        "FT%": 78.7,
+        "FTM": 670,
+        "FTA": 851
+    },
+    {
+        "PLAYER": "Dejounte Murray",
+        "FT%": 78.7,
+        "FTM": 885,
+        "FTA": 1125
+    },
+    {
+        "PLAYER": "George Mikan",
+        "FT%": 78.6,
+        "FTM": 554,
+        "FTA": 705
+    },
+    {
+        "PLAYER": "Brandon Ingram",
+        "FT%": 78.6,
+        "FTM": 1866,
+        "FTA": 2374
+    },
+    {
+        "PLAYER": "Cory Joseph",
+        "FT%": 78.6,
+        "FTM": 833,
+        "FTA": 1060
+    },
+    {
+        "PLAYER": "Jrue Holiday",
+        "FT%": 78.4,
+        "FTM": 1910,
+        "FTA": 2436
+    },
+    {
+        "PLAYER": "Dwyane Wade",
+        "FT%": 78.0,
+        "FTM": 951,
+        "FTA": 1220
+    },
+    {
+        "PLAYER": "Chris Boucher",
+        "FT%": 77.9,
+        "FTM": 605,
+        "FTA": 777
+    },
+    {
+        "PLAYER": "Julius Erving",
+        "FT%": 77.9,
+        "FTM": 707,
+        "FTA": 908
+    },
+    {
+        "PLAYER": "Bob Pettit",
+        "FT%": 77.4,
+        "FTM": 708,
+        "FTA": 915
+    },
+    {
+        "PLAYER": "Marcus Morris Sr.",
+        "FT%": 77.4,
+        "FTM": 1369,
+        "FTA": 1768
+    },
+    {
+        "PLAYER": "Elgin Baylor",
+        "FT%": 77.1,
+        "FTM": 847,
+        "FTA": 1098
+    },
+    {
+        "PLAYER": "Myles Turner",
+        "FT%": 77.1,
+        "FTM": 1419,
+        "FTA": 1840
+    },
+    {
+        "PLAYER": "Nikola Vucevic",
+        "FT%": 76.8,
+        "FTM": 1441,
+        "FTA": 1877
+    },
+    {
+        "PLAYER": "Pascal Siakam",
+        "FT%": 76.6,
+        "FTM": 1743,
+        "FTA": 2274
+    },
+    {
+        "PLAYER": "Bruce Brown",
+        "FT%": 76.4,
+        "FTM": 549,
+        "FTA": 719
+    },
+    {
+        "PLAYER": "Scottie Barnes",
+        "FT%": 76.4,
+        "FTM": 544,
+        "FTA": 712
+    },
+    {
+        "PLAYER": "Moses Malone",
+        "FT%": 76.2,
+        "FTM": 576,
+        "FTA": 756
+    },
+    {
+        "PLAYER": "Al Horford",
+        "FT%": 76.0,
+        "FTM": 1571,
+        "FTA": 2066
+    },
+    {
+        "PLAYER": "Bam Adebayo",
+        "FT%": 75.5,
+        "FTM": 1714,
+        "FTA": 2270
+    },
+    {
+        "PLAYER": "Josh Okogie",
+        "FT%": 74.8,
+        "FTM": 603,
+        "FTA": 806
+    },
+    {
+        "PLAYER": "Jaden Ivey",
+        "FT%": 74.8,
+        "FTM": 493,
+        "FTA": 659
+    },
+    {
+        "PLAYER": "Julius Randle",
+        "FT%": 74.8,
+        "FTM": 2605,
+        "FTA": 3481
+    },
+    {
+        "PLAYER": "Luka Doncic",
+        "FT%": 74.7,
+        "FTM": 2473,
+        "FTA": 3309
+    },
+    {
+        "PLAYER": "Jerami Grant",
+        "FT%": 74.6,
+        "FTM": 1922,
+        "FTA": 2575
+    },
+    {
+        "PLAYER": "OG Anunoby",
+        "FT%": 74.5,
+        "FTM": 523,
+        "FTA": 702
+    },
+    {
+        "PLAYER": "Robin Lopez",
+        "FT%": 74.3,
+        "FTM": 1301,
+        "FTA": 1751
+    },
+    {
+        "PLAYER": "Garrett Temple",
+        "FT%": 74.2,
+        "FTM": 581,
+        "FTA": 783
+    },
+    {
+        "PLAYER": "LeBron James",
+        "FT%": 74.1,
+        "FTM": 1836,
+        "FTA": 2479,
+        "id": 2544
+    },
+    {
+        "PLAYER": "Kareem Abdul-Jabbar",
+        "FT%": 74.0,
+        "FTM": 1050,
+        "FTA": 1419
+    },
+    {
+        "PLAYER": "Ivica Zubac",
+        "FT%": 73.9,
+        "FTM": 882,
+        "FTA": 1194
+    },
+    {
+        "PLAYER": "Caris LeVert",
+        "FT%": 73.9,
+        "FTM": 1001,
+        "FTA": 1354
+    },
+    {
+        "PLAYER": "Karl Malone",
+        "FT%": 73.6,
+        "FTM": 1269,
+        "FTA": 1725
+    },
+    {
+        "PLAYER": "De'Aaron Fox",
+        "FT%": 73.6,
+        "FTM": 1901,
+        "FTA": 2582
+    },
+    {
+        "PLAYER": "Kyle Kuzma",
+        "FT%": 73.3,
+        "FTM": 1031,
+        "FTA": 1406
+    },
+    {
+        "PLAYER": "Tony Parker",
+        "FT%": 73.1,
+        "FTM": 700,
+        "FTA": 958
+    },
+    {
+        "PLAYER": "Cody Zeller",
+        "FT%": 72.7,
+        "FTM": 1045,
+        "FTA": 1438
+    },
+    {
+        "PLAYER": "Domantas Sabonis",
+        "FT%": 72.6,
+        "FTM": 1737,
+        "FTA": 2391
+    },
+    {
+        "PLAYER": "Scottie Pippen",
+        "FT%": 72.4,
+        "FTM": 772,
+        "FTA": 1067
+    },
+    {
+        "PLAYER": "Robert Parish",
+        "FT%": 72.2,
+        "FTM": 556,
+        "FTA": 770
+    },
+    {
+        "PLAYER": "Andrew Wiggins",
+        "FT%": 72.2,
+        "FTM": 2300,
+        "FTA": 3185
+    },
+    {
+        "PLAYER": "Jaylen Brown",
+        "FT%": 72.0,
+        "FTM": 1450,
+        "FTA": 2014
+    },
+    {
+        "PLAYER": "Hakeem Olajuwon",
+        "FT%": 71.9,
+        "FTM": 743,
+        "FTA": 1034
+    },
+    {
+        "PLAYER": "Patrick Ewing",
+        "FT%": 71.8,
+        "FTM": 597,
+        "FTA": 831
+    },
+    {
+        "PLAYER": "Charles Barkley",
+        "FT%": 71.7,
+        "FTM": 751,
+        "FTA": 1048
+    },
+    {
+        "PLAYER": "Taj Gibson",
+        "FT%": 71.3,
+        "FTM": 1374,
+        "FTA": 1927
+    },
+    {
+        "PLAYER": "Cedi Osman",
+        "FT%": 71.1,
+        "FTM": 503,
+        "FTA": 707
+    },
+    {
+        "PLAYER": "David Robinson",
+        "FT%": 70.8,
+        "FTM": 684,
+        "FTA": 966
+    },
+    {
+        "PLAYER": "Alperen Sengun",
+        "FT%": 70.5,
+        "FTM": 615,
+        "FTA": 872
+    },
+    {
+        "PLAYER": "Giannis Antetokounmpo",
+        "FT%": 70.2,
+        "FTM": 4510,
+        "FTA": 6427
+    },
+    {
+        "PLAYER": "Larry Nance Jr.",
+        "FT%": 69.6,
+        "FTM": 500,
+        "FTA": 718
+    },
+    {
+        "PLAYER": "Zion Williamson",
+        "FT%": 69.5,
+        "FTM": 1007,
+        "FTA": 1449
+    },
+    {
+        "PLAYER": "Christian Wood",
+        "FT%": 69.4,
+        "FTM": 860,
+        "FTA": 1239
+    },
+    {
+        "PLAYER": "Marvin Bagley III",
+        "FT%": 69.2,
+        "FTM": 527,
+        "FTA": 762
+    },
+    {
+        "PLAYER": "Tim Duncan",
+        "FT%": 68.9,
+        "FTM": 1217,
+        "FTA": 1766
+    },
+    {
+        "PLAYER": "Aaron Gordon",
+        "FT%": 68.3,
+        "FTM": 1458,
+        "FTA": 2135
+    },
+    {
+        "PLAYER": "Alex Len",
+        "FT%": 68.1,
+        "FTM": 928,
+        "FTA": 1363
+    },
+    {
+        "PLAYER": "Evan Mobley",
+        "FT%": 68.1,
+        "FTM": 495,
+        "FTA": 727
+    },
+    {
+        "PLAYER": "Ish Smith",
+        "FT%": 67.6,
+        "FTM": 501,
+        "FTA": 741
+    },
+    {
+        "PLAYER": "Jusuf Nurkic",
+        "FT%": 66.7,
+        "FTM": 1299,
+        "FTA": 1948
+    },
+    {
+        "PLAYER": "Thaddeus Young",
+        "FT%": 66.1,
+        "FTM": 1417,
+        "FTA": 2143
+    },
+    {
+        "PLAYER": "Rudy Gobert",
+        "FT%": 63.9,
+        "FTM": 2468,
+        "FTA": 3864
+    },
+    {
+        "PLAYER": "JaVale McGee",
+        "FT%": 60.4,
+        "FTM": 982,
+        "FTA": 1627
+    },
+    {
+        "PLAYER": "Bill Russell",
+        "FT%": 60.3,
+        "FTM": 667,
+        "FTA": 1106
+    },
+    {
+        "PLAYER": "Ben Simmons",
+        "FT%": 58.9,
+        "FTM": 840,
+        "FTA": 1426
+    },
+    {
+        "PLAYER": "Mason Plumlee",
+        "FT%": 57.3,
+        "FTM": 1393,
+        "FTA": 2431
+    },
+    {
+        "PLAYER": "Dwight Howard",
+        "FT%": 54.8,
+        "FTM": 546,
+        "FTA": 997
+    },
+    {
+        "PLAYER": "Clint Capela",
+        "FT%": 54.5,
+        "FTM": 962,
+        "FTA": 1766
+    },
+    {
+        "PLAYER": "Jakob Poeltl",
+        "FT%": 53.8,
+        "FTM": 515,
+        "FTA": 958
+    },
+    {
+        "PLAYER": "Shaquille O'Neal",
+        "FT%": 50.4,
+        "FTM": 1168,
+        "FTA": 2317
+    },
+    {
+        "PLAYER": "Andre Drummond",
+        "FT%": 48.2,
+        "FTM": 1739,
+        "FTA": 3606
+    },
+    {
+        "PLAYER": "DeAndre Jordan",
+        "FT%": 47.5,
+        "FTM": 1742,
+        "FTA": 3664
+    },
+    {
+        "PLAYER": "Wilt Chamberlain",
+        "FT%": 46.5,
+        "FTM": 757,
+        "FTA": 1627
+    }
+]
