@@ -98,21 +98,33 @@ export default function Leaderboard() {
     return (
         <div className="container mx-auto p-6">
             <h1 className="text-3xl font-bold mb-8 text-gray-800">Leaderboard</h1>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out mr-4" onClick={handleFilter}>
+            <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out mr-4"
+                onClick={handleFilter}
+            >
                 See Your NBA Comparison
             </button>
+
             {isFiltered && (
-                <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out" onClick={handleReset}>
+                <button
+                    className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out mr-4"
+                    onClick={handleReset}
+                >
                     Reset
                 </button>
             )}
+
+            <div className="mb-6"></div>
+
             <input
                 type="text"
                 placeholder="Search users..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="mb-6 p-4 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="p-4 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+
+
             <p className="mb-4">Total players: {filterPlayers.length}</p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {currentPlayers.length > 0 ? (
