@@ -7,13 +7,16 @@ const Header = () => {
     const navigate = useNavigate()
     const { userLoggedIn } = useAuth()
     return (
-        <nav className="flex justify-between items-center w-full z-20 fixed top-0 left-0 h-16 border-b bg-gray-200 px-4 shadow-md">
+        <nav className="flex justify-between items-center w-full z-20 fixed top-0 left-0 h-16 border-b bg-gray-300 px-4 shadow-sm">
             <div className="flex items-center space-x-4">
                 {userLoggedIn ? (
                     <Link to="/home" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Home</Link>
 
                 ):(
-                    <Link to="/" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Home</Link>
+                    <Link to="/" className="text-lg font-semibold text-gray-700 hover:text-gray-900 transition duration-300 ease-in-out font-roboto">
+                        Free Throw Percentage Tracker
+                    </Link>
+
                 )}
                 
             </div>
@@ -42,13 +45,13 @@ const Header = () => {
                 ) : (
                     <>
                         <Link
-                            className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                            className="px-4 py-2 bg-orange-500 text-white font-semibold rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out"
                             to="/login"
                             >
                             Login
                         </Link>
                         <Link
-                            className="px-4 py-2 ml-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                            className="px-4 py-2 ml-2 bg-orange-500 text-white font-semibold rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out"
                             to="/register"
                             >
                             Register

@@ -63,21 +63,26 @@ const Home = () => {
 
     return (
         <div className="container mx-auto p-6">
-            <div className="text-3xl font-extrabold pt-14 text-center text-gray-800">
-                Welcome, {currentUser.displayName ? currentUser.displayName : currentUser.email}!
+            <div className="flex justify-center items-center min-h-screen bg-gray-100">
+                <div className="bg-white shadow-xl rounded-lg p-8 max-w-lg w-full border border-gray-200">
+                    { fullName && goal && position ? (
+                        <div className="text-center">
+                            <h1 className="text-3xl font-extrabold text-gray-800">Welcome, {fullName}</h1>
+                            <div className="mt-4">
+                                <h2 className="text-xl text-gray-600">Position: {position}</h2>
+                                <h3 className="text-xl text-gray-600 mt-2">FT Percentage: {ftPercentage}%</h3>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="text-center">
+                            <h1 className="text-2xl font-semibold text-gray-700">No Data yet</h1>
+                            <p className="text-gray-500 mt-2">Please update your profile to see the information here.</p>
+                        </div>
+                    )}
+                </div>
             </div>
-            { fullName && goal && position ? (
-                <div className="mt-8 text-center">
-                    <h1 className="text-2xl font-semibold text-gray-800">{fullName}</h1>
-                    <h2 className="text-xl text-gray-600 mt-2">Position: {position}</h2>
-                    <h3 className="text-xl text-gray-600 mt-2">FT Percentage Goal: {goal}%</h3>
-                    <h3 className="text-xl text-gray-600 mt-2">FT Percentage: {ftPercentage}%</h3>
-                </div>
-            ) : (
-                <div className="mt-8 text-center">
-                    <h1 className="text-xl text-gray-600">No Data yet</h1>
-                </div>
-            )}
+
+
     
     {formVisible && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
