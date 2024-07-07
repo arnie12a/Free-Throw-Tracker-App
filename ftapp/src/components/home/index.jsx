@@ -63,13 +63,13 @@ const Home = () => {
 
     return (
         <div className="min-h-screen flex justify-center items-center bg-gray-100">
-            <div className="bg-white shadow-xl rounded-lg p-8 max-w-lg w-full border border-gray-200">
+            <div className="bg-zinc-800 shadow-xl rounded-lg p-8 max-w-lg w-full border border-gray-200">
                 { fullName && goal && position ? (
                     <div className="text-center">
-                        <h1 className="text-3xl font-extrabold text-gray-800">Welcome, {fullName}</h1>
+                        <h1 className="text-3xl font-extrabold text-gray-50">Welcome, {fullName}</h1>
                         <div className="mt-4">
-                            <h2 className="text-xl text-gray-600">Position: {position}</h2>
-                            <h3 className="text-xl text-gray-600 mt-2">FT Percentage: {ftPercentage}%</h3>
+                            <h2 className="text-xl text-gray-200">Position: {position}</h2>
+                            <h3 className="text-xl text-gray-200 mt-2">FT Percentage: {ftPercentage}%</h3>
                         </div>
                     </div>
                 ) : (

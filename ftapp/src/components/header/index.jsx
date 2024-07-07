@@ -35,7 +35,7 @@ const Header = () => {
                                     navigate('/login');
                                 });
                             }}
-                            className="px-4 py-2 bg-orange-500 text-white font-semibold rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                            className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50 transition duration-150 ease-in-out"
                         >
                             Logout
                         </button>
@@ -45,13 +45,13 @@ const Header = () => {
                 ) : (
                     <>
                         <Link
-                            className="px-4 py-2 bg-orange-500 text-white font-semibold rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2  focus:ring-opacity-50 transition duration-150 ease-in-out"
+                            className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md  focus:outline-none focus:ring-2  focus:ring-opacity-50 transition duration-150 ease-in-out"
                             to="/login"
                             >
                             Login
                         </Link>
                         <Link
-                            className="px-4 py-2 ml-2 bg-orange-500 text-white font-semibold rounded-md hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                            className="px-4 py-2 ml-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md  focus:outline-none focus:ring-2 focus:ring-opacity-50 transition duration-150 ease-in-out"
                             to="/register"
                             >
                             Register

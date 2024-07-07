@@ -211,29 +211,39 @@ export default function FTSummary() {
     return (
         <div className="bg-gray-100 flex items-center justify-center p-4">
             <div className="w-full max-w-5xl mx-auto bg-white shadow-2xl rounded-lg overflow-hidden">
-                <div className="text-center border-b border-gray-200">
-                    <div className="flex space-x-1 justify-center">
-                        <button
-                            className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'all' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition ease-in-out duration-150`}
-                            onClick={() => handleTabClick('all')}
-                        >
-                            All Sessions
-                        </button>
-                        <button
-                            className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'practice' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition ease-in-out duration-150`}
-                            onClick={() => handleTabClick('practice')}
-                        >
-                            Practice
-                        </button>
-                        <button
-                            className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'game' ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition ease-in-out duration-150`}
-                            onClick={() => handleTabClick('game')}
-                        >
-                            Game
-                        </button>
-                    </div>
+            <div className="text-center border-b border-gray-200">
+                <div className="flex space-x-1 justify-center">
+                    <button
+                        className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'all' ? 'bg-blue-600 text-white shadow-lg' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition-all duration-150 ease-in-out transform ${activeTab === 'all' ? 'scale-105' : 'scale-100'}`}
+                        onClick={() => handleTabClick('all')}
+                    >
+                        All Sessions
+                    </button>
+                    <button
+                        className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'practice' ? 'bg-blue-600 text-white shadow-lg' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition-all duration-150 ease-in-out transform ${activeTab === 'practice' ? 'scale-105' : 'scale-100'}`}
+                        onClick={() => handleTabClick('practice')}
+                    >
+                        Practice
+                    </button>
+                    <button
+                        className={`py-3 px-6 w-1/3 focus:outline-none ${activeTab === 'game' ? 'bg-blue-600 text-white shadow-lg' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition-all duration-150 ease-in-out transform ${activeTab === 'game' ? 'scale-105' : 'scale-100'}`}
+                        onClick={() => handleTabClick('game')}
+                    >
+                        Game
+                    </button>
                 </div>
+            </div>
 
+
+                {activeTab === '12' ? (
+                    <div className="flex justify-center items-center h-full bg-gray-50 overflow-y-auto p-10">
+                        <div className="space-y-6 bg-white p-6 rounded-lg shadow-md w-full max-w-3xl">
+                            <div className="text-center">
+                                <h2 className="text-lg font-medium text-gray-800">Please click on a tab to proceed!</h2>
+                            </div>
+                        </div>
+                    </div>
+                    ) : (
                 <div className="flex justify-center items-center h-full bg-gray-50 overflow-y-auto p-10">
                     <div className="space-y-6 bg-white p-6 rounded-lg shadow-md w-full max-w-3xl">
                         {FTSessions.length > 0 && freeThrowPercentage && (
@@ -318,26 +328,36 @@ export default function FTSummary() {
                                                 </div>
                                             )}
                                             
-                                            <p className="text-lg text-gray-800">
-                                                <span className="font-semibold">Total Made:</span> {totalFTMade} <span className="mx-3"></span> <span className="font-semibold">Total Attempted:</span> {totalFTAttempted}
-                                            </p>
-                                            <div className="text-lg text-gray-800">
-                                                <h4 className="font-semibold">
-                                                    Worst Session: <span className="text-red-600">{worstPercentage}%</span>
-                                                </h4>
-                                                <p>
-                                                    <span className="font-semibold">Made:</span> {worstMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {worstAttempted}
-                                                </p>
+                                            <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-1">
+                                                <div className="bg-blue-50 p-6 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
+                                                    <p className="text-lg text-gray-800">
+                                                        <span className="font-semibold">Total Made:</span> {totalFTMade}
+                                                        <span className="mx-3"></span>
+                                                        <span className="font-semibold">Total Attempted:</span> {totalFTAttempted}
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div className="text-lg text-gray-800">
-                                                <h4 className="font-semibold">
-                                                    Best Session: <span className="text-green-600">{bestPercentage}%</span>
-                                                </h4>
-                                                <p>
-                                                    <span className="font-semibold">Made:</span> {bestMade} <span className="mx-3"></span> <span className="font-semibold">Attempts:</span> {bestAttempted}
-                                                </p>
-                                                
+
+                                            <div className="grid gap-6 sm:grid-cols-2">
+                                                <div className="bg-green-50 p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-105">
+                                                    <h3 className="text-lg font-semibold text-gray-800 mb-2">Best Session</h3>
+                                                    <div className="text-gray-700">
+                                                        <p><span className="font-medium">FT Made:</span> {bestMade}</p>
+                                                        <p><span className="font-medium">FT Attempted:</span> {bestAttempted}</p>
+                                                        <p><span className="font-medium">Percentage:</span> {bestPercentage}%</p>
+                                                    </div>
+                                                </div>
+                                                <div className="bg-red-50 p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-105">
+                                                    <h3 className="text-lg font-semibold text-gray-800 mb-2">Worst Session</h3>
+                                                    <div className="text-gray-700">
+                                                        <p><span className="font-medium">FT Made:</span> {worstMade}</p>
+                                                        <p><span className="font-medium">FT Attempted:</span> {worstAttempted}</p>
+                                                        <p><span className="font-medium">Percentage:</span> {worstPercentage}%</p>
+                                                    </div>
+                                                </div>
                                             </div>
+
+
                                         </>
                                     )}
                     
@@ -348,6 +368,9 @@ export default function FTSummary() {
                         )}
                     </div>
                 </div>
+                    )}
+
+                
             </div>
         </div>
     );
