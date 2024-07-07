@@ -261,12 +261,15 @@ const FTChart = ({ data }) => {
 
     return (
         <div className="p-4">
-            <div ref={chartRef}></div>
 
-            <div className="flex justify-center mb-4">
-                <button onClick={() => setView('yearly')} className="mx-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition">Yearly</button>
-                <button onClick={() => setView('monthly')} className="mx-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition">Monthly</button>
-                <button onClick={() => setView('daily')} className="mx-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition">Daily</button>
+            <div className="flex justify-center">
+                <div ref={chartRef}></div>
+            </div>
+
+            <div className="flex justify-center mb-4 space-x-2">
+                <button onClick={() => setView('yearly')} className={`px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition ${view === 'yearly' ? 'bg-blue-700' : ''}`}>Yearly</button>
+                <button onClick={() => setView('monthly')} className={`px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition ${view === 'monthly' ? 'bg-green-700' : ''}`}>Monthly</button>
+                <button onClick={() => setView('daily')} className={`px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition ${view === 'daily' ? 'bg-red-700' : ''}`}>Daily</button>
             </div>
         </div>
     );
