@@ -30,6 +30,7 @@ export default function FTSummary() {
     const [isSignificant, setIsSignificant] = useState(false);
     const [degreesOfFreedom, setDegreesOfFreedom] = useState(0);
     const [criticalValue, setCriticalValue] = useState(0);
+    const [hideMetrics, setHideMetrics] = useState(false);
 
     const ss = require('simple-statistics');
 
@@ -202,6 +203,7 @@ export default function FTSummary() {
             const last5 = await getFTPercentage(getLast5Sessions(FTSessions), activeTab);
             setLast5SessionPercentage(Math.round(last5))
             setTotalSessions(FTSessions.length);
+            
         };
 
 
@@ -327,7 +329,7 @@ export default function FTSummary() {
                                                     </div>
                                                 </div>
                                             )}
-                                            
+                                            <div id="metrics">
                                             <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-1">
                                                 <div className="bg-blue-50 p-6 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
                                                     <p className="text-lg text-gray-800">
@@ -355,6 +357,7 @@ export default function FTSummary() {
                                                         <p><span className="font-medium">Percentage:</span> {worstPercentage}%</p>
                                                     </div>
                                                 </div>
+                                            </div>
                                             </div>
 
 
