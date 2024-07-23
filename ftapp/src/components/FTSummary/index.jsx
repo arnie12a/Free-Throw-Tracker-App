@@ -329,7 +329,10 @@ export default function FTSummary() {
                                                     </div>
                                                 </div>
                                             )}
-                                            <div id="metrics">
+                                            {Last5Modal ? (
+                                                <div></div>
+                                            ) : (
+                                                <div id="metrics">
                                                 <div className="grid gap-12 md:grid-cols-1 lg:grid-cols-1">
                                                     <div className="bg-blue-50 p-6 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
                                                         <p className="text-lg text-gray-800">
@@ -359,6 +362,8 @@ export default function FTSummary() {
                                                     </div>
                                                 </div>
                                             </div>
+                                            )}
+                                            
 
 
 

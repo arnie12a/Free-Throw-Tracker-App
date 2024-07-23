@@ -55,13 +55,7 @@
         "FTA": 892,
         "id": 1497
     },
-    {
-        "PLAYER": "Desmond Bane",
-        "FT%": 87.9,
-        "FTM": 501,
-        "FTA": 570,
-        "id": 1630217
-    },
+    
     {
         "PLAYER": "Khris Middleton",
         "FT%": 87.9,
@@ -83,13 +77,7 @@
         "FTA": 3511,
         "id": 201568
     },
-    {
-        "PLAYER": "Anfernee Simons",
-        "FT%": 87.3,
-        "FTM": 557,
-        "FTA": 638,
-        "id": 1629014
-    },
+    
     {
         "PLAYER": "Trae Young",
         "FT%": 87.3,
@@ -223,13 +211,7 @@
         "FTA": 692,
         "id": 1629632
     },
-    {
-        "PLAYER": "Josh Richardson",
-        "FT%": 84.6,
-        "FTM": 850,
-        "FTA": 1005,
-        "id": 1626196
-    },
+   
     {
         "PLAYER": "Mikal Bridges",
         "FT%": 84.6,
@@ -279,13 +261,7 @@
         "FTA": 1274,
         "id": 77142
     },
-    {
-        "PLAYER": "John Havlicek",
-        "FT%": 83.6,
-        "FTM": 874,
-        "FTA": 1046,
-        "id": 76970
-    },
+  
     {
         "PLAYER": "Dennis Schroder",
         "FT%": 83.6,
@@ -293,13 +269,7 @@
         "FTA": 2279,
         "id": 203471
     },
-    {
-        "PLAYER": "Tobias Harris",
-        "FT%": 83.5,
-        "FTM": 2200,
-        "FTA": 2636,
-        "id": 202699
-    },
+ 
     {
         "PLAYER": "LaMelo Ball",
         "FT%": 83.4,
@@ -314,13 +284,7 @@
         "FTA": 2540,
         "id": 203897
     },
-    {
-        "PLAYER": "Kevin Johnson",
-        "FT%": 83.3,
-        "FTM": 594,
-        "FTA": 713,
-        "id": 134
-    },
+   
     {
         "PLAYER": "Jordan Clarkson",
         "FT%": 83.2,
@@ -328,13 +292,7 @@
         "FTA": 1841,
         "id": 203903
     },
-    {
-        "PLAYER": "Nicolas Batum",
-        "FT%": 83.2,
-        "FTM": 1503,
-        "FTA": 1807,
-        "id": 201587
-    },
+ 
     {
         "PLAYER": "Kristaps Porzingis",
         "FT%": 83.1,
@@ -377,13 +335,7 @@
         "FTA": 3099,
         "id": 203999
     },
-    {
-        "PLAYER": "Bennedict Mathurin",
-        "FT%": 82.6,
-        "FTM": 560,
-        "FTA": 678,
-        "id": 1631097
-    },
+    
     {
         "PLAYER": "Joel Embiid",
         "FT%": 82.6,
@@ -398,20 +350,7 @@
         "FTA": 858,
         "id": 201566
     },
-    {
-        "PLAYER": "Dolph Schayes",
-        "FT%": 82.5,
-        "FTM": 723,
-        "FTA": 876,
-        "id": 78076
-    },
-    {
-        "PLAYER": "Wesley Matthews",
-        "FT%": 82.3,
-        "FTM": 1721,
-        "FTA": 2090,
-        "id": 202083
-    },
+
     {
         "PLAYER": "Mike Conley",
         "FT%": 82.3,
@@ -433,13 +372,7 @@
         "FTA": 3330,
         "id": 203078
     },
-    {
-        "PLAYER": "Moritz Wagner",
-        "FT%": 82.0,
-        "FTM": 615,
-        "FTA": 750,
-        "id": 1629021
-    },
+   
     
     {
         "PLAYER": "Kentavious Caldwell-Pope",
@@ -484,14 +417,7 @@
         "id": 201569
     },
     
-    
-    {
-        "PLAYER": "Sam Jones",
-        "FT%": 81.1,
-        "FTM": 611,
-        "FTA": 753,
-        "id": 77196
-    },
+
     {
         "PLAYER": "Harrison Barnes",
         "FT%": 81.0,
@@ -506,27 +432,8 @@
         "FTA": 759,
         "id": 304
     },
-    {
-        "PLAYER": "Doug McDermott",
-        "FT%": 80.6,
-        "FTM": 515,
-        "FTA": 639,
-        "id": 203926
-    },
-    {
-        "PLAYER": "Alec Burks",
-        "FT%": 80.6,
-        "FTM": 1821,
-        "FTA": 2260,
-        "id": 202692
-    },
-    {
-        "PLAYER": "Delon Wright",
-        "FT%": 80.6,
-        "FTM": 605,
-        "FTA": 751,
-        "id": 1626153
-    },
+    
+   
     {
         "PLAYER": "Danny Green",
         "FT%": 80.5,
@@ -647,13 +554,6 @@
         "id": 1627742
     },
     {
-        "PLAYER": "Cory Joseph",
-        "FT%": 78.6,
-        "FTM": 833,
-        "FTA": 1060,
-        "id": 202709
-    },
-    {
         "PLAYER": "Jrue Holiday",
         "FT%": 78.4,
         "FTM": 1910,
@@ -688,13 +588,7 @@
         "FTA": 1840,
         "id": 1626167
     },
-    {
-        "PLAYER": "Nikola Vucevic",
-        "FT%": 76.8,
-        "FTM": 1441,
-        "FTA": 1877,
-        "id": 202696
-    },
+    
     {
         "PLAYER": "Pascal Siakam",
         "FT%": 76.6,
@@ -752,13 +646,7 @@
         "FTA": 3309,
         "id": 1629029
     },
-    {
-        "PLAYER": "Jerami Grant",
-        "FT%": 74.6,
-        "FTM": 1922,
-        "FTA": 2575,
-        "id": 203924
-    },
+    
     {
         "PLAYER": "OG Anunoby",
         "FT%": 74.5,
@@ -766,13 +654,7 @@
         "FTA": 702,
         "id": 1628384
     },
-    {
-        "PLAYER": "Robin Lopez",
-        "FT%": 74.3,
-        "FTM": 1301,
-        "FTA": 1751,
-        "id": 201577
-    },
+    
     {
         "PLAYER": "LeBron James",
         "FT%": 74.1,
@@ -857,13 +739,7 @@
         "FTA": 1048,
         "id": 787
     },
-    {
-        "PLAYER": "Taj Gibson",
-        "FT%": 71.3,
-        "FTM": 1374,
-        "FTA": 1927,
-        "id": 201959
-    },
+
     {
         "PLAYER": "David Robinson",
         "FT%": 70.8,
@@ -878,13 +754,7 @@
         "FTA": 6427,
         "id": 203507
     },
-    {
-        "PLAYER": "Larry Nance Jr.",
-        "FT%": 69.6,
-        "FTM": 500,
-        "FTA": 718,
-        "id": 1626204
-    },
+
     {
         "PLAYER": "Zion Williamson",
         "FT%": 69.5,

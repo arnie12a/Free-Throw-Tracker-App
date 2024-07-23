@@ -12,6 +12,8 @@ export default function Leaderboard() {
     const [currentPage, setCurrentPage] = useState(1);
     const [playersPerPage] = useState(6);
     const [isFiltered, setIsFiltered] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [targetPage, setTargetPage] = useState('');
 
     const handleFilter = () => {
         const range = 1;
@@ -64,39 +66,56 @@ export default function Leaderboard() {
     const totalPlayers = filterPlayers.length;
     const totalPages = Math.ceil(totalPlayers / playersPerPage);
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const paginate = (pageNumber) => {
+        if (pageNumber >= 1 && pageNumber <= totalPages) {
+            setCurrentPage(pageNumber);
+            setShowModal(false);
+        }
+    };
 
     // Determine the range of pages to display
     const getPageNumbers = () => {
         const pageNumbers = [];
-        let startPage, endPage;
         if (totalPages <= 5) {
-            // Less than 5 total pages so show all
-            startPage = 1;
-            endPage = totalPages;
-        } else {
-            // More than 5 total pages so calculate start and end pages
-            if (currentPage <= 3) {
-                startPage = 1;
-                endPage = 5;
-            } else if (currentPage + 2 >= totalPages) {
-                startPage = totalPages - 4;
-                endPage = totalPages;
-            } else {
-                startPage = currentPage - 2;
-                endPage = currentPage + 2;
+            for (let i = 1; i <= totalPages; i++) {
+                pageNumbers.push(i);
             }
-        }
-        for (let i = startPage; i <= endPage; i++) {
-            pageNumbers.push(i);
+        } else {
+            if (currentPage === 1) {
+                pageNumbers.push(1, 2, 3, '...', totalPages);
+            } else if (currentPage === totalPages) {
+                pageNumbers.push(1, '...', totalPages - 2, totalPages - 1, totalPages);
+            } else if (currentPage === 2) {
+                pageNumbers.push(1, 2, 3, '...', totalPages);
+            } else if (currentPage === totalPages - 1) {
+                pageNumbers.push(1, '...', totalPages - 2, totalPages - 1, totalPages);
+            } else {
+                pageNumbers.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
+            }
         }
         return pageNumbers;
     };
 
     const pageNumbers = getPageNumbers();
 
+    const handleEllipsisClick = () => {
+        setShowModal(true);
+    };
+
+    const handleTargetPageChange = (e) => {
+        setTargetPage(e.target.value);
+    };
+
+    const handleModalSubmit = (e) => {
+        e.preventDefault();
+        const pageNumber = parseInt(targetPage, 10);
+        if (pageNumber >= 1 && pageNumber <= totalPages) {
+            paginate(pageNumber);
+        }
+    };
+
     return (
-        <div className="container mx-auto p-6">
+        <div className="container mx-auto p-6 bg-gray-100">
             <h1 className="text-3xl font-bold mb-8 text-gray-800">Leaderboard</h1>
             <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out mr-4"
@@ -124,14 +143,13 @@ export default function Leaderboard() {
                 className="p-4 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
 
-
             <p className="mb-4">Total players: {filterPlayers.length}</p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {currentPlayers.length > 0 ? (
                     currentPlayers.map(player => (
                         <div key={player.PLAYER} className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
                             <img src={getImageUrl(player.id)} alt={player.PLAYER} className="w-full h-48 object-cover rounded-t-lg" />
-                            <div className="bg-gradient-to-r from-orange-500 to-gray-500 p-4">
+                            <div className="bg-gradient-to-r from-orange-400 to-gray-400 p-4">
                                 <h2 className="text-xl font-semibold text-white">{player.PLAYER}</h2>
                                 <p className="text-white">Free Throw Percentage: {player['FT%']}%</p>
                             </div>
@@ -153,14 +171,23 @@ export default function Leaderboard() {
                                 Previous
                             </button>
                         </li>
-                        {pageNumbers.map(number => (
-                            <li key={number} className="mx-2">
-                                <button
-                                    onClick={() => paginate(number)}
-                                    className={`px-3 py-1 rounded ${currentPage === number ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'}`}
-                                >
-                                    {number}
-                                </button>
+                        {pageNumbers.map((number, index) => (
+                            <li key={index} className="mx-2">
+                                {number === '...' ? (
+                                    <button
+                                        onClick={handleEllipsisClick}
+                                        className="px-3 py-1 bg-gray-200 text-gray-800 rounded"
+                                    >
+                                        ...
+                                    </button>
+                                ) : (
+                                    <button
+                                        onClick={() => paginate(number)}
+                                        className={`px-3 py-1 rounded ${currentPage === number ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'}`}
+                                    >
+                                        {number}
+                                    </button>
+                                )}
                             </li>
                         ))}
                         <li className="mx-2">
@@ -175,6 +202,39 @@ export default function Leaderboard() {
                     </ul>
                 </nav>
             </div>
+
+            {showModal && (
+                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white p-4 rounded-lg shadow-lg">
+                        <form onSubmit={handleModalSubmit}>
+                            <label className="block mb-2 text-gray-800">Enter page number:</label>
+                            <input
+                                type="number"
+                                value={targetPage}
+                                onChange={handleTargetPageChange}
+                                className="p-2 border border-gray-300 rounded-lg w-full mb-4"
+                                min="1"
+                                max={totalPages}
+                            />
+                            <div className="flex justify-end">
+                                <button
+                                    type="button"
+                                    className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2"
+                                    onClick={() => setShowModal(false)}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                >
+                                    Go
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
