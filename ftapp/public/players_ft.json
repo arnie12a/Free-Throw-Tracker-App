@@ -626,13 +626,6 @@
         "id": 202685
     },
     {
-        "PLAYER": "Kevin McHale",
-        "FT%": 78.8,
-        "FTM": 766,
-        "FTA": 972,
-        "id": 1450
-    },
-    {
         "PLAYER": "Clyde Drexler",
         "FT%": 78.7,
         "FTM": 670,
@@ -645,13 +638,6 @@
         "FTM": 885,
         "FTA": 1125,
         "id": 1627749
-    },
-    {
-        "PLAYER": "George Mikan",
-        "FT%": 78.6,
-        "FTM": 554,
-        "FTA": 705,
-        "id": 600012
     },
     {
         "PLAYER": "Brandon Ingram",
@@ -687,20 +673,6 @@
         "FTM": 707,
         "FTA": 908,
         "id": 76681
-    },
-    {
-        "PLAYER": "Bob Pettit",
-        "FT%": 77.4,
-        "FTM": 708,
-        "FTA": 915,
-        "id": 77847
-    },
-    {
-        "PLAYER": "Marcus Morris Sr.",
-        "FT%": 77.4,
-        "FTM": 1369,
-        "FTA": 1768,
-        "id": 202694
     },
     {
         "PLAYER": "Elgin Baylor",
@@ -816,20 +788,6 @@
         "id": 76003
     },
     {
-        "PLAYER": "Ivica Zubac",
-        "FT%": 73.9,
-        "FTM": 882,
-        "FTA": 1194,
-        "id": 1627826
-    },
-    {
-        "PLAYER": "Caris LeVert",
-        "FT%": 73.9,
-        "FTM": 1001,
-        "FTA": 1354,
-        "id": 1627747
-    },
-    {
         "PLAYER": "Karl Malone",
         "FT%": 73.6,
         "FTM": 1269,
@@ -842,13 +800,6 @@
         "FTM": 1901,
         "FTA": 2582,
         "id": 1628368
-    },
-    {
-        "PLAYER": "Kyle Kuzma",
-        "FT%": 73.3,
-        "FTM": 1031,
-        "FTA": 1406,
-        "id": 1628398
     },
     {
         "PLAYER": "Tony Parker",
@@ -870,13 +821,6 @@
         "FTM": 772,
         "FTA": 1067,
         "id": 937
-    },
-    {
-        "PLAYER": "Robert Parish",
-        "FT%": 72.2,
-        "FTM": 556,
-        "FTA": 770,
-        "id": 305
     },
     {
         "PLAYER": "Andrew Wiggins",
@@ -949,13 +893,6 @@
         "id": 1629627
     },
     {
-        "PLAYER": "Marvin Bagley III",
-        "FT%": 69.2,
-        "FTM": 527,
-        "FTA": 762,
-        "id": 1628963
-    },
-    {
         "PLAYER": "Tim Duncan",
         "FT%": 68.9,
         "FTM": 1217,
@@ -968,20 +905,6 @@
         "FTM": 1458,
         "FTA": 2135,
         "id": 203932
-    },
-    {
-        "PLAYER": "Jusuf Nurkic",
-        "FT%": 66.7,
-        "FTM": 1299,
-        "FTA": 1948,
-        "id": 203994
-    },
-    {
-        "PLAYER": "Thaddeus Young",
-        "FT%": 66.1,
-        "FTM": 1417,
-        "FTA": 2143,
-        "id": 201152
     },
     {
         "PLAYER": "Rudy Gobert",
@@ -1003,20 +926,6 @@
         "FTM": 667,
         "FTA": 1106,
         "id": 78049
-    },
-    {
-        "PLAYER": "Ben Simmons",
-        "FT%": 58.9,
-        "FTM": 840,
-        "FTA": 1426,
-        "id": 1627732
-    },
-    {
-        "PLAYER": "Mason Plumlee",
-        "FT%": 57.3,
-        "FTM": 1393,
-        "FTA": 2431,
-        "id": 203486
     },
     {
         "PLAYER": "Dwight Howard",
