@@ -251,23 +251,25 @@ export default function FTSummary() {
                                                 See Last 5 Session Statistics
                                             </button>
                                             {Last5Modal && (
-                                                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
-                                                    <div className="relative top-20 mx-auto p-5 border w-1/2 shadow-lg rounded-md bg-white">
-                                                        <div className="mt-3 text-center">
-                                                            <h4 className={`mt-2 text-lg font-medium ${last5SessionsPercentage >= freeThrowPercentage ? 'text-green-500' : 'text-red-500'}`}>
-                                                                Past 5 Sessions Average Percentage: {last5SessionsPercentage}%
-                                                            </h4>
-                                                            <Last5LineChart data={last5Sessions} />
-
-                                                            <button 
-                                                                onClick={() => setLast5Modal(false)} 
-                                                                className="mt-4 bg-red-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-red-600 focus:outline-none"
-                                                            >
-                                                                Close
-                                                            </button>
+                                                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+                                                <div className="relative w-full max-w-4xl p-5 border shadow-lg rounded-md bg-white mx-4 sm:w-2/3 md:w-3/4 lg:w-2/3">
+                                                    <div className="mt-3 text-center">
+                                                        <h4 className={`mt-2 text-lg font-medium ${last5SessionsPercentage >= freeThrowPercentage ? 'text-green-500' : 'text-red-500'}`}>
+                                                            Past 5 Sessions Average Percentage: {last5SessionsPercentage}%
+                                                        </h4>
+                                                        <div className="flex justify-center my-4">  {/* Adjusted margin for spacing */}
+                                                            <Last5LineChart data={last5Sessions} className="w-full" />  {/* Ensure full width usage */}
                                                         </div>
+                                                        <button 
+                                                            onClick={() => setLast5Modal(false)} 
+                                                            className="mt-4 bg-red-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-red-600 focus:outline-none"
+                                                        >
+                                                            Close
+                                                        </button>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            
                                             )}
                                             {Last5Modal ? (
                                                 <div></div>
