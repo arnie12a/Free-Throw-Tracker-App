@@ -62,8 +62,8 @@ const Home = () => {
     }
 
     return (
-        <div className="min-h-screen flex justify-center items-center bg-gray-100">
-            <div className="bg-zinc-800 shadow-xl rounded-lg p-8 max-w-lg w-full border border-gray-200">
+        <div className="min-h-screen flex justify-center items-center bg-gray-600">
+            <div className="bg-zinc-500 shadow-xl rounded-lg p-8 max-w-lg w-full border border-gray-200">
                 { fullName && goal && position ? (
                     <div className="text-center">
                         <h1 className="text-3xl font-extrabold text-gray-50">Welcome, {fullName}</h1>

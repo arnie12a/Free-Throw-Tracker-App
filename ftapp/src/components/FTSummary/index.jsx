@@ -24,7 +24,6 @@ export default function FTSummary() {
     const [totalSessions, setTotalSessions] = useState('');
     const [difference, setDifference] = useState(0);
     const [Last5Modal, setLast5Modal] = useState(false);
-    const [tTestModal, settTestModal] = useState(false);
     const [last5Sessions, setLast5Sessions] = useState([]);
     const [tValue, setTValue] = useState(0);
     const [isSignificant, setIsSignificant] = useState(false);
@@ -58,33 +57,7 @@ export default function FTSummary() {
         return tValue;
     };
 
-    const tTest = (sessions) => {
-        settTestModal(true)
-        const practiceSessions = [];
-        const gameSessions = [];
-        for (let i = 0; i < sessions.length; i++) {
-            const percentage = calculateShootingPercentage(sessions[i].ftMade, sessions[i].ftAttempted);
-            if (sessions[i].sessionType === 'practice') {
-                practiceSessions.push(percentage);
-            } else if (sessions[i].sessionType === 'game') {
-                gameSessions.push(percentage);
-            }
-        }
-        
-        const tValue = calculateTValue(practiceSessions, gameSessions)
-        const degreesOfFreedom = practiceSessions.length + gameSessions.length - 2;
-        const criticalValue = ss.probit(0.975); // 95% confidence interval
-        setTValue(tValue);
-        setDegreesOfFreedom(degreesOfFreedom);
-        setCriticalValue(criticalValue);
-        setIsSignificant(Math.abs(tValue) > criticalValue);
-        return {
-            tValue,
-            degreesOfFreedom,
-            criticalValue,
-            isSignificant: Math.abs(tValue) > criticalValue
-        };
-    };
+    
 
     const getBestWorstSessions = (sessions, tab) => {
         let bestMade = -1;
@@ -254,40 +227,7 @@ export default function FTSummary() {
                                     <>
                                         <h1 className="text-5xl font-bold text-blue-600">
                                             Free Throw Percentage: {freeThrowPercentage}%
-                                        </h1>
-                                        <button 
-                                                onClick={() => tTest(FTSessions)} 
-                                                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-red-600 focus:outline-none"
-                                            >
-                                                See T-Test Statistics
-                                        </button>
-                                        {tTestModal && (
-                                            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
-                                                <div className="relative mx-auto p-6 border w-1/2 max-w-lg shadow-lg rounded-md bg-white">
-                                                    <div className="text-center">
-                                                        <h1 className="text-2xl font-semibold mb-4">T-Test Results</h1>
-                                                        <div className="mb-4">
-                                                            <p className="text-lg"><span className="font-medium">T-Value:</span> {tValue}</p>
-                                                            <p className="text-lg"><span className="font-medium">Degrees of Freedom:</span> {degreesOfFreedom}</p>
-                                                            <p className="text-lg"><span className="font-medium">Critical Value:</span> {criticalValue}</p>
-                                                            <p className="text-lg">
-                                                                <span className="font-medium">Significance:</span> 
-                                                                {isSignificant ? 
-                                                                    " The user shoots game and practice free throws differently." : 
-                                                                    " The user shoots game and practice free throws the same."}
-                                                            </p>                                                        
-                                                        </div>
-                                                        <button 
-                                                            onClick={() => settTestModal(false)} 
-                                                            className="mt-6 bg-red-500 text-white px-6 py-2 rounded-md shadow-sm hover:bg-red-600 focus:outline-none"
-                                                        >
-                                                            Close
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            )}                                        
+                                        </h1>                                     
                                         <h1 className={`${difference >= 0 ? 'text-green-500' : 'text-red-500'} text-3xl font-bold`}>
                                             {difference}
                                         </h1>
