@@ -7,7 +7,7 @@ const Header = () => {
     const navigate = useNavigate()
     const { userLoggedIn } = useAuth()
     return (
-        <nav className="flex justify-between items-center w-full z-20 fixed top-0 left-0 h-16 border-b bg-gray-200 px-4 shadow-sm">
+        <nav className="flex justify-between items-center w-full z-20 fixed top-0 left-0 h-16 border-b bg-gradient-to-r from-[#546a7b] to-[#c6c5b9] px-4 shadow-sm">
             <div className="flex items-center space-x-4">
                 {userLoggedIn ? (
                     <Link to="/home" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Home</Link>

@@ -58,6 +58,11 @@ export default function Leaderboard() {
             .catch(error => console.error('Error fetching the JSON file:', error));
     }, []);
 
+    useEffect(() => {
+        players.filter(user =>
+            `${user.PLAYER}`.toLowerCase().includes(searchTerm.toLowerCase()))
+    }, [searchTerm])
+
     // Pagination logic
     const indexOfLastPlayer = currentPage * playersPerPage;
     const indexOfFirstPlayer = indexOfLastPlayer - playersPerPage;
