@@ -7,13 +7,13 @@ const Header = () => {
     const navigate = useNavigate()
     const { userLoggedIn } = useAuth()
     return (
-        <nav className="flex justify-between items-center w-full z-20 fixed top-0 left-0 h-16 border-b bg-gradient-to-r from-[#546a7b] to-[#c6c5b9] px-4 shadow-sm">
+        <nav className="flex justify-between items-center w-full z-20 fixed top-0 left-0 h-16 bg-gray-600 px-4 shadow-sm">
             <div className="flex items-center space-x-4">
                 {userLoggedIn ? (
-                    <Link to="/home" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Home</Link>
+                    <Link to="/home" className="text-xl font-semibold text-white hover:text-gray-200">Home</Link>
 
                 ):(
-                    <Link to="/" className="text-lg font-semibold text-gray-700 hover:text-gray-900 transition duration-300 ease-in-out font-roboto">
+                    <Link to="/" className="text-xl font-semibold text-white hover:text-gray-200 transition duration-300 ease-in-out font-roboto">
                         Free Throw Percentage Tracker
                     </Link>
 
@@ -23,11 +23,11 @@ const Header = () => {
             <div className="flex items-center space-x-4">
                 {userLoggedIn ? (
                     <>
-                        <Link to="/addFTSession" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Add</Link>
-                        <Link to="/FTLog" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Log</Link>
-                        <Link to="/leaderboard" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Leaderboard</Link>
+                        <Link to="/addFTSession" className="text-lg font-semibold text-white hover:text-gray-200">Add</Link>
+                        <Link to="/FTLog" className="text-lg font-semibold text-white hover:text-gray-200">Log</Link>
+                        <Link to="/leaderboard" className="text-lg font-semibold text-white hover:text-gray-200">Leaderboard</Link>
 
-                        <Link to="/FTSummary" className="text-lg font-semibold text-gray-700 hover:text-gray-900">Statistics</Link>
+                        <Link to="/FTSummary" className="text-lg font-semibold text-white hover:text-gray-200">Statistics</Link>
 
                         <button
                             onClick={() => {
