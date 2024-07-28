@@ -285,7 +285,7 @@ export default function FTSummary() {
                                                     </div>
                                                 </div>
 
-                                                <div className="grid gap-12 sm:grid-cols-2 pt-1">
+                                                <div className="grid gap-12 sm:grid-cols-2 pt-1 mt-8">
                                                     <div className="bg-green-50 p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-105">
                                                         <h3 className="text-lg font-semibold text-gray-800 mb-2">Best Session</h3>
                                                         <div className="text-gray-700">
