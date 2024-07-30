@@ -12,6 +12,8 @@ import { useRoutes } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import Leaderboard from "./components/Leaderboard";
 
+import { DataProvider } from "./components/contexts/dataContext";
+
 function App() {
   const routesArray = [
     {
@@ -50,10 +52,13 @@ function App() {
   let routesElement = useRoutes(routesArray);
   return (
     <AuthProvider>
-        <Header />
+      <DataProvider>
+      <Header />
         <div className="pt-16 w-full h-screen flex flex-col bg-gray-100">
             {routesElement}
         </div>
+      </DataProvider>
+        
     </AuthProvider>
   );
 }
