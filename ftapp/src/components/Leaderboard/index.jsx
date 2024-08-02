@@ -121,7 +121,6 @@ export default function Leaderboard() {
 
     return (
         <div className="container mx-auto p-6 bg-gray-100">
-            <h1 className="text-3xl font-bold mb-8 text-gray-800">Leaderboard</h1>
             <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out mr-4"
                 onClick={handleFilter}
