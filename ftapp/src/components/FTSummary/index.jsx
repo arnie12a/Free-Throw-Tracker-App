@@ -167,7 +167,7 @@ export default function FTSummary() {
     }, [activeTab]);
 
     return (
-        <div className="bg-gray-100 flex items-center justify-center p-4">
+        <div className="bg-gray-100 flex items-center justify-center p-4 pt-16">
             <div className="w-full max-w-5xl mx-auto bg-gray-100 shadow-2xl rounded-lg overflow-hidden">
             <div className="text-center border-gray-200 pt-4">
                 <div className="flex space-x-4 justify-center">

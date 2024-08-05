@@ -120,7 +120,7 @@ export default function Leaderboard() {
     };
 
     return (
-        <div className="container mx-auto p-6 bg-gray-100">
+        <div className="container mx-auto p-6 bg-gray-100 pt-16">
             <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out mr-4"
                 onClick={handleFilter}
@@ -147,8 +147,8 @@ export default function Leaderboard() {
                 className="p-4 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
 
-            <p className="mb-4">Total players: {filterPlayers.length}</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <p className="mb-4 pt-4 text-lg">Total players: {filterPlayers.length}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
                 {currentPlayers.length > 0 ? (
                     currentPlayers.map(player => (
                         <div key={player.PLAYER} className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">

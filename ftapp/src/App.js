@@ -52,7 +52,7 @@ function App() {
   return (
     <AuthProvider>
       <Header />
-        <div className="pt-16 w-full h-screen flex flex-col bg-gray-100">
+        <div className="pt-20 w-full h-screen flex flex-col bg-gray-100">
             {routesElement}
         </div>
         

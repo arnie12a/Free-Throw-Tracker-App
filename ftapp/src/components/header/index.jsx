@@ -49,60 +49,57 @@ const Header = () => {
                     </svg>
                 </button>
                 <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} w-full md:block md:w-auto`} id="navbar-dropdown">
-                    <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            
-                    {userLoggedIn ? (
-                <>
-                <li>
-                <Link to="/addFTSession" className="text-lg font-semibold text-white hover:text-gray-200">Add</Link>
-
-                </li>
-                <li>
-                <Link to="/FTLog" className="text-lg font-semibold text-white hover:text-gray-200">Log</Link>
-
-                </li>
-                <li>
-                <Link to="/leaderboard" className="text-lg font-semibold text-white hover:text-gray-200">Leaderboard</Link>
-
-                </li>
-                <li>
-                <Link to="/FTSummary" className="text-lg font-semibold text-white hover:text-gray-200">Statistics</Link>
-
-                </li>
-                    <button
-                    onClick={() => {
-                        doSignOut().then(() => {
-                        navigate('/login');
-                        });
-                    }}
-                    className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50 transition duration-150 ease-in-out"
-                    >
-                    Logout
-                    </button>
-                </>
-                ) : (
-                <>
-                <li>
-                <Link
-                    className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50 transition duration-150 ease-in-out"
-                    to="/login"
-                    >
-                    Login
-                    </Link>
-                </li>
-                <li>
-                <Link
-                    className="px-4 py-2 ml-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50 transition duration-150 ease-in-out"
-                    to="/register"
-                    >
-                    Register
-                    </Link>
-                </li>
-                    
-                </>
-                )}
+                    <ul className="flex flex-col font-medium p-4 pt-2 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 space-y-4 md:space-y-0 md:space-x-4">
+                        {userLoggedIn ? (
+                            <>
+                                <li>
+                                    <Link to="/addFTSession" className="text-xl font-semibold text-white hover:text-gray-400">Add</Link>
+                                </li>
+                                <li>
+                                    <Link to="/FTLog" className="text-xl font-semibold text-white hover:text-gray-400">Log</Link>
+                                </li>
+                                <li>
+                                    <Link to="/leaderboard" className="text-xl font-semibold text-white hover:text-gray-400">Leaderboard</Link>
+                                </li>
+                                <li>
+                                    <Link to="/FTSummary" className="text-xl font-semibold text-white hover:text-gray-400">Statistics</Link>
+                                </li>
+                                <li>
+                                    <button
+                                        onClick={() => {
+                                            doSignOut().then(() => {
+                                                navigate('/login');
+                                            });
+                                        }}
+                                        className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                                    >
+                                        Logout
+                                    </button>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li>
+                                    <Link
+                                        className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                                        to="/login"
+                                    >
+                                        Login
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        className="px-4 py-2 ml-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                                        to="/register"
+                                    >
+                                        Register
+                                    </Link>
+                                </li>
+                            </>
+                        )}
                     </ul>
                 </div>
+
             </div>
         </nav>
 
