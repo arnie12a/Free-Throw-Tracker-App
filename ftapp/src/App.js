@@ -12,7 +12,6 @@ import { useRoutes } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import Leaderboard from "./components/Leaderboard";
 
-
 function App() {
   const routesArray = [
     {
@@ -48,14 +47,18 @@ function App() {
       element: <Leaderboard />
     }
   ];
+
   let routesElement = useRoutes(routesArray);
+
   return (
     <AuthProvider>
+      {/* Ensure the header stays fixed with proper z-index */}
       <Header />
-        <div className="pt-20 w-full h-screen flex flex-col bg-gray-100">
-            {routesElement}
-        </div>
-        
+      
+      {/* Add padding to prevent overlap and allow scrolling */}
+      <div className="pt-20 w-full flex-1 flex flex-col bg-gray-100">
+        {routesElement}
+      </div>
     </AuthProvider>
   );
 }
