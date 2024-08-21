@@ -53,7 +53,7 @@ function App() {
   return (
     <AuthProvider>
       {/* Ensure the header stays fixed with proper z-index */}
-      <Header />
+      <Header/>
       
       {/* Add padding to prevent overlap and allow scrolling */}
       <div className="pt-20 w-full flex-1 flex flex-col bg-gray-100">
