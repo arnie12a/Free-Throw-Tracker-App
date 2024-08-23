@@ -89,8 +89,7 @@ export default function FTLog() {
     return (
         
         <div className="bg-gray-100 min-h-screen p-4 pt-16">
-            <div className="relative overflow-x-auto shadow-lg sm:rounded-lg pb-8 mt-6">
-                <table className="w-full text-sm text-left text-gray-600 dark:text-gray-400">
+            <table className="w-full text-sm text-left text-gray-600 dark:text-gray-400 table-fixed">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-800 dark:text-gray-300">
                     <tr>
                         <th scope="col" className="px-6 py-4 text-center">
@@ -161,7 +160,6 @@ export default function FTLog() {
                     )}
                     </tbody>
                 </table>
-                </div>
 
 
 
