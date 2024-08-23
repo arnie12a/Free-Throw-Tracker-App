@@ -211,19 +211,19 @@ const FTChart = ({ data }) => {
     {/* Buttons Section */}
     <div className="flex flex-col items-center space-y-4">
                 <button
-                    className={`px-4 py-2 rounded-md text-white ${view === 'yearly' ? 'bg-blue-500' : 'bg-gray-400 hover:bg-gray-500'}`}
+                    className={`px-4 py-2 rounded-md text-white ${view === 'yearly' ? 'bg-gray-500' : 'bg-gray-400 hover:bg-gray-500'}`}
                     onClick={() => setView('yearly')}
                 >
                     Yearly
                 </button>
                 <button
-                    className={`px-4 py-2 rounded-md text-white ${view === 'monthly' ? 'bg-blue-500' : 'bg-gray-400 hover:bg-gray-500'}`}
+                    className={`px-4 py-2 rounded-md text-white ${view === 'monthly' ? 'bg-red-500' : 'bg-red-400 hover:bg-red-500'}`}
                     onClick={() => setView('monthly')}
                 >
                     Monthly
                 </button>
                 <button
-                    className={`px-4 py-2 rounded-md text-white ${view === 'daily' ? 'bg-blue-500' : 'bg-gray-400 hover:bg-gray-500'}`}
+                    className={`px-4 py-2 rounded-md text-white ${view === 'daily' ? 'bg-green-500' : 'bg-green-400 hover:bg-green-500'}`}
                     onClick={() => setView('daily')}
                 >
                     Daily

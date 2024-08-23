@@ -89,69 +89,80 @@ export default function FTLog() {
     return (
         
         <div className="bg-gray-100 min-h-screen p-4 pt-16">
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg pb-8 mt-6">
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <div className="relative overflow-x-auto shadow-lg sm:rounded-lg pb-8 mt-6">
+                <table className="w-full text-sm text-left text-gray-600 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-800 dark:text-gray-300">
                     <tr>
-                        <th scope="col" className="px-6 py-3 text-center">
-                            Date
+                        <th scope="col" className="px-6 py-4 text-center">
+                        Date
                         </th>
-                        <th scope="col" className="px-6 py-3 text-center">
-                            Free Throws Made
+                        <th scope="col" className="px-6 py-4 text-center">
+                        Free Throws Made
                         </th>
-                        <th scope="col" className="px-6 py-3 text-center">
-                            Free Throws Attempted
+                        <th scope="col" className="px-6 py-4 text-center">
+                        Free Throws Attempted
                         </th>
-                        <th scope="col" className="px-6 py-3 text-center">
-                            Session Type
+                        <th scope="col" className="px-6 py-4 text-center">
+                        Session Type
                         </th>
-                        <th scope="col" className="px-6 py-3 text-center">
-                            Action
+                        <th scope="col" className="px-6 py-4 text-center">
+                        Action
                         </th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     {FTSessions && FTSessions.length > 0 ? (
-                        FTSessions.map(ftSession => (
-                            <tr key={ftSession.id} className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 even:bg-gray-50 dark:even:bg-gray-800">
-                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
-                                    {ftSession.date}
-                                </th>
-                                <td className="px-6 py-4 text-center">
-                                    {ftSession.ftMade}
-                                </td>
-                                <td className="px-6 py-4 text-center">
-                                    {ftSession.ftAttempted}
-                                </td>
-                                <td className="px-6 py-4 text-center">
-                                    {ftSession.sessionType}
-                                </td>
-                                <td className="px-6 py-4 text-center">
-                                    <div className="flex justify-center space-x-4">
-                                        <button 
-                                            onClick={() => openEditModal(ftSession.id, ftSession)} 
-                                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline transition duration-300 ease-in-out"
-                                        >
-                                            Edit
-                                        </button>
-                                        <button 
-                                            onClick={() => openDeleteModal(ftSession.id)} 
-                                            className="font-medium text-red-600 dark:text-red-500 hover:underline transition duration-300 ease-in-out"
-                                        >
-                                            Delete
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                        FTSessions.map((ftSession, index) => (
+                        <tr
+                            key={ftSession.id}
+                            className={`bg-white dark:bg-gray-900 ${
+                            index % 2 === 0 ? 'even:bg-gray-50 dark:even:bg-gray-800' : ''
+                            } hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200`}
+                        >
+                            <th
+                            scope="row"
+                            className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
+                            >
+                            {ftSession.date}
+                            </th>
+                            <td className="px-6 py-4 text-center">
+                            {ftSession.ftMade}
+                            </td>
+                            <td className="px-6 py-4 text-center">
+                            {ftSession.ftAttempted}
+                            </td>
+                            <td className="px-6 py-4 text-center capitalize">
+                            {ftSession.sessionType}
+                            </td>
+                            <td className="px-6 py-4 text-center">
+                            <div className="flex justify-center space-x-4">
+                                <button
+                                onClick={() => openEditModal(ftSession.id, ftSession)}
+                                className="font-medium text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-500 transition-colors duration-300 ease-in-out"
+                                >
+                                Edit
+                                </button>
+                                <button
+                                onClick={() => openDeleteModal(ftSession.id)}
+                                className="font-medium text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-500 transition-colors duration-300 ease-in-out"
+                                >
+                                Delete
+                                </button>
+                            </div>
+                            </td>
+                        </tr>
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="5" className="text-center text-gray-700 py-4">No free throw sessions available</td>
+                        <td colSpan="5" className="text-center text-gray-700 py-6">
+                            No free throw sessions available
+                        </td>
                         </tr>
                     )}
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+                </div>
+
 
 
         {deleteModalState && (
