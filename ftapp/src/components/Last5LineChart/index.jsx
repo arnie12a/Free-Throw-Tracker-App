@@ -7,23 +7,23 @@ const Last5LineChart = ({ data }) => {
     useEffect(() => {
         if (data.length === 0) return;
 
-        // Set up the SVG and dimensions
-        const margin = { top: 20, right: 30, bottom: 50, left: 50 },
-            width = 500 - margin.left - margin.right,
-            height = 300 - margin.top - margin.bottom;
+        // Set up the SVG and dimensions with responsive scaling
+        const margin = { top: 20, right: 30, bottom: 50, left: 50 };
+        const svgWidth = parseInt(d3.select(svgRef.current).style('width')) - margin.left - margin.right;
+        const svgHeight = 300 - margin.top - margin.bottom;
 
         // Clear previous SVG content before re-rendering
         d3.select(svgRef.current).selectAll("*").remove();
 
         const svg = d3.select(svgRef.current)
-            .attr('width', width + margin.left + margin.right)
-            .attr('height', height + margin.top + margin.bottom)
+            .attr('width', svgWidth + margin.left + margin.right)
+            .attr('height', svgHeight + margin.top + margin.bottom)
             .append('g')
             .attr('transform', `translate(${margin.left},${margin.top})`);
 
         // Set the ranges
-        const x = d3.scalePoint().range([0, width]).padding(0.5);
-        const y = d3.scaleLinear().range([height, 0]);
+        const x = d3.scalePoint().range([0, svgWidth]).padding(0.5);
+        const y = d3.scaleLinear().range([svgHeight, 0]);
 
         // Define the line
         const valueline = d3.line()
@@ -67,7 +67,7 @@ const Last5LineChart = ({ data }) => {
             .duration(2000)
             .attr("opacity", 1);
 
-        // Create a tooltip div that is hidden by default
+        // Tooltip setup
         const tooltip = d3.select('body').append('div')
             .attr('class', 'tooltip')
             .style('position', 'absolute')
@@ -78,7 +78,6 @@ const Last5LineChart = ({ data }) => {
             .style('pointer-events', 'none')
             .style('opacity', 0);
 
-        // Add tooltip functionality
         svg.selectAll('circle')
             .on('mouseover', function(event, d) {
                 d3.select(this).attr('r', 8);
@@ -94,30 +93,34 @@ const Last5LineChart = ({ data }) => {
 
         // Add the X Axis
         svg.append('g')
-            .attr('transform', `translate(0,${height})`)
+            .attr('transform', `translate(0,${svgHeight})`)
             .call(d3.axisBottom(x).tickFormat((d, i) => `Session ${i + 1}`));
 
         // Add the Y Axis
         svg.append('g')
             .call(d3.axisLeft(y));
 
-        // Add X Axis label
+        // X Axis label
         svg.append('text')
-            .attr('transform', `translate(${width / 2}, ${height + margin.bottom - 10})`)
+            .attr('transform', `translate(${svgWidth / 2}, ${svgHeight + margin.bottom - 10})`)
             .style('text-anchor', 'middle')
             .text('Sessions');
 
-        // Add Y Axis label
+        // Y Axis label
         svg.append('text')
             .attr('transform', 'rotate(-90)')
             .attr('y', 0 - margin.left)
-            .attr('x', 0 - (height / 2))
+            .attr('x', 0 - (svgHeight / 2))
             .attr('dy', '1em')
             .style('text-anchor', 'middle')
             .text('Percentage');
     }, [data]);
 
-    return <svg ref={svgRef}></svg>;
+    return (
+        <div className="w-full h-auto p-4 bg-white shadow-md rounded-lg">
+            <svg ref={svgRef} className="w-full"></svg>
+        </div>
+    );
 }
 
 export default Last5LineChart;

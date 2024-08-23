@@ -167,30 +167,38 @@ export default function FTSummary() {
     }, [activeTab]);
 
     return (
-        <div className="bg-gray-100 flex items-center justify-center p-4 pt-16">
+        <div className="bg-gray-100 flex items-center justify-center p-4 pt-24">
             <div className="w-full max-w-5xl mx-auto bg-gray-100 shadow-2xl rounded-lg overflow-hidden">
-            <div className="text-center border-gray-200 pt-4">
-                <div className="flex space-x-4 justify-center">
-                    <button
-                        className={`py-3 px-6 w-1/4 focus:outline-none ${activeTab === 'all' ? 'bg-blue-600 text-white shadow-lg' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition-all duration-150 ease-in-out transform ${activeTab === 'all' ? 'scale-105' : 'scale-100'}`}
-                        onClick={() => handleTabClick('all')}
-                    >
-                        All Sessions
-                    </button>
-                    <button
-                        className={`py-3 px-6 w-1/4 focus:outline-none ${activeTab === 'practice' ? 'bg-blue-600 text-white shadow-lg' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition-all duration-150 ease-in-out transform ${activeTab === 'practice' ? 'scale-105' : 'scale-100'}`}
-                        onClick={() => handleTabClick('practice')}
-                    >
-                        Practice
-                    </button>
-                    <button
-                        className={`py-3 px-6 w-1/4 focus:outline-none ${activeTab === 'game' ? 'bg-blue-600 text-white shadow-lg' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition-all duration-150 ease-in-out transform ${activeTab === 'game' ? 'scale-105' : 'scale-100'}`}
-                        onClick={() => handleTabClick('game')}
-                    >
-                        Game
-                    </button>
+            <div className="relative text-center border-gray-200 pt-4">
+                    <div className="flex space-x-4 justify-center relative z-10">
+                        <button
+                            className={`py-3 px-6 w-1/4 focus:outline-none ${activeTab === 'all' ? 'bg-blue-600 text-white shadow-lg' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition-all duration-150 ease-in-out transform ${activeTab === 'all' ? 'scale-105' : 'scale-100'}`}
+                            onClick={() => handleTabClick('all')}
+                            style={{ zIndex: activeTab === 'all' ? 50 : 10 }} // Inline styling for more control
+                        >
+                            All Sessions
+                        </button>
+                        <button
+                            className={`py-3 px-6 w-1/4 focus:outline-none ${activeTab === 'practice' ? 'bg-blue-600 text-white shadow-lg' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition-all duration-150 ease-in-out transform ${activeTab === 'practice' ? 'scale-105' : 'scale-100'}`}
+                            onClick={() => handleTabClick('practice')}
+                            style={{ zIndex: activeTab === 'practice' ? 50 : 10 }}
+                        >
+                            Practice
+                        </button>
+                        <button
+                            className={`py-3 px-6 w-1/4 focus:outline-none ${activeTab === 'game' ? 'bg-blue-600 text-white shadow-lg' : 'bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-800'} rounded-t-lg border border-gray-300 transition-all duration-150 ease-in-out transform ${activeTab === 'game' ? 'scale-105' : 'scale-100'}`}
+                            onClick={() => handleTabClick('game')}
+                            style={{ zIndex: activeTab === 'game' ? 50 : 10 }}
+                        >
+                            Game
+                        </button>
+                    </div>
+                    {/* Other elements that should be underneath the buttons */}
+                    <div className="absolute inset-0 z-0">
+                        {/* Content that the buttons should appear in front of */}
+                    </div>
                 </div>
-            </div>
+
 
 
                 {activeTab === '12' ? (
@@ -211,9 +219,7 @@ export default function FTSummary() {
                                         <h1 className="text-5xl font-bold text-blue-600">
                                             Free Throw Percentage: {freeThrowPercentage}%
                                         </h1>                                     
-                                        <h1 className={`${difference >= 0 ? 'text-green-500' : 'text-red-500'} text-3xl font-bold`}>
-                                            {difference}
-                                        </h1>
+                
                                         <h5 className="mt-2 text-lg font-medium text-gray-700">
                                             Total Shooting Sessions: {totalSessions}
                                         </h5>

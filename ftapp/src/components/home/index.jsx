@@ -69,7 +69,13 @@ const Home = () => {
                         <h1 className="text-3xl font-extrabold text-gray-50">Welcome, {fullName}</h1>
                         <div className="mt-4">
                             <h2 className="text-xl text-gray-200">Position: {position}</h2>
-                            <h3 className="text-xl text-gray-200 mt-2">FT Percentage: {ftPercentage}%</h3>
+                            <h3 className="text-xl text-gray-200 mt-2 pb-4">FT Percentage: {ftPercentage}%</h3>
+                            <a 
+                                href='/addFTSession' 
+                                className="inline-block px-6 py-2 bg-blue-600 text-white font-medium text-sm leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out p-4"
+                            >
+                                Start tracking your free throws!
+                            </a>
                         </div>
                     </div>
                 ) : (
