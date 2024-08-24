@@ -108,22 +108,25 @@ const Header = () => {
               </>
             ) : (
               <>
-                <li>
-                  <Link
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50 transition duration-150 ease-in-out"
-                    to="/login"
-                  >
-                    Login
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="px-4 py-2 ml-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50 transition duration-150 ease-in-out"
-                    to="/register"
-                  >
-                    Register
-                  </Link>
-                </li>
+                <ul className="flex items-center space-x-4">
+                  <li>
+                    <Link
+                      className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                      to="/login"
+                    >
+                      Log In
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                      to="/register"
+                    >
+                      Register
+                    </Link>
+                  </li>
+                </ul>
+
               </>
             )}
           </ul>
