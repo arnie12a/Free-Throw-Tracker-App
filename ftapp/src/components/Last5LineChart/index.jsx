@@ -1,16 +1,34 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import * as d3 from 'd3';
 
 const Last5LineChart = ({ data }) => {
     const svgRef = useRef();
+    const [dimensions, setDimensions] = useState({ width: 0, height: 300 });
 
     useEffect(() => {
-        if (data.length === 0) return;
+        // Function to update dimensions based on container size
+        const updateDimensions = () => {
+            const width = svgRef.current ? svgRef.current.clientWidth : 0;
+            setDimensions({ width, height: 300 });
+        };
+
+        // Initial dimensions update
+        updateDimensions();
+
+        // Event listener for window resize
+        window.addEventListener('resize', updateDimensions);
+
+        // Clean up the event listener on component unmount
+        return () => window.removeEventListener('resize', updateDimensions);
+    }, []);
+
+    useEffect(() => {
+        if (data.length === 0 || dimensions.width === 0) return;
 
         // Set up the SVG and dimensions with responsive scaling
         const margin = { top: 20, right: 30, bottom: 50, left: 50 };
-        const svgWidth = parseInt(d3.select(svgRef.current).style('width')) - margin.left - margin.right;
-        const svgHeight = 300 - margin.top - margin.bottom;
+        const svgWidth = dimensions.width - margin.left - margin.right;
+        const svgHeight = dimensions.height - margin.top - margin.bottom;
 
         // Clear previous SVG content before re-rendering
         d3.select(svgRef.current).selectAll("*").remove();
@@ -114,13 +132,13 @@ const Last5LineChart = ({ data }) => {
             .attr('dy', '1em')
             .style('text-anchor', 'middle')
             .text('Percentage');
-    }, [data]);
+    }, [data, dimensions]);
 
     return (
         <div className="w-full h-auto p-4 bg-white shadow-md rounded-lg">
             <svg ref={svgRef} className="w-full"></svg>
         </div>
     );
-}
+};
 
 export default Last5LineChart;
