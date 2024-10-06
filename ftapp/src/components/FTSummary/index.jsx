@@ -130,11 +130,28 @@ export default function FTSummary() {
         fetchData();
     }, [FTSessions]);
 
+    // Handle the tab functionality switching
+    useEffect(() => {
+        const fetchNewTabData = async (activeTab) => {
+            const tempSessions = FTSessions.filter(session => session.sessionType === activeTab.toLowerCase());
+            const percentage = await getFTPercentage(tempSessions);
+            setFreeThrowPercentage(percentage);
+            getBestWorstSessions(tempSessions);
+            const tempLast5 = getLast5Sessions(tempSessions);
+            setLast5Sessions(tempLast5);
+
+        }
+        console.log('Tab name: ', activeTab);
+        
+        fetchNewTabData(activeTab);
+    }, [activeTab])
+
     const getTabData = () => {
         return FTSessions.filter(session => session.sessionType === activeTab.toLowerCase());
     };
 
     const tabData = getTabData();
+    
 
     return (
         <div className="bg-gray-100 flex items-center justify-center p-4 pt-24">
@@ -146,9 +163,7 @@ export default function FTSummary() {
                                 <h1 className="text-4xl md:text-5xl font-bold text-blue-600">
                                     Free Throw Percentage: {freeThrowPercentage}%
                                 </h1>
-                                <h5 className="mt-2 text-md md:text-lg font-medium text-gray-700">
-                                    Total Shooting Sessions: {FTSessions.length}
-                                </h5>
+                        
                                 <FTChart data={FTSessions} />
                                 <button
                                     onClick={() => setIsModalOpen(true)}
@@ -194,6 +209,12 @@ export default function FTSummary() {
                                                     <h2 className="text-xl md:text-2xl font-semibold text-gray-700">
                                                         {activeTab} Sessions
                                                     </h2>
+                                                    <h1 className="text-4xl md:text-5xl font-bold text-blue-600">
+                                                        Free Throw Percentage: {freeThrowPercentage}%
+                                                    </h1>
+                                                    <h5 className="mt-2 text-md md:text-lg font-medium text-gray-700">
+                                                        Total Shooting Sessions: {FTSessions.length}
+                                                    </h5>
                                                     {tabData.length === 0 ? (
                                                         <p className="text-md md:text-lg text-gray-600 mt-4">
                                                             You have not shot any {activeTab.toLowerCase()} sessions.

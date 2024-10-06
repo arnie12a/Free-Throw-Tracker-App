@@ -54,43 +54,8 @@ const FTChart = ({ data }) => {
         return sortedMonthlyData;
     };
 
-    const getLastMonthData = (data) => {
-        const now = new Date();
-        const lastMonth = now.getMonth() === 0 ? 11 : now.getMonth() - 1;
-        const lastMonthYear = now.getMonth() === 0 ? now.getFullYear() - 1 : now.getFullYear();
-
-        return data.filter(({ date }) => {
-            const d = new Date(date);
-            return d.getFullYear() === lastMonthYear && d.getMonth() === lastMonth;
-        });
-    };
-
-    const groupByDay = (data) => {
-        const dailyData = data.reduce((acc, { date, ftMade, ftAttempted }) => {
-            const { year, month, day } = formatDate(date);
-            const key = `${year}-${month}-${day}`;
-            if (!acc[key]) {
-                acc[key] = { ftMade: 0, ftAttempted: 0 };
-            }
-            acc[key].ftMade += ftMade;
-            acc[key].ftAttempted += ftAttempted;
-            return acc;
-        }, {});
-
-        const sortedDailyData = Object.keys(dailyData)
-            .sort((a, b) => new Date(a) - new Date(b))
-            .map((key) => ({
-                day: key,
-                percentage: Math.round((dailyData[key].ftMade / dailyData[key].ftAttempted) * 100),
-            }));
-
-        return sortedDailyData;
-    };
-
     const currentYearData = getCurrentYearData(data);
     const monthlyData = groupByMonth(currentYearData);
-    const lastMonthData = getLastMonthData(data);
-    const dailyData = groupByDay(lastMonthData);
     const yearlyData = calculateYearlyPercentage(data);
 
     const [view, setView] = useState('yearly');
@@ -101,9 +66,9 @@ const FTChart = ({ data }) => {
     }, [view]);
 
     const drawChart = () => {
-        const data = view === 'yearly' ? yearlyData : view === 'monthly' ? monthlyData : dailyData;
-        const parseTime = d3.timeParse(view === 'yearly' ? '%Y' : view === 'monthly' ? '%Y-%m' : '%Y-%m-%d');
-        const formatTime = d3.timeFormat(view === 'yearly' ? '%Y' : view === 'monthly' ? '%b %Y' : '%d %b');
+        const data = view === 'yearly' ? yearlyData : monthlyData;
+        const parseTime = d3.timeParse(view === 'yearly' ? '%Y' : '%Y-%m');
+        const formatTime = d3.timeFormat(view === 'yearly' ? '%Y' : '%b %Y');
 
         d3.select(chartRef.current).select('svg').remove();
 
@@ -121,7 +86,7 @@ const FTChart = ({ data }) => {
         const width = svgWidth - margin.left - margin.right;
         const height = svgHeight - margin.top - margin.bottom;
 
-        const xDomain = d3.extent(data, d => parseTime(view === 'yearly' ? d.year : view === 'monthly' ? d.month : d.day));
+        const xDomain = d3.extent(data, d => parseTime(view === 'yearly' ? d.year : d.month));
         const x = d3.scaleTime()
             .domain(xDomain)
             .range([0, width])
@@ -133,7 +98,7 @@ const FTChart = ({ data }) => {
             .range([height, 0]);
 
         const line = d3.line()
-            .x(d => x(parseTime(view === 'yearly' ? d.year : view === 'monthly' ? d.month : d.day)))
+            .x(d => x(parseTime(view === 'yearly' ? d.year : d.month)))
             .y(d => y(d.percentage));
 
         const xAxis = svg.append('g')
@@ -164,7 +129,7 @@ const FTChart = ({ data }) => {
             .data(data)
             .enter().append('circle')
             .attr('class', 'dot')
-            .attr('cx', d => x(parseTime(view === 'yearly' ? d.year : view === 'monthly' ? d.month : d.day)))
+            .attr('cx', d => x(parseTime(view === 'yearly' ? d.year : d.month)))
             .attr('cy', d => y(d.percentage))
             .attr('r', 4)
             .attr('fill', 'steelblue')
@@ -173,25 +138,59 @@ const FTChart = ({ data }) => {
             .duration(1000)
             .attr('opacity', 1);
 
-        // Tooltip
-        const tooltip = d3.select(chartRef.current)
-            .append('div')
-            .attr('class', 'tooltip')
-            .style('opacity', 0)
-            .style('position', 'absolute')
-            .style('background', '#fff')
-            .style('padding', '5px')
-            .style('border', '1px solid #ccc')
-            .style('border-radius', '5px')
-            .style('pointer-events', 'none');
+        // Tooltip filter for drop shadow
+        const defs = d3.select(chartRef.current).append('defs');
+        const filter = defs.append('filter')
+            .attr('id', 'drop-shadow')
+            .attr('height', '130%');
 
+        filter.append('feGaussianBlur')
+            .attr('in', 'SourceAlpha')
+            .attr('stdDeviation', 3);
+
+        filter.append('feOffset')
+            .attr('dx', 2)
+            .attr('dy', 2)
+            .attr('result', 'offsetblur');
+
+        filter.append('feFlood')
+            .attr('flood-color', 'rgba(0, 0, 0, 0.5)');
+
+        filter.append('feComposite')
+            .attr('in2', 'offsetblur')
+            .attr('operator', 'in');
+
+        const feMerge = filter.append('feMerge');
+        feMerge.append('feMergeNode');
+        feMerge.append('feMergeNode').attr('in', 'SourceGraphic');
+
+        // Create the tooltip
+        const tooltip = d3.select(chartRef.current)
+        .append('div')
+        .attr('class', 'tooltip')
+        .style('opacity', 0)
+        .style('position', 'absolute')
+        .style('background', 'rgba(0, 0, 0, 0.75)') // Semi-transparent background
+        .style('padding', '10px')
+        .style('border', '1px solid #666')
+        .style('border-radius', '10px')
+        .style('filter', 'url(#drop-shadow)') // Add shadow
+        .style('pointer-events', 'none');
+
+        // Tooltip text styling
+        tooltip.append('div')
+        .style('font-size', '12px')
+        .style('color', '#ffffff') // Set text color to white
+        .style('font-weight', 'bold');
+
+        // Update mouse events for tooltips
         svg.selectAll('.dot')
             .on('mouseover', function(event, d) {
                 d3.select(this).attr('r', 6);
                 tooltip.transition()
                     .duration(200)
                     .style('opacity', .9);
-                tooltip.html(`Date: ${formatTime(parseTime(view === 'yearly' ? d.year : view === 'monthly' ? d.month : d.day))}<br>Percentage: ${d.percentage}%`)
+                tooltip.html(`Date: ${formatTime(parseTime(view === 'yearly' ? d.year : d.month))}<br>Percentage: ${d.percentage}%`)
                     .style('left', (event.pageX + 10) + 'px')
                     .style('top', (event.pageY - 28) + 'px');
             })
@@ -208,8 +207,8 @@ const FTChart = ({ data }) => {
             <div className="flex justify-center">
                 <div ref={chartRef} className="w-full"></div>
             </div>
-    {/* Buttons Section */}
-    <div className="flex flex-col items-center space-y-4">
+            {/* Buttons Section */}
+            <div className="flex flex-col items-center space-y-4">
                 <button
                     className={`px-4 py-2 rounded-md text-white ${view === 'yearly' ? 'bg-gray-500' : 'bg-gray-400 hover:bg-gray-500'}`}
                     onClick={() => setView('yearly')}
@@ -222,13 +221,9 @@ const FTChart = ({ data }) => {
                 >
                     Monthly
                 </button>
-                <button
-                    className={`px-4 py-2 rounded-md text-white ${view === 'daily' ? 'bg-green-500' : 'bg-green-400 hover:bg-green-500'}`}
-                    onClick={() => setView('daily')}
-                >
-                    Daily
-                </button>
             </div>
         </div>
-    )}
-    export default FTChart;
+    );
+};
+
+export default FTChart;
