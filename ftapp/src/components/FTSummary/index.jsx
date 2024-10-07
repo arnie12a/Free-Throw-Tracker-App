@@ -135,7 +135,7 @@ export default function FTSummary() {
         const fetchNewTabData = async (activeTab) => {
             const tempSessions = FTSessions.filter(session => session.sessionType === activeTab.toLowerCase());
             const percentage = await getFTPercentage(tempSessions);
-            setFreeThrowPercentage(percentage);
+            setFreeThrowPercentage(Math.round(percentage));
             getBestWorstSessions(tempSessions);
             const tempLast5 = getLast5Sessions(tempSessions);
             setLast5Sessions(tempLast5);
