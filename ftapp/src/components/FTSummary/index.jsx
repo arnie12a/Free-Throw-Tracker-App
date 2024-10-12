@@ -19,9 +19,9 @@ export default function FTSummary() {
     const [worstPercentage, setWorstPercentage] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activeTab, setActiveTab] = useState("Game");
-    const [last5SessionsPercentage, setLast5SessionPercentage] = useState(0);
     const [last5Sessions, setLast5Sessions] = useState([]);
-    const [difference, setDifference] = useState(0);
+    const [totalNumberOfSessions, setTotalNumberOfSessions] = useState(0);
+    
 
     const ss = require('simple-statistics');
 
@@ -108,9 +108,7 @@ export default function FTSummary() {
             setFTSessions(sessions);
             const percentage = await getFTPercentage(sessions);
             setUserShootingPercentage(user, percentage.toFixed(2));
-            if (percentage && user) {
-                setDifference((percentage - user[0].ftGoalPercentage).toFixed(2));
-            }
+            
         };
 
         fetchDataLoad();
@@ -124,7 +122,6 @@ export default function FTSummary() {
             const temp = getLast5Sessions(FTSessions);
             setLast5Sessions(temp);
             const last5 = await getFTPercentage(getLast5Sessions(FTSessions));
-            setLast5SessionPercentage(Math.round(last5));
         };
 
         fetchData();
@@ -139,6 +136,7 @@ export default function FTSummary() {
             getBestWorstSessions(tempSessions);
             const tempLast5 = getLast5Sessions(tempSessions);
             setLast5Sessions(tempLast5);
+            setTotalNumberOfSessions(tempSessions.length);
 
         }
         console.log('Tab name: ', activeTab);
@@ -212,8 +210,9 @@ export default function FTSummary() {
                                                     <h1 className="text-4xl md:text-5xl font-bold text-blue-600">
                                                         Free Throw Percentage: {freeThrowPercentage}%
                                                     </h1>
+                                                
                                                     <h5 className="mt-2 text-md md:text-lg font-medium text-gray-700">
-                                                        Total Shooting Sessions: {FTSessions.length}
+                                                        Total Shooting Sessions: {totalNumberOfSessions}
                                                     </h5>
                                                     {tabData.length === 0 ? (
                                                         <p className="text-md md:text-lg text-gray-600 mt-4">
