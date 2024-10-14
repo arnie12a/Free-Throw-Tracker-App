@@ -152,121 +152,121 @@ export default function FTSummary() {
     
 
     return (
-        <div className="bg-gray-100 flex items-center justify-center p-4 pt-24">
-            <div className="w-full max-w-5xl mx-auto bg-gray-100 shadow-2xl rounded-lg overflow-hidden">
-                <div className="flex justify-center items-center h-full bg-gray-100 overflow-y-auto p-4 md:p-10">
-                    <div className="space-y-6 bg-white p-4 md:p-6 rounded-lg shadow-md w-full max-w-5xl">
-                        {FTSessions.length > 0 && freeThrowPercentage && (
-                            <div className="space-y-6 text-center">
-                                <h1 className="text-4xl md:text-5xl font-bold text-blue-600">
-                                    Free Throw Percentage: {freeThrowPercentage}%
-                                </h1>
-                        
-                                <FTChart data={FTSessions} />
-                                <button
-                                    onClick={() => setIsModalOpen(true)}
-                                    className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none"
-                                >
-                                    More Details
-                                </button>
+        <div className="bg-gray-50 flex items-center justify-center min-h-screen py-10 px-4">
+    <div className="w-full max-w-6xl mx-auto bg-white shadow-2xl rounded-lg overflow-hidden">
+        <div className="flex justify-center items-center h-full bg-gray-100 overflow-y-auto p-6 md:p-10">
+            <div className="space-y-8 bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-5xl">
+                {FTSessions.length > 0 && freeThrowPercentage && (
+                    <div className="space-y-8 text-center">
+                        <h1 className="text-5xl md:text-6xl font-extrabold text-blue-600">
+                            Free Throw Percentage: {freeThrowPercentage}%
+                        </h1>
 
-                                {isModalOpen && (
-                                    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
-                                        <div className="bg-white rounded-lg p-4 md:p-8 w-full max-w-lg md:max-w-3xl shadow-lg overflow-y-auto max-h-full">
-                                            <div className="flex justify-between items-center">
-                                                <button
-                                                    onClick={() => setIsModalOpen(false)}
-                                                    className="text-gray-600 hover:text-gray-900 text-2xl"
-                                                >
-                                                    &times;
-                                                </button>
-                                                <button
-                                                    onClick={() => setIsModalOpen(false)}
-                                                    className="text-blue-500 hover:text-blue-700"
-                                                >
-                                                    Hide Details
-                                                </button>
-                                            </div>
-                                            <div className="mt-4">
-                                                <div className="mt-4 flex justify-center space-x-2 md:space-x-4">
-                                                    <button
-                                                        onClick={() => setActiveTab("Game")}
-                                                        className={`px-3 md:px-4 py-2 rounded-md shadow-sm ${activeTab === "Game" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"} hover:bg-blue-600 focus:outline-none`}
-                                                    >
-                                                        Game
-                                                    </button>
-                                                    <button
-                                                        onClick={() => setActiveTab("Practice")}
-                                                        className={`px-3 md:px-4 py-2 rounded-md shadow-sm ${activeTab === "Practice" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"} hover:bg-blue-600 focus:outline-none`}
-                                                    >
-                                                        Practice
-                                                    </button>
-                                                </div>
+                        <div className="rounded-lg overflow-hidden shadow-lg bg-gray-50 p-4 md:p-6">
+                            <FTChart data={FTSessions} />
+                        </div>
 
-                                                <div className="mt-8">
-                                                    <h2 className="text-xl md:text-2xl font-semibold text-gray-700">
-                                                        {activeTab} Sessions
-                                                    </h2>
-                                                    <h1 className="text-4xl md:text-5xl font-bold text-blue-600">
-                                                        Free Throw Percentage: {freeThrowPercentage}%
-                                                    </h1>
-                                                
-                                                    <h5 className="mt-2 text-md md:text-lg font-medium text-gray-700">
-                                                        Total Shooting Sessions: {totalNumberOfSessions}
-                                                    </h5>
-                                                    {tabData.length === 0 ? (
-                                                        <p className="text-md md:text-lg text-gray-600 mt-4">
-                                                            You have not shot any {activeTab.toLowerCase()} sessions.
+                        <button
+                            onClick={() => setIsModalOpen(true)}
+                            className="mt-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-full shadow-md transition-transform transform hover:scale-105 focus:outline-none"
+                        >
+                            View More Details
+                        </button>
+
+                        {isModalOpen && (
+                            <div className="fixed inset-0 bg-gray-900 bg-opacity-60 flex items-center justify-center z-50 p-4">
+                                <div className="bg-white rounded-lg p-6 md:p-10 w-full max-w-lg md:max-w-4xl shadow-2xl relative overflow-y-auto max-h-full">
+                                    {/* Modal Header */}
+                                    <button
+                                        onClick={() => setIsModalOpen(false)}
+                                        className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-3xl font-bold"
+                                    >
+                                        &times;
+                                    </button>
+
+                                    <div className="mt-6 space-y-6">
+                                        {/* Tab Switch Buttons */}
+                                        <div className="flex justify-center space-x-4">
+                                            <button
+                                                onClick={() => setActiveTab("Game")}
+                                                className={`px-4 py-2 rounded-full shadow-md text-lg transition-all ${activeTab === "Game" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"} hover:bg-blue-600 focus:outline-none`}
+                                            >
+                                                Game
+                                            </button>
+                                            <button
+                                                onClick={() => setActiveTab("Practice")}
+                                                className={`px-4 py-2 rounded-full shadow-md text-lg transition-all ${activeTab === "Practice" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"} hover:bg-blue-600 focus:outline-none`}
+                                            >
+                                                Practice
+                                            </button>
+                                        </div>
+
+                                        {/* Modal Content */}
+                                        <div className="mt-8 text-center">
+                                    
+                                            <p className="text-4xl font-extrabold text-blue-600 mt-2">
+                                                Session Percentage: {freeThrowPercentage}%
+                                            </p>
+                                            <p className="text-lg font-medium text-gray-600 mt-2">
+                                                Total Sessions: {totalNumberOfSessions}
+                                            </p>
+
+                                            {tabData.length === 0 ? (
+                                                <p className="text-lg text-gray-500 mt-6">
+                                                    No {activeTab.toLowerCase()} sessions recorded.
+                                                </p>
+                                            ) : (
+                                                <div className="grid gap-8 mt-10">
+                                                    <div className="bg-blue-50 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-transform transform hover:scale-105">
+                                                        <p className="text-lg font-medium text-gray-700">
+                                                            <span className="font-semibold">Total Made:</span> {totalFTMade}
+                                                            <span className="mx-4"></span>
+                                                            <span className="font-semibold">Total Attempted:</span> {totalFTAttempted}
                                                         </p>
-                                                    ) : (
-                                                        <div id="metrics" className="grid gap-4 md:gap-12 pt-8">
-                                                            <div className="bg-blue-50 p-4 md:p-6 rounded-lg shadow-md transform transition duration-500 hover:scale-105">
-                                                                <p className="text-md md:text-lg text-gray-800">
-                                                                    <span className="font-semibold">Total Made:</span> {totalFTMade}
-                                                                    <span className="mx-2 md:mx-3"></span>
-                                                                    <span className="font-semibold">Total Attempted:</span> {totalFTAttempted}
-                                                                </p>
-                                                            </div>
+                                                    </div>
 
-                                                            <div className="grid gap-4 md:gap-12 sm:grid-cols-1 md:grid-cols-2 pt-1 mt-8">
-                                                                <div className="bg-green-50 p-4 md:p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-105">
-                                                                    <h3 className="font-semibold text-xl md:text-2xl text-green-700 mb-2">Best Session</h3>
-                                                                    <p className="text-md md:text-lg text-gray-800">
-                                                                        <span className="font-semibold">Made:</span> {bestMade} <br />
-                                                                        <span className="font-semibold">Attempted:</span> {bestAttempted} <br />
-                                                                        <span className="font-semibold">Percentage:</span> {bestPercentage}%
-                                                                    </p>
-                                                                </div>
-
-                                                                <div className="bg-red-50 p-4 md:p-6 rounded-lg shadow-lg transform transition duration-500 hover:scale-105">
-                                                                    <h3 className="font-semibold text-xl md:text-2xl text-red-700 mb-2">Worst Session</h3>
-                                                                    <p className="text-md md:text-lg text-gray-800">
-                                                                        <span className="font-semibold">Made:</span> {worstMade} <br />
-                                                                        <span className="font-semibold">Attempted:</span> {worstAttempted} <br />
-                                                                        <span className="font-semibold">Percentage:</span> {worstPercentage}%
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-
-                                                            {/* Include Last 5 Sessions Line Chart */}
-                                                            <div className="mt-8">
-                                                                <h2 className="text-xl md:text-2xl font-semibold text-gray-700">
-                                                                    Last 5 Sessions
-                                                                </h2>
-                                                                <Last5LineChart data={last5Sessions} />
-                                                            </div>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                        <div className="bg-green-50 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-transform transform hover:scale-105">
+                                                            <h3 className="text-xl font-semibold text-green-700">Best Session</h3>
+                                                            <p className="text-lg text-gray-700 mt-2">
+                                                                <span className="font-semibold">Made:</span> {bestMade}<br />
+                                                                <span className="font-semibold">Attempted:</span> {bestAttempted}<br />
+                                                                <span className="font-semibold">Percentage:</span> {bestPercentage}%
+                                                            </p>
                                                         </div>
-                                                    )}
+
+                                                        <div className="bg-red-50 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-transform transform hover:scale-105">
+                                                            <h3 className="text-xl font-semibold text-red-700">Worst Session</h3>
+                                                            <p className="text-lg text-gray-700 mt-2">
+                                                                <span className="font-semibold">Made:</span> {worstMade}<br />
+                                                                <span className="font-semibold">Attempted:</span> {worstAttempted}<br />
+                                                                <span className="font-semibold">Percentage:</span> {worstPercentage}%
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Include Last 5 Sessions Line Chart */}
+                                                    <div className="mt-10">
+                                                        <h2 className="text-2xl font-bold text-gray-700">
+                                                            Last 5 Sessions
+                                                        </h2>
+                                                        <div className="mt-6">
+                                                            <Last5LineChart data={last5Sessions} />
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            )}
                                         </div>
                                     </div>
-                                )}
+                                </div>
                             </div>
                         )}
                     </div>
-                </div>
+                )}
             </div>
         </div>
+    </div>
+</div>
+
     );
 }

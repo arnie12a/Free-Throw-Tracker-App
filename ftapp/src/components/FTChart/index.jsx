@@ -1,5 +1,28 @@
-import React, { useEffect, useRef, useState } from 'react';
-import * as d3 from 'd3';
+import React, { useState } from 'react';
+import { Line } from 'react-chartjs-2';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+    TimeScale
+} from 'chart.js';
+import 'chartjs-adapter-date-fns';
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+    TimeScale
+);
 
 const FTChart = ({ data }) => {
     const formatDate = (dateStr) => {
@@ -59,164 +82,117 @@ const FTChart = ({ data }) => {
     const yearlyData = calculateYearlyPercentage(data);
 
     const [view, setView] = useState('yearly');
-    const chartRef = useRef(null);
 
-    useEffect(() => {
-        drawChart();
-    }, [view]);
+    const getChartData = () => {
+        const chartData = view === 'yearly' ? yearlyData : monthlyData;
 
-    const drawChart = () => {
-        const data = view === 'yearly' ? yearlyData : monthlyData;
-        const parseTime = d3.timeParse(view === 'yearly' ? '%Y' : '%Y-%m');
-        const formatTime = d3.timeFormat(view === 'yearly' ? '%Y' : '%b %Y');
+        return {
+            labels: chartData.map(d => view === 'yearly' ? d.year : d.month),
+            datasets: [
+                {
+                    label: 'Free Throw Percentage',
+                    data: chartData.map(d => d.percentage),
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.3)', // Softer background
+                    fill: true,
+                    tension: 0.3, // Smoother curve
+                    pointBackgroundColor: '#34D399', // Tailwind's teal color
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#34D399',
+                    pointRadius: 6, // Bigger points for visibility
+                    pointHoverRadius: 8, // Enlarge on hover
+                },
+            ],
+        };
+    };
 
-        d3.select(chartRef.current).select('svg').remove();
+    const getMinPercentage = () => {
+        const chartData = view === 'yearly' ? yearlyData : monthlyData;
+        const percentages = chartData.map(d => d.percentage);
+        const minPercentage = Math.min(...percentages);
+        return Math.max(0, Math.floor(minPercentage / 5) * 5 - 10); // Round down to nearest multiple of 5 and subtract 10
+    };
 
-        const svgWidth = chartRef.current.clientWidth;
-        const svgHeight = 300;
-        const margin = { top: 20, right: 20, bottom: 70, left: 50 };
+    const getMaxPercentage = () => {
+        const chartData = view === 'yearly' ? yearlyData : monthlyData;
+        const percentages = chartData.map(d => d.percentage);
+        const maxPercentage = Math.max(...percentages);
+        return Math.ceil(maxPercentage / 5) * 5; // Round up to nearest multiple of 5
+    };
 
-        const svg = d3.select(chartRef.current)
-            .append('svg')
-            .attr('width', svgWidth)
-            .attr('height', svgHeight)
-            .append('g')
-            .attr('transform', `translate(${margin.left},${margin.top})`);
-
-        const width = svgWidth - margin.left - margin.right;
-        const height = svgHeight - margin.top - margin.bottom;
-
-        const xDomain = d3.extent(data, d => parseTime(view === 'yearly' ? d.year : d.month));
-        const x = d3.scaleTime()
-            .domain(xDomain)
-            .range([0, width])
-            .nice();
-
-        const minY = Math.min(...data.map(d => d.percentage)) - 10;
-        const y = d3.scaleLinear()
-            .domain([minY, 100])
-            .range([height, 0]);
-
-        const line = d3.line()
-            .x(d => x(parseTime(view === 'yearly' ? d.year : d.month)))
-            .y(d => y(d.percentage));
-
-        const xAxis = svg.append('g')
-            .attr('transform', `translate(0,${height})`)
-            .call(d3.axisBottom(x).ticks(data.length).tickFormat(d => formatTime(d)));
-
-        if (view !== 'yearly') {
-            xAxis.selectAll('text')
-                .attr('transform', 'rotate(-45)')
-                .style('text-anchor', 'end');
-        }
-
-        svg.append('g')
-            .call(d3.axisLeft(y));
-
-        svg.append('path')
-            .datum(data)
-            .attr('fill', 'none')
-            .attr('stroke', 'steelblue')
-            .attr('stroke-width', 1.5)
-            .attr('d', line)
-            .attr('opacity', 0)
-            .transition()
-            .duration(1000)
-            .attr('opacity', 1);
-
-        svg.selectAll('.dot')
-            .data(data)
-            .enter().append('circle')
-            .attr('class', 'dot')
-            .attr('cx', d => x(parseTime(view === 'yearly' ? d.year : d.month)))
-            .attr('cy', d => y(d.percentage))
-            .attr('r', 4)
-            .attr('fill', 'steelblue')
-            .attr('opacity', 0)
-            .transition()
-            .duration(1000)
-            .attr('opacity', 1);
-
-        // Tooltip filter for drop shadow
-        const defs = d3.select(chartRef.current).append('defs');
-        const filter = defs.append('filter')
-            .attr('id', 'drop-shadow')
-            .attr('height', '130%');
-
-        filter.append('feGaussianBlur')
-            .attr('in', 'SourceAlpha')
-            .attr('stdDeviation', 3);
-
-        filter.append('feOffset')
-            .attr('dx', 2)
-            .attr('dy', 2)
-            .attr('result', 'offsetblur');
-
-        filter.append('feFlood')
-            .attr('flood-color', 'rgba(0, 0, 0, 0.5)');
-
-        filter.append('feComposite')
-            .attr('in2', 'offsetblur')
-            .attr('operator', 'in');
-
-        const feMerge = filter.append('feMerge');
-        feMerge.append('feMergeNode');
-        feMerge.append('feMergeNode').attr('in', 'SourceGraphic');
-
-        // Create the tooltip
-        const tooltip = d3.select(chartRef.current)
-        .append('div')
-        .attr('class', 'tooltip')
-        .style('opacity', 0)
-        .style('position', 'absolute')
-        .style('background', 'rgba(0, 0, 0, 0.75)') // Semi-transparent background
-        .style('padding', '10px')
-        .style('border', '1px solid #666')
-        .style('border-radius', '10px')
-        .style('filter', 'url(#drop-shadow)') // Add shadow
-        .style('pointer-events', 'none');
-
-        // Tooltip text styling
-        tooltip.append('div')
-        .style('font-size', '12px')
-        .style('color', '#ffffff') // Set text color to white
-        .style('font-weight', 'bold');
-
-        // Update mouse events for tooltips
-        svg.selectAll('.dot')
-            .on('mouseover', function(event, d) {
-                d3.select(this).attr('r', 6);
-                tooltip.transition()
-                    .duration(200)
-                    .style('opacity', .9);
-                tooltip.html(`Date: ${formatTime(parseTime(view === 'yearly' ? d.year : d.month))}<br>Percentage: ${d.percentage}%`)
-                    .style('left', (event.pageX + 10) + 'px')
-                    .style('top', (event.pageY - 28) + 'px');
-            })
-            .on('mouseout', function() {
-                d3.select(this).attr('r', 4);
-                tooltip.transition()
-                    .duration(500)
-                    .style('opacity', 0);
-            });
+    const chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false, // Ensures better responsiveness
+        plugins: {
+            legend: {
+                display: false,
+            },
+            tooltip: {
+                callbacks: {
+                    label: function (context) {
+                        return `Percentage: ${context.raw}%`;
+                    },
+                },
+                backgroundColor: '#111827', // Darker background for tooltip
+                titleColor: '#F9FAFB', // Tailwind white
+                bodyColor: '#F9FAFB',
+                titleFont: { weight: 'bold' },
+                borderWidth: 1,
+                borderColor: '#6B7280', // Tailwind gray
+                borderRadius: 8, // Rounded tooltip
+                padding: 10,
+                animation: {
+                    duration: 400, // Smooth tooltip animation
+                },
+            },
+        },
+        scales: {
+            x: {
+                type: 'time',
+                time: {
+                    unit: view === 'yearly' ? 'year' : 'month',
+                    displayFormats: {
+                        year: 'yyyy',
+                        month: 'MMM yyyy',
+                    },
+                },
+                grid: { display: false }, // Remove grid lines for cleaner look
+                ticks: {
+                    align: 'start', // Ensure the first tick is not right on the vertical axis
+                },
+            },
+            y: {
+                beginAtZero: false,
+                suggestedMin: getMinPercentage(),
+                suggestedMax: getMaxPercentage(),
+                ticks: {
+                    stepSize: 5, // Ensure steps are multiples of 5
+                },
+                title: { display: true, text: 'Free Throw Percentage', font: { size: 14 } },
+                grid: { color: '#E5E7EB' }, // Light gray grid lines
+            },
+        },
     };
 
     return (
-        <div className="p-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div className="flex justify-center">
-                <div ref={chartRef} className="w-full"></div>
+        <div className="p-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="flex justify-center w-full h-96"> {/* Fixed chart height for consistency */}
+                <Line data={getChartData()} options={chartOptions} />
             </div>
-            {/* Buttons Section */}
-            <div className="flex flex-col items-center space-y-4">
+            <div className="flex justify-center items-center flex-col space-y-4"> {/* Centering the buttons */}
                 <button
-                    className={`px-4 py-2 rounded-md text-white ${view === 'yearly' ? 'bg-gray-500' : 'bg-gray-400 hover:bg-gray-500'}`}
+                    className={`px-6 py-3 rounded-lg shadow-md transition-all duration-300 text-white font-semibold ${
+                        view === 'yearly' ? 'bg-teal-500' : 'bg-teal-400 hover:bg-teal-500'
+                    }`}
                     onClick={() => setView('yearly')}
                 >
                     Yearly
                 </button>
                 <button
-                    className={`px-4 py-2 rounded-md text-white ${view === 'monthly' ? 'bg-red-500' : 'bg-red-400 hover:bg-red-500'}`}
+                    className={`px-6 py-3 rounded-lg shadow-md transition-all duration-300 text-white font-semibold ${
+                        view === 'monthly' ? 'bg-red-500' : 'bg-red-400 hover:bg-red-500'
+                    }`}
                     onClick={() => setView('monthly')}
                 >
                     Monthly
