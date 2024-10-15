@@ -1,26 +1,21 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Chart, registerables } from 'chart.js';
 
-Chart.register(...registerables); // Register all Chart.js components
+Chart.register(...registerables);
 
 const Last5LineChart = ({ data }) => {
     const chartRef = useRef();
     const [dimensions, setDimensions] = useState({ width: 0, height: 300 });
 
     useEffect(() => {
-        // Function to update dimensions based on container size
         const updateDimensions = () => {
             const width = chartRef.current ? chartRef.current.clientWidth : 0;
             setDimensions({ width, height: 300 });
         };
 
-        // Initial dimensions update
         updateDimensions();
-
-        // Event listener for window resize
         window.addEventListener('resize', updateDimensions);
 
-        // Clean up the event listener on component unmount
         return () => window.removeEventListener('resize', updateDimensions);
     }, []);
 
@@ -28,14 +23,20 @@ const Last5LineChart = ({ data }) => {
         if (data.length === 0 || dimensions.width === 0) return;
 
         const ctx = chartRef.current.getContext('2d');
-
-        // Prepare the data for Chart.js
         const labels = data.map((_, i) => `Session ${i + 1}`);
         const percentages = data.map(d => d.percentage);
         const ftMade = data.map(d => d.ftMade);
         const ftAttempted = data.map(d => d.ftAttempted);
 
-        // Create the chart
+        // Calculate minimum Y-axis bound (minimum value - 10, rounded down to nearest multiple of 5)
+        const minPercentage = Math.min(...percentages);
+        const yMin = Math.floor((minPercentage - 10) / 5) * 5;
+
+        // Create gradient for the line chart
+        const gradient = ctx.createLinearGradient(0, 0, dimensions.width, 0);
+        gradient.addColorStop(0, 'rgba(99, 102, 241, 0.8)'); // Indigo start
+        gradient.addColorStop(1, 'rgba(79, 209, 197, 0.8)'); // Teal end
+
         const chart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -45,11 +46,13 @@ const Last5LineChart = ({ data }) => {
                         label: 'Free Throw Percentage',
                         data: percentages,
                         fill: false,
-                        borderColor: 'blue',
-                        borderWidth: 2,
-                        tension: 0.2,
-                        pointRadius: 5,
+                        borderColor: gradient,
+                        borderWidth: 3,
+                        pointBackgroundColor: 'rgba(128, 90, 213, 1)', // Purple points
+                        pointBorderColor: '#fff',
+                        pointRadius: 6,
                         pointHoverRadius: 8,
+                        tension: 0.3, // Smooth lines
                     },
                 ],
             },
@@ -61,17 +64,15 @@ const Last5LineChart = ({ data }) => {
                         enabled: true,
                         mode: 'index',
                         intersect: false,
-                        backgroundColor: 'rgba(0, 0, 0, 0.75)',
-                        titleColor: '#ffffff',
-                        bodyColor: '#ffffff',
-                        padding: 10,
-                        borderRadius: 8,
-                        borderColor: '#666',
+                        backgroundColor: 'rgba(34, 34, 34, 0.8)', // Dark tooltip
+                        titleColor: '#f3f4f6', // Light text
+                        bodyColor: '#e5e7eb', // Lighter text
+                        padding: 12,
+                        borderRadius: 12,
+                        borderColor: '#4b5563', // Subtle gray border
                         borderWidth: 1,
                         callbacks: {
-                            title: (tooltipItems) => {
-                                return `Session ${tooltipItems[0].label}`;
-                            },
+                            title: (tooltipItems) => `Session ${tooltipItems[0].label}`,
                             label: (tooltipItem) => {
                                 const index = tooltipItem.dataIndex;
                                 return `Percentage: ${percentages[index]}%`;
@@ -91,25 +92,33 @@ const Last5LineChart = ({ data }) => {
                         title: {
                             display: true,
                             text: 'Sessions',
+                            color: '#6b7280', // Muted gray
                         },
                         grid: {
-                            display: true,
+                            display: false,
                         },
                         ticks: {
-                            autoSkip: false, // Prevent auto skipping of ticks
-                            maxRotation: 0, // Prevent rotation of ticks
+                            color: '#6b7280', // Muted gray ticks
+                            maxRotation: 0,
                         },
                     },
                     y: {
                         title: {
                             display: true,
                             text: 'Percentage',
+                            color: '#6b7280', // Muted gray
                         },
-                        min: 0,
-                        max: 100,
+                        min: yMin, // Minimum value calculated dynamically
+                        max: 100, // Fixed maximum value
                         ticks: {
-                            callback: (value) => value + '%',
-                            padding: 10, // Increase padding between y-axis and points
+                            stepSize: 5, // Steps in multiples of 5
+                            callback: (value) => `${value}%`,
+                            padding: 10,
+                            color: '#6b7280', // Muted gray ticks
+                        },
+                        grid: {
+                            borderDash: [5, 5], // Dotted lines
+                            color: 'rgba(209, 213, 219, 0.3)', // Light gray grid
                         },
                     },
                 },
@@ -117,13 +126,15 @@ const Last5LineChart = ({ data }) => {
         });
 
         return () => {
-            chart.destroy(); // Clean up the chart instance on unmount
+            chart.destroy();
         };
     }, [data, dimensions]);
 
     return (
-        <div className="w-full h-auto p-4 bg-white shadow-md rounded-lg">
-            <canvas ref={chartRef} className="w-full h-64"></canvas>
+        <div className="w-full h-auto p-6 bg-gray-100 shadow-lg rounded-lg">
+            <div className="relative">
+                <canvas ref={chartRef} className="w-full h-72"></canvas>
+            </div>
         </div>
     );
 };
