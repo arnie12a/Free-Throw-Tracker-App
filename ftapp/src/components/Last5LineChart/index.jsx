@@ -23,7 +23,7 @@ const Last5LineChart = ({ data }) => {
         if (data.length === 0 || dimensions.width === 0) return;
 
         const ctx = chartRef.current.getContext('2d');
-        const labels = data.map((_, i) => `Session ${i + 1}`);
+        const labels = data.map((_, i) => `${i + 1}`);
         const percentages = data.map(d => d.percentage);
         const ftMade = data.map(d => d.ftMade);
         const ftAttempted = data.map(d => d.ftAttempted);
