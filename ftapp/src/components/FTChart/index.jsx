@@ -90,7 +90,7 @@ const FTChart = ({ data }) => {
             labels: chartData.map(d => view === 'yearly' ? d.year : d.month),
             datasets: [
                 {
-                    label: 'Free Throw Percentage',
+                    label: 'Free Throw Percentage (%)',
                     data: chartData.map(d => d.percentage),
                     borderColor: 'rgba(75, 192, 192, 1)',
                     backgroundColor: 'rgba(75, 192, 192, 0.3)', // Softer background

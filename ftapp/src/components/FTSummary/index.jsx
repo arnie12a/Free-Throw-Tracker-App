@@ -21,6 +21,8 @@ export default function FTSummary() {
     const [activeTab, setActiveTab] = useState("Game");
     const [last5Sessions, setLast5Sessions] = useState([]);
     const [totalNumberOfSessions, setTotalNumberOfSessions] = useState(0);
+    const [createMoreDetails, setCreateMoreDetails] = useState(false);
+    const [cancelMoreDetails, setCancelMoreDetails] = useState(false);
     
 
     const ss = require('simple-statistics');
