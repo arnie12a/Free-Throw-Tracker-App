@@ -169,7 +169,11 @@ export default function FTSummary() {
                         </div>
 
                         <button
-                            onClick={() => setIsModalOpen(true)}
+                            onClick={() => {
+                                setIsModalOpen(true);
+                                setActiveTab('Game');
+
+                            }}
                             className="mt-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-full shadow-md transition-transform transform hover:scale-105 focus:outline-none"
                         >
                             View More Details
@@ -180,7 +184,10 @@ export default function FTSummary() {
                                 <div className="bg-white rounded-lg p-6 md:p-10 w-full max-w-lg md:max-w-4xl shadow-2xl relative overflow-y-auto max-h-full">
                                     {/* Modal Header */}
                                     <button
-                                        onClick={() => setIsModalOpen(false)}
+                                        onClick={() => {
+                                            setIsModalOpen(false);
+                                            setCancelMoreDetails(true);
+                                        }}
                                         className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-3xl font-bold"
                                     >
                                         &times;
