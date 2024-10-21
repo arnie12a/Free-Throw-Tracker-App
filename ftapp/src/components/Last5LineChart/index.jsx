@@ -52,7 +52,7 @@ const Last5LineChart = ({ data }) => {
                         pointBorderColor: '#fff',
                         pointRadius: 6,
                         pointHoverRadius: 8,
-                        tension: 0.3, // Smooth lines
+                        tension: 0, // Smooth lines
                     },
                 ],
             },

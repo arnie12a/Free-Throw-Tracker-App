@@ -110,7 +110,7 @@ export default function FTSummary() {
             setFTSessions(sessions);
             const percentage = await getFTPercentage(sessions);
             setUserShootingPercentage(user, percentage.toFixed(2));
-            
+            setActiveTab('All');
         };
 
         fetchDataLoad();
@@ -132,7 +132,14 @@ export default function FTSummary() {
     // Handle the tab functionality switching
     useEffect(() => {
         const fetchNewTabData = async (activeTab) => {
-            const tempSessions = FTSessions.filter(session => session.sessionType === activeTab.toLowerCase());
+            let tempSessions = []
+            if(activeTab == 'All'){
+                tempSessions = FTSessions
+            }
+            else {
+                tempSessions = FTSessions.filter(session => session.sessionType === activeTab.toLowerCase());
+
+            }
             const percentage = await getFTPercentage(tempSessions);
             setFreeThrowPercentage(Math.round(percentage));
             getBestWorstSessions(tempSessions);
@@ -141,7 +148,6 @@ export default function FTSummary() {
             setTotalNumberOfSessions(tempSessions.length);
 
         }
-        console.log('Tab name: ', activeTab);
         
         fetchNewTabData(activeTab);
     }, [activeTab])
@@ -171,6 +177,7 @@ export default function FTSummary() {
                         <button
                             onClick={() => {
                                 setIsModalOpen(true);
+                                setActiveTab('Practice');
                                 setActiveTab('Game');
 
                             }}
@@ -187,6 +194,7 @@ export default function FTSummary() {
                                         onClick={() => {
                                             setIsModalOpen(false);
                                             setCancelMoreDetails(true);
+                                            setActiveTab('All');
                                         }}
                                         className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-3xl font-bold"
                                     >

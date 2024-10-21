@@ -15,6 +15,7 @@ const Home = () => {
     const [goal, setGoal] = useState('');
     const [ftPercentage, setFTPercentage] = useState(0);
     const [submitted, setSubmitted] = useState(false);
+    const [difference, setDifference] = useState(0);
     
     useEffect(() => {
         getUserInfo();
@@ -58,19 +59,34 @@ const Home = () => {
             setFormVisible(true)
         }
         setFTPercentage(userData[0].ftPercentage);
+        setDifference(userData[0].ftGoalPercentage - userData[0].ftPercentage)
+        console.log(difference)
         return 
     }
 
     return (
         <div className="min-h-screen flex justify-center items-center bg-gray-100">
-            <div className="bg-zinc-400 shadow-xl rounded-lg p-8 max-w-lg w-full border border-gray-200">
-                
+            <div className="bg-zinc-500 shadow-xl rounded-lg p-8 max-w-lg w-full border border-gray-200">
+
                 { fullName && goal && position ? (
                     <div className="text-center">
                         <h1 className="text-3xl font-extrabold text-gray-50">Welcome, {fullName}</h1>
                         <div className="mt-4">
                             <h2 className="text-xl text-gray-200">Position: {position}</h2>
                             <h3 className="text-xl text-gray-200 mt-2 pb-4">FT Percentage: {ftPercentage}%</h3>
+                            <h3 className="text-xl text-gray-200 mt-2 pb-4">
+                                {difference < 0 ? (
+                                    <>
+                                    You are shooting <span className="text-red-500">{Math.abs(difference).toFixed(2)}%</span> under your goal. Keep grinding!
+                                    </>
+                                ) : (
+                                    <>
+                                    You are shooting <span className="text-green-500">{difference.toFixed(2)}%</span> above your goal! Congratulations!
+                                    </>
+                                )}
+                            </h3>
+
+
                             <a 
                                 href='/addFTSession' 
                                 className="inline-block px-6 py-2 bg-blue-600 text-white font-medium text-sm leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out p-4"

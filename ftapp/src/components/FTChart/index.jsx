@@ -95,7 +95,7 @@ const FTChart = ({ data }) => {
                     borderColor: 'rgba(75, 192, 192, 1)',
                     backgroundColor: 'rgba(75, 192, 192, 0.3)', // Softer background
                     fill: true,
-                    tension: 0.3, // Smoother curve
+                    tension: 0, // Smoother curve
                     pointBackgroundColor: '#34D399', // Tailwind's teal color
                     pointBorderColor: '#fff',
                     pointHoverBackgroundColor: '#fff',

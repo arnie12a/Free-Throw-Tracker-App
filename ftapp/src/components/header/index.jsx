@@ -15,7 +15,7 @@ const Header = () => {
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <div className="flex items-center space-x-3 rtl:space-x-reverse">
           <img
-            src="https://media.tenor.com/NlIpPfwJ3qgAAAAi/miss-airball.gif"
+            src="missedShot.gif"
             className="w-16 h-16"
             alt="Flowbite Logo"
           />
