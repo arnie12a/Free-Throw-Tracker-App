@@ -23,9 +23,9 @@ export default function FTSummary() {
     const [totalNumberOfSessions, setTotalNumberOfSessions] = useState(0);
     const [createMoreDetails, setCreateMoreDetails] = useState(false);
     const [cancelMoreDetails, setCancelMoreDetails] = useState(false);
-    
+    const [showMoreDetailsButton, setShowMoreDetailsButton] = useState(true);    
 
-    const ss = require('simple-statistics');
+
 
     const calculateShootingPercentage = (made, attempted) => (made / attempted) * 100;
 
@@ -103,6 +103,15 @@ export default function FTSummary() {
         });
     };
 
+    const checkUniqueSessions = (arr) => {
+        let temp1 = arr.filter(session => session.sessionType === 'practice')
+        let temp2 = arr.filter(session => session.sessionType === 'game')
+        if (temp1.length == arr.length || temp2.length ==arr.length) {
+            return false;
+        }
+        return true;
+    }
+
     useEffect(() => {
         const fetchDataLoad = async () => {
             const sessions = await getFTSession();
@@ -111,6 +120,8 @@ export default function FTSummary() {
             const percentage = await getFTPercentage(sessions);
             setUserShootingPercentage(user, percentage.toFixed(2));
             setActiveTab('All');
+            setShowMoreDetailsButton(checkUniqueSessions(sessions));
+
         };
 
         fetchDataLoad();
@@ -123,7 +134,7 @@ export default function FTSummary() {
             getBestWorstSessions(FTSessions);
             const temp = getLast5Sessions(FTSessions);
             setLast5Sessions(temp);
-            const last5 = await getFTPercentage(getLast5Sessions(FTSessions));
+            //const last5 = await getFTPercentage(getLast5Sessions(FTSessions));
         };
 
         fetchData();
@@ -133,6 +144,7 @@ export default function FTSummary() {
     useEffect(() => {
         const fetchNewTabData = async (activeTab) => {
             let tempSessions = []
+            
             if(activeTab == 'All'){
                 tempSessions = FTSessions
             }
@@ -174,7 +186,8 @@ export default function FTSummary() {
                             <FTChart data={FTSessions} />
                         </div>
 
-                        <button
+                        {showMoreDetailsButton && (
+                            <button
                             onClick={() => {
                                 setIsModalOpen(true);
                                 setActiveTab('Practice');
@@ -185,6 +198,8 @@ export default function FTSummary() {
                         >
                             View More Details
                         </button>
+                        )}
+                        
 
                         {isModalOpen && (
                             <div className="fixed inset-0 bg-gray-900 bg-opacity-60 flex items-center justify-center z-50 p-4">
@@ -205,17 +220,18 @@ export default function FTSummary() {
                                         {/* Tab Switch Buttons */}
                                         <div className="flex justify-center space-x-4">
                                             <button
-                                                onClick={() => setActiveTab("Game")}
-                                                className={`px-4 py-2 rounded-full shadow-md text-lg transition-all ${activeTab === "Game" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"} hover:bg-blue-600 focus:outline-none`}
-                                            >
-                                                Game
-                                            </button>
-                                            <button
                                                 onClick={() => setActiveTab("Practice")}
                                                 className={`px-4 py-2 rounded-full shadow-md text-lg transition-all ${activeTab === "Practice" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"} hover:bg-blue-600 focus:outline-none`}
                                             >
                                                 Practice
                                             </button>
+                                            <button
+                                                onClick={() => setActiveTab("Game")}
+                                                className={`px-4 py-2 rounded-full shadow-md text-lg transition-all ${activeTab === "Game" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"} hover:bg-blue-600 focus:outline-none`}
+                                            >
+                                                Game
+                                            </button>
+                                            
                                         </div>
 
                                         {/* Modal Content */}
