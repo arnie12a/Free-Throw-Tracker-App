@@ -130,8 +130,9 @@ const FTChart = ({ data }) => {
             },
             tooltip: {
                 callbacks: {
+                    title: () => '', // Removes the title (which is where the date comes from)
                     label: function (context) {
-                        return `Percentage: ${context.raw}%`;
+                        return `Percentage: ${context.raw}%`; // Display only the percentage
                     },
                 },
                 backgroundColor: '#111827', // Darker background for tooltip
@@ -145,7 +146,9 @@ const FTChart = ({ data }) => {
                 animation: {
                     duration: 400, // Smooth tooltip animation
                 },
+                displayColors: false, // Hides color boxes for datasets
             },
+            
         },
         scales: {
             x: {
