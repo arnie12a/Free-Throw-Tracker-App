@@ -49,7 +49,7 @@ export default function Leaderboard() {
 
     useEffect(() => {
         getUserFreeThrowPercentage();
-        fetch('/players_ft.json')
+        fetch('/playerData.json')
             .then(response => response.json())
             .then(data => {
                 setPlayers(data);
