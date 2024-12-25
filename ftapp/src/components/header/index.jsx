@@ -27,9 +27,9 @@ const Header = () => {
       backgroundColor: '#1565C0',
     },
   };
-// #2d75bd
+//rgb(78, 82, 86)
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: '#233e7a' }}>
+    <AppBar position="fixed" sx={{ backgroundColor: '#576c94' }}>
       <Toolbar>
         <div style={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
           <img src="missedShot.gif" alt="Logo" style={{ width: 40, height: 40, marginRight: 10 }} />
