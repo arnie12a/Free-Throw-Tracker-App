@@ -1,106 +1,119 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/authContext';
 import { useNavigate } from 'react-router-dom';
-
 import { db } from '../firebase/firebase';
+import { collection, addDoc } from 'firebase/firestore';
 
-import { collection, addDoc } from "firebase/firestore";
+// Material UI components
+import { TextField, RadioGroup, FormControlLabel, Radio, Button, FormControl, FormLabel, Grid, Box } from '@mui/material';
 
 export default function AddFTSession() {
-    const [date, setDate] = useState('');
-    const [ftMade, setFTMade] = useState(0);
-    const [ftAttempted, setFTAttempted] = useState(0);
-    const [sessionType, setSessionType] = useState('');
+  const [date, setDate] = useState('');
+  const [ftMade, setFTMade] = useState(0);
+  const [ftAttempted, setFTAttempted] = useState(0);
+  const [sessionType, setSessionType] = useState('');
 
-    const { currentUser } = useAuth()
-    const navigate = useNavigate();
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
 
+  const handleRadioChange = (e) => {
+    setSessionType(e.target.value);
+  };
 
-    const handleRadioChange = (e) => {
-        setSessionType(e.target.value);
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    if (ftMade > ftAttempted) {
+      console.log('Impossible! Try again');
+      return;
+    }
 
-        if(ftMade > ftAttempted) {
-            console.log('impossible try again')
-            return
-        }
-        
-        try {
-            const percentage = Math.round((ftMade/ftAttempted)*100)
-            await addDoc(collection(db, 'ftsessions'), {
-                ftMade: ftMade,
-                ftAttempted: ftAttempted,
-                percentage: percentage,
-                date: date,
-                sessionType: sessionType,
-                uid: currentUser.uid
-            });
-            navigate('/FTSummary')
+    try {
+      const percentage = Math.round((ftMade / ftAttempted) * 100);
+      await addDoc(collection(db, 'ftsessions'), {
+        ftMade: ftMade,
+        ftAttempted: ftAttempted,
+        percentage: percentage,
+        date: date,
+        sessionType: sessionType,
+        uid: currentUser.uid,
+      });
+      navigate('/FTSummary');
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-            
-        } catch (error) {
-            console.log(error)
-        }
-        
+  return (
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', bgcolor: 'background.default' }}>
+      <Box sx={{ bgcolor: 'white', p: 4, borderRadius: 2, boxShadow: 3, width: '100%', maxWidth: 400 }}>
+        <h1 style={{ textAlign: 'center', marginBottom: '16px', fontSize: '31px' }}>Add Free Throw Session</h1>
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                label="Date"
+                type="date"
+                fullWidth
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+                InputLabelProps={{ shrink: true }}
+                variant="outlined"
+              />
+            </Grid>
 
-    };
+            <Grid item xs={12}>
+              <TextField
+                label="Free Throws Made"
+                type="number"
+                fullWidth
+                value={ftMade}
+                onChange={(e) => setFTMade(parseInt(e.target.value))}
+                required
+                variant="outlined"
+              />
+            </Grid>
 
-    return (
-        <div className="bg-gray-100 flex justify-center items-center min-h-screen">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                <h1 className="text-2xl font-bold mb-6 text-center">Add Free Throw Session Data</h1>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                        <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date:</label>
-                        <input type="date" id="date" value={date} onChange={(e) => setDate(e.target.value)} required className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                    </div>
-                    <div>
-                        <label htmlFor="ftMade" className="block text-sm font-medium text-gray-700">Free Throws Made:</label>
-                        <input type="number" id="ftMade" value={ftMade} onChange={(e) => setFTMade(parseInt(e.target.value))} required className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                    </div>
-                    <div>
-                        <label htmlFor="ftAttempted" className="block text-sm font-medium text-gray-700">Free Throws Attempted:</label>
-                        <input type="number" id="ftAttempted" value={ftAttempted} onChange={(e) => setFTAttempted(parseInt(e.target.value))} required className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-                    </div>
+            <Grid item xs={12}>
+              <TextField
+                label="Free Throws Attempted"
+                type="number"
+                fullWidth
+                value={ftAttempted}
+                onChange={(e) => setFTAttempted(parseInt(e.target.value))}
+                required
+                variant="outlined"
+              />
+            </Grid>
 
-                    <div className="mt-4">
-                        <span className="block text-sm font-medium text-gray-700">Session Type:</span>
-                        <div className="mt-1">
-                            <label className="inline-flex items-center">
-                                <input
-                                    type="radio"
-                                    name="sessionType"
-                                    value="game"
-                                    checked={sessionType === 'game'}
-                                    onChange={handleRadioChange}
-                                    className="form-radio text-indigo-600"
-                                />
-                                <span className="ml-2">Game</span>
-                            </label>
-                            <label className="inline-flex items-center ml-6">
-                                <input
-                                    type="radio"
-                                    name="sessionType"
-                                    value="practice"
-                                    checked={sessionType === 'practice'}
-                                    onChange={handleRadioChange}
-                                    className="form-radio text-indigo-600"
-                                />
-                                <span className="ml-2">Practice</span>
-                            </label>
-                        </div>
-                    </div>
+            <Grid item xs={12}>
+              <FormControl component="fieldset" fullWidth>
+                <FormLabel component="legend">Session Type</FormLabel>
+                <RadioGroup row value={sessionType} onChange={handleRadioChange}>
+                  <FormControlLabel value="game" control={<Radio />} label="Game" />
+                  <FormControlLabel value="practice" control={<Radio />} label="Practice" />
+                </RadioGroup>
+              </FormControl>
+            </Grid>
 
-                    <div className="text-center">
-                        <button type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Submit</button>
-                    </div>
-
-                    
-                </form>
-            </div>
-        </div>
-    );
+            <Grid item xs={12}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                sx={{
+                  py: 1.5,
+                  '&:hover': { bgcolor: 'primary.dark' },
+                }}
+              >
+                Submit
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </Box>
+    </Box>
+  );
 }

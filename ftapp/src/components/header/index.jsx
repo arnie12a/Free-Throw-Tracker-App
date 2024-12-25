@@ -2,137 +2,165 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/authContext';
 import { doSignOut } from '../firebase/auth';
+import { AppBar, Toolbar, Typography, Button, Menu, MenuItem, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const Header = () => {
   const navigate = useNavigate();
   const { userLoggedIn } = useAuth();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  const handleMenuClick = (event) => setAnchorEl(event.currentTarget);
+  const handleMenuClose = () => setAnchorEl(null);
 
+  const buttonStyles = {
+    fontSize: '1.1rem',
+    fontWeight: 'bold',
+    padding: '6px 12px',
+    margin: '0 5px',
+    backgroundColor: '#1976D2',
+    color: 'white',
+    borderRadius: '8px',
+    '&:hover': {
+      backgroundColor: '#1565C0',
+    },
+  };
+// #2d75bd
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700 fixed w-full shadow-lg">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <div className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img
-            src="missedShot.gif"
-            className="w-16 h-16"
-            alt="Flowbite Logo"
-          />
-          <Link
-            to={userLoggedIn ? '/home' : '/'}
-            className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
+    <AppBar position="fixed" sx={{ backgroundColor: '#233e7a' }}>
+      <Toolbar>
+        <div style={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+          <img src="missedShot.gif" alt="Logo" style={{ width: 40, height: 40, marginRight: 10 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            sx={{ fontSize: '1.4rem', fontWeight: 'bold', color: 'white' }} // Adjusted text size for title
           >
-            {userLoggedIn ? 'Home' : 'Free Throw Tracker'}
-          </Link>
+            <Link
+              to={userLoggedIn ? '/home' : '/'}
+              style={{
+                textDecoration: 'none',
+                color: 'inherit',
+              }}
+            >
+              {userLoggedIn ? 'Home' : 'Free Throw Tracker'}
+            </Link>
+          </Typography>
         </div>
 
-        <button
-          onClick={toggleMobileMenu}
-          type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 transition-all"
-          aria-controls="navbar-dropdown"
-          aria-expanded={isMobileMenuOpen}
-        >
-          <span className="sr-only">Open main menu</span>
-          <svg
-            className="w-6 h-6"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16m-7 6h7"
-            />
-          </svg>
-        </button>
-
-        <div
-          className={`${
-            isMobileMenuOpen ? 'block' : 'hidden'
-          } w-full md:block md:w-auto transition-all duration-300 ease-in-out`}
-          id="navbar-dropdown"
-        >
-          <ul className="flex flex-col font-medium p-4 mt-4 border border-gray-200 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 space-y-4 md:space-y-0 md:space-x-4">
-            {userLoggedIn ? (
-              <>
-                <li>
-                  <Link
-                    to="/addFTSession"
-                    className="text-lg font-medium text-gray-900 hover:text-gray-700 dark:text-white dark:hover:text-gray-400"
-                  >
-                    Add
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/FTLog"
-                    className="text-lg font-medium text-gray-900 hover:text-gray-700 dark:text-white dark:hover:text-gray-400"
-                  >
-                    Log
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/leaderboard"
-                    className="text-lg font-medium text-gray-900 hover:text-gray-700 dark:text-white dark:hover:text-gray-400"
-                  >
-                    Leaderboard
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/FTSummary"
-                    className="text-lg font-medium text-gray-900 hover:text-gray-700 dark:text-white dark:hover:text-gray-400"
-                  >
-                    Statistics
-                  </Link>
-                </li>
-                <li>
-                  <button
+        {isMobile ? (
+          <>
+            <IconButton
+              edge="end"
+              color="inherit"
+              onClick={handleMenuClick}
+              aria-label="menu"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+              MenuListProps={{
+                'aria-labelledby': 'menu-button',
+              }}
+            >
+              {userLoggedIn ? (
+                <>
+                  <MenuItem onClick={handleMenuClose}>
+                    <Link to="/addFTSession" style={{ textDecoration: 'none', color: 'inherit', fontSize: '1rem' }}>
+                      Add
+                    </Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClose}>
+                    <Link to="/FTLog" style={{ textDecoration: 'none', color: 'inherit', fontSize: '1rem' }}>
+                      Log
+                    </Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClose}>
+                    <Link to="/leaderboard" style={{ textDecoration: 'none', color: 'inherit', fontSize: '1rem' }}>
+                      Leaderboard
+                    </Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClose}>
+                    <Link to="/FTSummary" style={{ textDecoration: 'none', color: 'inherit', fontSize: '1rem' }}>
+                      Statistics
+                    </Link>
+                  </MenuItem>
+                  <MenuItem
                     onClick={() => {
                       doSignOut().then(() => {
                         navigate('/login');
                       });
                     }}
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md focus:outline-none focus:ring-2 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                    style={{ ...buttonStyles }}
                   >
                     Logout
-                  </button>
-                </li>
+                  </MenuItem>
+                </>
+              ) : (
+                <>
+                  <MenuItem onClick={handleMenuClose}>
+                    <Link to="/login" style={{ textDecoration: 'none', ...buttonStyles }}>
+                      Log In
+                    </Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClose}>
+                    <Link to="/register" style={{ textDecoration: 'none', ...buttonStyles }}>
+                      Register
+                    </Link>
+                  </MenuItem>
+                </>
+              )}
+            </Menu>
+          </>
+        ) : (
+          <div style={{ display: 'flex' }}>
+            {userLoggedIn ? (
+              <>
+                <Button color="inherit" component={Link} to="/addFTSession" sx={{ fontSize: '1rem' }}>
+                  Add
+                </Button>
+                <Button color="inherit" component={Link} to="/FTLog" sx={{ fontSize: '1rem' }}>
+                  Log
+                </Button>
+                <Button color="inherit" component={Link} to="/leaderboard" sx={{ fontSize: '1rem' }}>
+                  Leaderboard
+                </Button>
+                <Button color="inherit" component={Link} to="/FTSummary" sx={{ fontSize: '1rem' }}>
+                  Statistics
+                </Button>
+                <Button
+                  onClick={() => {
+                    doSignOut().then(() => {
+                      navigate('/login');
+                    });
+                  }}
+                  sx={buttonStyles}
+                >
+                  Logout
+                </Button>
               </>
             ) : (
               <>
-                <ul className="flex items-center space-x-4">
-                  <li>
-                    <Link
-                      className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 transition duration-150 ease-in-out"
-                      to="/login"
-                    >
-                      Log In
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 transition duration-150 ease-in-out"
-                      to="/register"
-                    >
-                      Register
-                    </Link>
-                  </li>
-                </ul>
-
+                <Button component={Link} to="/login" sx={buttonStyles}>
+                  Log In
+                </Button>
+                <Button component={Link} to="/register" sx={buttonStyles}>
+                  Register
+                </Button>
               </>
             )}
-          </ul>
-        </div>
-      </div>
-    </nav>
+          </div>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 };
 

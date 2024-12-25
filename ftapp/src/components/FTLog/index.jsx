@@ -86,21 +86,21 @@ export default function FTLog() {
           <Table stickyHeader>
             <TableHead>
               <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>FT Made</TableCell>
-                <TableCell>FT Attempted</TableCell>
-                <TableCell>Session Type</TableCell>
-                <TableCell>Actions</TableCell>
+                <TableCell align="center">Date</TableCell>
+                <TableCell align="center">FT Made</TableCell>
+                <TableCell align="center">FT Attempted</TableCell>
+                <TableCell align="center">Session Type</TableCell>
+                <TableCell align="center">Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {FTSessions.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((session) => (
                 <TableRow hover key={session.id}>
-                  <TableCell>{session.date}</TableCell>
-                  <TableCell>{session.ftMade}</TableCell>
-                  <TableCell>{session.ftAttempted}</TableCell>
-                  <TableCell>{session.sessionType}</TableCell>
-                  <TableCell>
+                  <TableCell align="center">{session.date}</TableCell>
+                  <TableCell align="center">{session.ftMade}</TableCell>
+                  <TableCell align="center">{session.ftAttempted}</TableCell>
+                  <TableCell align="center">{session.sessionType}</TableCell>
+                  <TableCell align="center">
                     <Button color="primary" onClick={() => {
                       setCurrentSession(session);
                       setEditFTMade(session.ftMade);

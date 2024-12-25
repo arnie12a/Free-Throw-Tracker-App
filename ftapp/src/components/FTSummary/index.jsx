@@ -4,6 +4,7 @@ import { db } from "../firebase/firebase";
 import { useAuth } from '../contexts/authContext';
 import FTChart from '../FTChart';
 import Last5LineChart from '../Last5LineChart';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs, Typography } from '@mui/material';
 
 export default function FTSummary() {
     const [FTSessions, setFTSessions] = useState([]);
@@ -18,14 +19,10 @@ export default function FTSummary() {
     const [worstAttempted, setWorstAttempted] = useState(0);
     const [worstPercentage, setWorstPercentage] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [activeTab, setActiveTab] = useState("Game");
+    const [activeTab, setActiveTab] = useState(0);
     const [last5Sessions, setLast5Sessions] = useState([]);
     const [totalNumberOfSessions, setTotalNumberOfSessions] = useState(0);
-    const [createMoreDetails, setCreateMoreDetails] = useState(false);
-    const [cancelMoreDetails, setCancelMoreDetails] = useState(false);
-    const [showMoreDetailsButton, setShowMoreDetailsButton] = useState(true);    
-
-
+    const [showMoreDetailsButton, setShowMoreDetailsButton] = useState(true);
 
     const calculateShootingPercentage = (made, attempted) => (made / attempted) * 100;
 
@@ -106,7 +103,7 @@ export default function FTSummary() {
     const checkUniqueSessions = (arr) => {
         let temp1 = arr.filter(session => session.sessionType === 'practice')
         let temp2 = arr.filter(session => session.sessionType === 'game')
-        if (temp1.length == arr.length || temp2.length ==arr.length) {
+        if (temp1.length == arr.length || temp2.length == arr.length) {
             return false;
         }
         return true;
@@ -119,9 +116,8 @@ export default function FTSummary() {
             setFTSessions(sessions);
             const percentage = await getFTPercentage(sessions);
             setUserShootingPercentage(user, percentage.toFixed(2));
-            setActiveTab('All');
+            setActiveTab(0);  // Default to 'All'
             setShowMoreDetailsButton(checkUniqueSessions(sessions));
-
         };
 
         fetchDataLoad();
@@ -134,23 +130,19 @@ export default function FTSummary() {
             getBestWorstSessions(FTSessions);
             const temp = getLast5Sessions(FTSessions);
             setLast5Sessions(temp);
-            //const last5 = await getFTPercentage(getLast5Sessions(FTSessions));
         };
 
         fetchData();
     }, [FTSessions]);
 
-    // Handle the tab functionality switching
     useEffect(() => {
         const fetchNewTabData = async (activeTab) => {
             let tempSessions = []
-            
-            if(activeTab == 'All'){
-                tempSessions = FTSessions
-            }
-            else {
-                tempSessions = FTSessions.filter(session => session.sessionType === activeTab.toLowerCase());
 
+            if (activeTab === 0) {
+                tempSessions = FTSessions;
+            } else {
+                tempSessions = FTSessions.filter(session => session.sessionType === (activeTab === 1 ? 'practice' : 'game'));
             }
             const percentage = await getFTPercentage(tempSessions);
             setFreeThrowPercentage(Math.round(percentage));
@@ -158,148 +150,107 @@ export default function FTSummary() {
             const tempLast5 = getLast5Sessions(tempSessions);
             setLast5Sessions(tempLast5);
             setTotalNumberOfSessions(tempSessions.length);
-
         }
-        
+
         fetchNewTabData(activeTab);
-    }, [activeTab])
-
-    const getTabData = () => {
-        return FTSessions.filter(session => session.sessionType === activeTab.toLowerCase());
-    };
-
-    const tabData = getTabData();
-    
+    }, [activeTab]);
 
     return (
         <div className="bg-gray-50 flex items-center justify-center min-h-screen py-10 px-4">
-    <div className="w-full max-w-6xl mx-auto bg-white shadow-2xl rounded-lg overflow-hidden">
-        <div className="flex justify-center items-center h-full bg-gray-100 overflow-y-auto p-6 md:p-10">
-            <div className="space-y-8 bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-5xl">
-                {FTSessions.length > 0 && freeThrowPercentage && (
-                    <div className="space-y-8 text-center">
-                        <h1 className="text-5xl md:text-6xl font-extrabold text-blue-600">
-                            Free Throw Percentage: {freeThrowPercentage}%
-                        </h1>
+            <div className="w-full max-w-6xl mx-auto bg-white shadow-2xl rounded-lg overflow-hidden">
+                <div className="flex justify-center items-center h-full bg-gray-100 overflow-y-auto p-6 md:p-10">
+                    <div className="space-y-8 bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-5xl">
+                        {FTSessions.length > 0 && freeThrowPercentage && (
+                            <div className="space-y-8 text-center">
+                                <Typography variant="h3" color="primary">
+                                    Free Throw Percentage: {freeThrowPercentage}%
+                                </Typography>
 
-                        <div className="rounded-lg overflow-hidden shadow-lg bg-gray-50 p-4 md:p-6">
-                            <FTChart data={FTSessions} />
-                        </div>
+                                <div className="rounded-lg overflow-hidden shadow-lg bg-gray-50 p-4 md:p-6">
+                                    <FTChart data={FTSessions} />
+                                </div>
 
-                        {showMoreDetailsButton && (
-                            <button
-                            onClick={() => {
-                                setIsModalOpen(true);
-                                setActiveTab('Practice');
-                                setActiveTab('Game');
-
-                            }}
-                            className="mt-6 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-3 rounded-full shadow-md transition-transform transform hover:scale-105 focus:outline-none"
-                        >
-                            View More Details
-                        </button>
-                        )}
-                        
-
-                        {isModalOpen && (
-                            <div className="fixed inset-0 bg-gray-900 bg-opacity-60 flex items-center justify-center z-50 p-4">
-                                <div className="bg-white rounded-lg p-6 md:p-10 w-full max-w-lg md:max-w-4xl shadow-2xl relative overflow-y-auto max-h-full">
-                                    {/* Modal Header */}
-                                    <button
-                                        onClick={() => {
-                                            setIsModalOpen(false);
-                                            setCancelMoreDetails(true);
-                                            setActiveTab('All');
-                                        }}
-                                        className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-3xl font-bold"
+                                {showMoreDetailsButton && (
+                                    <Button
+                                        onClick={() => setIsModalOpen(true)}
+                                        variant="contained"
+                                        color="primary"
+                                        className="mt-6"
                                     >
-                                        &times;
-                                    </button>
+                                        View More Details
+                                    </Button>
+                                )}
 
-                                    <div className="mt-6 space-y-6">
-                                        {/* Tab Switch Buttons */}
-                                        <div className="flex justify-center space-x-4">
-                                            <button
-                                                onClick={() => setActiveTab("Practice")}
-                                                className={`px-4 py-2 rounded-full shadow-md text-lg transition-all ${activeTab === "Practice" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"} hover:bg-blue-600 focus:outline-none`}
-                                            >
-                                                Practice
-                                            </button>
-                                            <button
-                                                onClick={() => setActiveTab("Game")}
-                                                className={`px-4 py-2 rounded-full shadow-md text-lg transition-all ${activeTab === "Game" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"} hover:bg-blue-600 focus:outline-none`}
-                                            >
-                                                Game
-                                            </button>
-                                            
-                                        </div>
+                                <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+                                    <DialogTitle>More Details</DialogTitle>
+                                    <DialogContent>
+                                        <Tabs
+                                            value={activeTab}
+                                            onChange={(event, newValue) => setActiveTab(newValue)}
+                                            indicatorColor="primary"
+                                            textColor="primary"
+                                            variant="fullWidth"
+                                        >
+                                            <Tab label="All" />
+                                            <Tab label="Practice" />
+                                            <Tab label="Game" />
+                                        </Tabs>
 
-                                        {/* Modal Content */}
-                                        <div className="mt-8 text-center">
-                                    
-                                            <p className="text-4xl font-extrabold text-blue-600 mt-2">
-                                                Session Percentage: {freeThrowPercentage}%
-                                            </p>
-                                            <p className="text-lg font-medium text-gray-600 mt-2">
-                                                Total Sessions: {totalNumberOfSessions}
-                                            </p>
+                                        <div className="mt-6 text-center">
+                                            <Typography variant="h5">Session Percentage: {freeThrowPercentage}%</Typography>
+                                            <Typography variant="body1">Total Sessions: {totalNumberOfSessions}</Typography>
 
-                                            {tabData.length === 0 ? (
-                                                <p className="text-lg text-gray-500 mt-6">
-                                                    No {activeTab.toLowerCase()} sessions recorded.
-                                                </p>
+                                            {FTSessions.length === 0 ? (
+                                                <Typography variant="body1" color="textSecondary" className="mt-6">
+                                                    No sessions recorded.
+                                                </Typography>
                                             ) : (
-                                                <div className="grid gap-8 mt-10">
-                                                    <div className="bg-blue-50 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-transform transform hover:scale-105">
-                                                        <p className="text-lg font-medium text-gray-700">
-                                                            <span className="font-semibold">Total Made:</span> {totalFTMade}
-                                                            <span className="mx-4"></span>
-                                                            <span className="font-semibold">Total Attempted:</span> {totalFTAttempted}
-                                                        </p>
+                                                <div className="mt-10 space-y-6">
+                                                    <div className="p-4 bg-blue-50 rounded-lg">
+                                                        <Typography variant="body1">
+                                                            <strong>Total Made:</strong> {totalFTMade} | <strong>Total Attempted:</strong> {totalFTAttempted}
+                                                        </Typography>
                                                     </div>
 
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                        <div className="bg-green-50 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-transform transform hover:scale-105">
-                                                            <h3 className="text-xl font-semibold text-green-700">Best Session</h3>
-                                                            <p className="text-lg text-gray-700 mt-2">
-                                                                <span className="font-semibold">Made:</span> {bestMade}<br />
-                                                                <span className="font-semibold">Attempted:</span> {bestAttempted}<br />
-                                                                <span className="font-semibold">Percentage:</span> {bestPercentage}%
-                                                            </p>
+                                                        <div className="p-4 bg-green-50 rounded-lg">
+                                                            <Typography variant="h6">Best Session</Typography>
+                                                            <Typography variant="body1">
+                                                                <strong>Made:</strong> {bestMade}<br />
+                                                                <strong>Attempted:</strong> {bestAttempted}<br />
+                                                                <strong>Percentage:</strong> {bestPercentage}%
+                                                            </Typography>
                                                         </div>
 
-                                                        <div className="bg-red-50 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-transform transform hover:scale-105">
-                                                            <h3 className="text-xl font-semibold text-red-700">Worst Session</h3>
-                                                            <p className="text-lg text-gray-700 mt-2">
-                                                                <span className="font-semibold">Made:</span> {worstMade}<br />
-                                                                <span className="font-semibold">Attempted:</span> {worstAttempted}<br />
-                                                                <span className="font-semibold">Percentage:</span> {worstPercentage}%
-                                                            </p>
+                                                        <div className="p-4 bg-red-50 rounded-lg">
+                                                            <Typography variant="h6">Worst Session</Typography>
+                                                            <Typography variant="body1">
+                                                                <strong>Made:</strong> {worstMade}<br />
+                                                                <strong>Attempted:</strong> {worstAttempted}<br />
+                                                                <strong>Percentage:</strong> {worstPercentage}%
+                                                            </Typography>
                                                         </div>
                                                     </div>
 
-                                                    {/* Include Last 5 Sessions Line Chart */}
                                                     <div className="mt-10">
-                                                        <h2 className="text-2xl font-bold text-gray-700">
-                                                            Last 5 Sessions
-                                                        </h2>
-                                                        <div className="mt-6">
-                                                            <Last5LineChart data={last5Sessions} />
-                                                        </div>
+                                                        <Typography variant="h6">Last 5 Sessions</Typography>
+                                                        <Last5LineChart data={last5Sessions} />
                                                     </div>
                                                 </div>
                                             )}
                                         </div>
-                                    </div>
-                                </div>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button onClick={() => setIsModalOpen(false)} color="secondary">
+                                            Close
+                                        </Button>
+                                    </DialogActions>
+                                </Dialog>
                             </div>
                         )}
                     </div>
-                )}
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
     );
 }

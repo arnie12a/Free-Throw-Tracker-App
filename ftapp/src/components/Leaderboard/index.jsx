@@ -150,7 +150,7 @@ export default function Leaderboard() {
                         <DialogContent>
                             <p><strong>Games Played:</strong> {selectedPlayer.GP}</p>
                             <p><strong>Points:</strong> {selectedPlayer.PTS}</p>
-                            <p><strong>Free Throw %:</strong> {selectedPlayer['FT%']}%</p>
+                            <p><strong>Free Throw Percentage:</strong> {selectedPlayer['FT%']}%</p>
                             <p><strong>Field Goals Made:</strong> {selectedPlayer.FGM}</p>
                             <p><strong>Field Goals Attempted:</strong> {selectedPlayer.FGA}</p>
                             {/* Add more details as needed */}
