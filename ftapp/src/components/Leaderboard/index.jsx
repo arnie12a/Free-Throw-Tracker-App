@@ -8,6 +8,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
+import { Typography, Grid, Box } from '@mui/material';
+
 
 export default function Leaderboard() {
     const { currentUser } = useAuth();
@@ -146,18 +148,90 @@ export default function Leaderboard() {
             >
                 {selectedPlayer && (
                     <>
-                        <DialogTitle>{selectedPlayer.PLAYER}</DialogTitle>
-                        <DialogContent>
-                            <p><strong>Games Played:</strong> {selectedPlayer.GP}</p>
-                            <p><strong>Points:</strong> {selectedPlayer.PTS}</p>
-                            <p><strong>Free Throw Percentage:</strong> {selectedPlayer['FT%']}%</p>
-                            <p><strong>Field Goals Made:</strong> {selectedPlayer.FGM}</p>
-                            <p><strong>Field Goals Attempted:</strong> {selectedPlayer.FGA}</p>
-                            {/* Add more details as needed */}
+                        <DialogTitle sx={{ backgroundColor: '#2d75bd', color: 'white', textAlign: 'center' }}>
+                            <Typography variant="h5" fontWeight="bold">
+                            {selectedPlayer.PLAYER}
+                            </Typography>
+                        </DialogTitle>
+                        <DialogContent dividers sx={{ padding: 3 }}>
+                            {/* Player Image */}
+                            <Box display="flex" justifyContent="center" mb={3}>
+                            <img
+                                src={getImageUrl(selectedPlayer.index)} // Use the player's ID to fetch the image
+                                alt={`${selectedPlayer.PLAYER}`}
+                                style={{
+                                width: '150px',
+                                height: '150px',
+                                borderRadius: '50%',
+                                border: '3px solid #2d75bd',
+                                objectFit: 'cover',
+                                }}
+                                onError={(e) => (e.target.src = 'defaultPlayerImage.png')} // Fallback to a default image
+                            />
+                            </Box>
+
+                            {/* Player Stats */}
+                            <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="body1">
+                                <strong>Games Played:</strong> {selectedPlayer.GP}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="body1">
+                                <strong>Points:</strong> {selectedPlayer.PTS}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="body1">
+                                <strong>Field Goal Percentage:</strong> {selectedPlayer['FG%']}%
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="body1">
+                                <strong>Three Point Percentage:</strong> {selectedPlayer['3P%']}%
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="body1">
+                                <strong>Rebounds:</strong> {selectedPlayer.REB}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="body1">
+                                <strong>Assists:</strong> {selectedPlayer.AST}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="body1">
+                                <strong>Steals:</strong> {selectedPlayer.STL}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="body1">
+                                <strong>Blocks:</strong> {selectedPlayer.BLK}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="body1">
+                                <strong>Turnovers:</strong> {selectedPlayer.TOV}
+                                </Typography>
+                            </Grid>
+                            </Grid>
                         </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleCloseModal} color="primary">
-                                Close
+                        <DialogActions sx={{ justifyContent: 'center', padding: 2 }}>
+                            <Button
+                            onClick={handleCloseModal}
+                            variant="contained"
+                            color="primary"
+                            sx={{
+                                fontWeight: 'bold',
+                                textTransform: 'none',
+                                paddingX: 3,
+                                paddingY: 1,
+                            }}
+                            >
+                            Close
                             </Button>
                         </DialogActions>
                     </>
