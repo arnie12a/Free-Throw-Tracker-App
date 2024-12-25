@@ -67,7 +67,7 @@ export default function Leaderboard() {
 
     useEffect(() => {
         getUserFreeThrowPercentage();
-        fetch('/playerData.json')
+        fetch('/nbaPlayerData.json')
             .then(response => response.json())
             .then(data => {
                 setPlayers(data);
@@ -118,7 +118,7 @@ export default function Leaderboard() {
                             className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
                             onClick={() => handleOpenModal(player)}
                         >
-                            <img src={getImageUrl(player.id)} alt={player.PLAYER} className="w-full h-48 object-cover rounded-t-lg" />
+                            <img src={getImageUrl(player.index)} alt={player.PLAYER} className="w-full h-48 object-cover rounded-t-lg" />
                             <div className="bg-gradient-to-r from-orange-400 to-gray-400 p-4">
                                 <h2 className="text-xl font-semibold text-white">{player.PLAYER}</h2>
                                 <p className="text-white">Free Throw Percentage: {player['FT%']}%</p>

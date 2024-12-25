@@ -11,6 +11,7 @@ import { AuthProvider } from "./components/contexts/authContext";
 import { useRoutes } from "react-router-dom";
 import Leaderboard from "./components/Leaderboard";
 
+
 function App() {
   const routesArray = [
     {
@@ -27,7 +28,7 @@ function App() {
     },
     {
       path: "/home",
-      element: <Home />,
+      element: <Home />
     },
     {
       path: "/addFTSession",
