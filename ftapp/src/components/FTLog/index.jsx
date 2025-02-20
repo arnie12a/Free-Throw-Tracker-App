@@ -19,7 +19,7 @@ import {
   FormControlLabel,
   useMediaQuery,
 } from '@mui/material';
-import { collection, getDocs, doc, deleteDoc, setDoc, query, where } from 'firebase/firestore';
+import { collection, getDocs, doc, deleteDoc, setDoc, query, where, orderBy } from 'firebase/firestore';
 import { useTheme } from '@mui/material/styles';
 import { db } from '../firebase/firebase';
 import { useAuth } from '../contexts/authContext';
@@ -42,12 +42,17 @@ export default function FTLog() {
 
   const getFTSession = async () => {
     const specificUID = currentUser.uid;
-    const q = query(collection(db, 'ftsessions'), where('uid', '==', specificUID));
-
+    const q = query(
+      collection(db, 'ftsessions'),
+      where('uid', '==', specificUID),
+      orderBy('date', 'desc') // Sort by date in descending order
+    );
+  
     const querySnapshot = await getDocs(q);
     const sessions = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     setFTSessions(sessions);
   };
+  
 
   const handleChangePage = (event, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (event) => {

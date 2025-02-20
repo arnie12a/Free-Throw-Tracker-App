@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { collection, setDoc, doc, getDocs, query, where } from 'firebase/firestore';
+import { collection, setDoc, doc, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { db } from "../firebase/firebase";
 import { useAuth } from '../contexts/authContext';
 import FTChart from '../FTChart';
@@ -58,10 +58,16 @@ export default function FTSummary() {
 
     const getFTSession = async () => {
         const specificUID = currentUser.uid;
-        const q = query(collection(db, "ftsessions"), where("uid", "==", specificUID));
+        const q = query(
+            collection(db, "ftsessions"),
+            where("uid", "==", specificUID),
+            orderBy("date", "desc") // Sort by date in descending order
+        );
+        
         const querySnapshot = await getDocs(q);
         return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     };
+    
 
     const getCurrentUser = async () => {
         const specificUID = currentUser.uid;
