@@ -3,8 +3,7 @@ import { collection, setDoc, doc, getDocs, query, where, orderBy } from 'firebas
 import { db } from "../firebase/firebase";
 import { useAuth } from '../contexts/authContext';
 import FTChart from '../FTChart';
-import Last5LineChart from '../Last5LineChart';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Tab, Tabs, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
 export default function FTSummary() {
     const [FTSessions, setFTSessions] = useState([]);
@@ -176,82 +175,9 @@ export default function FTSummary() {
                                     <FTChart data={FTSessions} />
                                 </div>
 
-                                {showMoreDetailsButton && (
-                                    <Button
-                                        onClick={() => setIsModalOpen(true)}
-                                        variant="contained"
-                                        color="primary"
-                                        className="mt-6"
-                                    >
-                                        View More Details
-                                    </Button>
-                                )}
+                                
 
-                                <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                                    <DialogTitle>More Details</DialogTitle>
-                                    <DialogContent>
-                                        <Tabs
-                                            value={activeTab}
-                                            onChange={(event, newValue) => setActiveTab(newValue)}
-                                            indicatorColor="primary"
-                                            textColor="primary"
-                                            variant="fullWidth"
-                                        >
-                                            <Tab label="All" />
-                                            <Tab label="Practice" />
-                                            <Tab label="Game" />
-                                        </Tabs>
-
-                                        <div className="mt-6 text-center">
-                                            <Typography variant="h5">Session Percentage: {freeThrowPercentage}%</Typography>
-                                            <Typography variant="body1">Total Sessions: {totalNumberOfSessions}</Typography>
-
-                                            {FTSessions.length === 0 ? (
-                                                <Typography variant="body1" color="textSecondary" className="mt-6">
-                                                    No sessions recorded.
-                                                </Typography>
-                                            ) : (
-                                                <div className="mt-10 space-y-6">
-                                                    <div className="p-4 bg-blue-50 rounded-lg">
-                                                        <Typography variant="body1">
-                                                            <strong>Total Made:</strong> {totalFTMade} | <strong>Total Attempted:</strong> {totalFTAttempted}
-                                                        </Typography>
-                                                    </div>
-
-                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                        <div className="p-4 bg-green-50 rounded-lg">
-                                                            <Typography variant="h6">Best Session</Typography>
-                                                            <Typography variant="body1">
-                                                                <strong>Made:</strong> {bestMade}<br />
-                                                                <strong>Attempted:</strong> {bestAttempted}<br />
-                                                                <strong>Percentage:</strong> {bestPercentage}%
-                                                            </Typography>
-                                                        </div>
-
-                                                        <div className="p-4 bg-red-50 rounded-lg">
-                                                            <Typography variant="h6">Worst Session</Typography>
-                                                            <Typography variant="body1">
-                                                                <strong>Made:</strong> {worstMade}<br />
-                                                                <strong>Attempted:</strong> {worstAttempted}<br />
-                                                                <strong>Percentage:</strong> {worstPercentage}%
-                                                            </Typography>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="mt-10">
-                                                        <Typography variant="h6">Last 5 Sessions</Typography>
-                                                        <Last5LineChart data={last5Sessions} />
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </DialogContent>
-                                    <DialogActions>
-                                        <Button onClick={() => setIsModalOpen(false)} color="secondary">
-                                            Close
-                                        </Button>
-                                    </DialogActions>
-                                </Dialog>
+                                
                             </div>
                         )}
                     </div>
