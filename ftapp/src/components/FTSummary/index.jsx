@@ -89,6 +89,7 @@ export default function FTSummary() {
         return (totalMade / totalAttempted) * 100;
     };
 
+    // calculates the last 5 esssions
     const getLast5Sessions = (arr) => {
         return arr.length >= 5 ? arr.slice(-5) : arr;
     };
