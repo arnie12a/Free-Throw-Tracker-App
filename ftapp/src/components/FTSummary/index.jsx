@@ -94,6 +94,7 @@ export default function FTSummary() {
         return arr.length >= 5 ? arr.slice(-5) : arr;
     };
 
+    // gets the shooting percentgae from the users database
     const setUserShootingPercentage = async (user, percentage) => {
         await setDoc(doc(db, 'users', currentUser.uid), {
             firstName: user[0].firstName,
