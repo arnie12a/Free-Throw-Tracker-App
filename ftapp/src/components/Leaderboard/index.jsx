@@ -26,7 +26,7 @@ export default function Leaderboard() {
     const handleFilter = () => {
         const range = 1;
         const filtered = allPlayers.filter(player =>
-            Math.abs(player['FT%'] - userFTPercentage) <= range
+            Math.abs((player['FT%']*100).toFixed(2) - userFTPercentage) <= range
         );
         setPlayers(filtered);
         setCurrentPage(1);
@@ -67,7 +67,7 @@ export default function Leaderboard() {
 
     useEffect(() => {
         getUserFreeThrowPercentage();
-        fetch('/nbaPlayerData.json')
+        fetch('/nbaPlayerFTCareerData.json')
             .then(response => response.json())
             .then(data => {
                 setPlayers(data);
@@ -121,7 +121,7 @@ export default function Leaderboard() {
                             <img src={getImageUrl(player.index)} alt={player.PLAYER} className="w-full h-48 object-cover rounded-t-lg" />
                             <div className="bg-gradient-to-r from-orange-400 to-gray-400 p-4">
                                 <h2 className="text-xl font-semibold text-white">{player.PLAYER}</h2>
-                                <p className="text-white">Free Throw Percentage: {player['FT%']}%</p>
+                                <p className="text-white">Free Throw Percentage: {(player['FT%']*100).toFixed(2)}%</p>
                             </div>
                         </div>
                     ))
@@ -146,103 +146,7 @@ export default function Leaderboard() {
   fullWidth
   maxWidth="sm"
 >
-  {selectedPlayer && (
-    <>
-      {/* Dialog Title */}
-      <DialogTitle
-        sx={{
-          backgroundColor: '#2d75bd',
-          color: 'white',
-          textAlign: 'center',
-          paddingY: 2,
-          borderRadius: '8px 8px 0 0',
-        }}
-      >
-        <Typography variant="h5" fontWeight="bold">
-          {selectedPlayer.PLAYER}
-        </Typography>
-      </DialogTitle>
-
-      {/* Dialog Content */}
-      <DialogContent
-        dividers
-        sx={{
-          padding: 4,
-          backgroundColor: '#f9f9f9',
-        }}
-      >
-        {/* Player Image */}
-        <Box display="flex" justifyContent="center" mb={4}>
-          <img
-            src={getImageUrl(selectedPlayer.index)}
-            alt={`${selectedPlayer.PLAYER}`}
-            style={{
-              width: '150px',
-              height: '150px',
-              borderRadius: '50%',
-              border: '4px solid #2d75bd',
-              objectFit: 'cover',
-              boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-              transition: 'transform 0.3s',
-              cursor: 'pointer',
-            }}
-            onMouseOver={(e) => (e.target.style.transform = 'scale(1.1)')}
-            onMouseOut={(e) => (e.target.style.transform = 'scale(1)')}
-            onError={(e) => (e.target.src = 'defaultPlayerImage.png')}
-          />
-        </Box>
-
-        {/* Player Stats */}
-        <Grid container spacing={3}>
-          {[
-            { label: 'Games Played', value: selectedPlayer.GP },
-            { label: 'Points', value: selectedPlayer.PTS },
-            { label: 'Field Goal Percentage', value: `${selectedPlayer['FG%']}%` },
-            { label: 'Three Point Percentage', value: `${selectedPlayer['3P%']}%` },
-            { label: 'Rebounds', value: selectedPlayer.REB },
-            { label: 'Assists', value: selectedPlayer.AST },
-            { label: 'Steals', value: selectedPlayer.STL },
-            { label: 'Blocks', value: selectedPlayer.BLK },
-            { label: 'Turnovers', value: selectedPlayer.TOV },
-          ].map((stat, index) => (
-            <Grid key={index} item xs={12} sm={6}>
-              <Typography variant="body1" fontSize="1rem" color="text.secondary">
-                <strong>{stat.label}:</strong> {stat.value}
-              </Typography>
-            </Grid>
-          ))}
-        </Grid>
-      </DialogContent>
-
-      {/* Dialog Actions */}
-      <DialogActions
-        sx={{
-          justifyContent: 'center',
-          padding: 3,
-          backgroundColor: '#f9f9f9',
-          borderRadius: '0 0 8px 8px',
-        }}
-      >
-        <Button
-          onClick={handleCloseModal}
-          variant="contained"
-          sx={{
-            backgroundColor: '#2d75bd',
-            color: 'white',
-            fontWeight: 'bold',
-            textTransform: 'none',
-            paddingX: 4,
-            paddingY: 1.5,
-            '&:hover': {
-              backgroundColor: '#235a91',
-            },
-          }}
-        >
-          Close
-        </Button>
-      </DialogActions>
-    </>
-  )}
+  
 </Dialog>
 
         </div>
