@@ -116,7 +116,6 @@ export default function Leaderboard() {
                         <div
                             key={player.PLAYER}
                             className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
-                            onClick={() => handleOpenModal(player)}
                         >
                             <img src={getImageUrl(player.index)} alt={player.PLAYER} className="w-full h-48 object-cover rounded-t-lg" />
                             <div className="bg-gradient-to-r from-orange-400 to-gray-400 p-4">
