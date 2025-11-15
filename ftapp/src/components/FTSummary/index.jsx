@@ -356,9 +356,7 @@ export default function FTSummary() {
                     <div className="space-y-8 bg-white p-6 md:p-8 rounded-lg shadow-lg w-full max-w-5xl">
                         {FTSessions.length > 0 && freeThrowPercentage && (
                             <div className="space-y-8 text-center">
-                                <Typography variant="h3" color="primary">
-                                    Free Throw Percentage: {freeThrowPercentage}%
-                                </Typography>
+                                
 
                                 {/* Toggle Tabs */}
                                 <Tabs
@@ -372,6 +370,35 @@ export default function FTSummary() {
                                     <Tab label="Practice" />
                                     <Tab label="Game" />
                                 </Tabs>
+                           
+
+                                {/* Totals Section */}
+                                <div className="mt-6">
+                                <Typography variant="h3" color="primary" className='p-4 bg-gray-100 shadow-md'>
+                                    Free Throw Percentage: {freeThrowPercentage}%
+                                </Typography>
+                                    <div className="flex justify-between items-center bg-gray-100 rounded-lg shadow-md p-4">
+                                        
+                                        <div className="text-center flex-1">
+                                        <Typography variant="h6" color="primary">
+                                            Made
+                                        </Typography>
+                                        <Typography variant="h4" color="textPrimary">
+                                            {totalFTMade}
+                                        </Typography>
+                                        </div>
+                                        <div className="border-l-2 border-gray-300 h-12 mx-4"></div>
+                                        <div className="text-center flex-1">
+                                        <Typography variant="h6" color="primary">
+                                            Attempted
+                                        </Typography>
+                                        <Typography variant="h4" color="textPrimary">
+                                            {totalFTAttempted}
+                                        </Typography>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <div className="rounded-lg overflow-hidden shadow-lg bg-gray-50 p-4 md:p-6">
                                     {/* Pass filtered data to chart */}
@@ -383,6 +410,7 @@ export default function FTSummary() {
                                         } 
                                     />
                                 </div>
+
                             </div>
                         )}
                     </div>
