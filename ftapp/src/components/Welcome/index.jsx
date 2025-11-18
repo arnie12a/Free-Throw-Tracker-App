@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Paper, Pagination, Dialog, DialogTitle, DialogContent, DialogActions, Button
+  Paper, Pagination, Dialog, DialogTitle, DialogContent, DialogActions, Button, Avatar
 } from '@mui/material';
 
 export default function Welcome() {
@@ -42,9 +42,12 @@ export default function Welcome() {
     setSelectedPlayer(null);
   };
 
+  const getImageUrl = (id) =>
+    `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${id}.png`;
+
   return (
     <div className="container mx-auto p-6 bg-gray-100 pt-16">
-      <h1 className="text-3xl font-bold mb-6 text-center">Compare your Free Throw Shooting with NBA Greats</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">Compare Your Shooting with NBA Greats</h1>
 
       <input
         type="text"
@@ -72,7 +75,16 @@ export default function Welcome() {
                 style={{ cursor: 'pointer' }}
                 onClick={() => handleOpenModal(player)}
               >
-                <TableCell>{player.Player}</TableCell>
+                <TableCell>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <Avatar
+                      src={getImageUrl(player.Id)}
+                      alt={player.Player}
+                      sx={{ width: 40, height: 40 }}
+                    />
+                    {player.Player}
+                  </div>
+                </TableCell>
                 <TableCell align="right">{player.FT}</TableCell>
                 <TableCell align="right">{player.FTA}</TableCell>
                 <TableCell align="right">{(player.Percentage * 100).toFixed(2)}%</TableCell>
@@ -101,9 +113,9 @@ export default function Welcome() {
               <p><strong>Free Throws Attempted:</strong> {selectedPlayer.FTA}</p>
               <p><strong>Percentage:</strong> {(selectedPlayer.Percentage * 100).toFixed(2)}%</p>
               <img
-                src={`https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${selectedPlayer.Id}.png`}
+                src={getImageUrl(selectedPlayer.Id)}
                 alt={selectedPlayer.Player}
-                style={{ marginTop: '16px', borderRadius: '8px' }}
+                style={{ marginTop: '16px', borderRadius: '8px', width: '100%' }}
               />
             </DialogContent>
             <DialogActions>
