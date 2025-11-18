@@ -1,0 +1,611 @@
+[
+    {
+        "Player": "Stephen Curry",
+        "FT": 4102,
+        "FTA": 4499,
+        "Percentage": 0.9117581684818848,
+        "Id": 201939
+    },
+    {
+        "Player": "Steve Nash",
+        "FT": 3060,
+        "FTA": 3384,
+        "Percentage": 0.9042553191489362,
+        "Id": 959
+    },
+    {
+        "Player": "Damian Lillard",
+        "FT": 5262,
+        "FTA": 5853,
+        "Percentage": 0.8990261404407995,
+        "Id": 203081
+    },
+    {
+        "Player": "Chauncey Billups",
+        "FT": 4496,
+        "FTA": 5029,
+        "Percentage": 0.894014714655001,
+        "Id": 1497
+    },
+    {
+        "Player": "Ray Allen",
+        "FT": 4398,
+        "FTA": 4920,
+        "Percentage": 0.8939024390243903,
+        "Id": 951
+    },
+    {
+        "Player": "Reggie Miller",
+        "FT": 6237,
+        "FTA": 7026,
+        "Percentage": 0.8877028181041845,
+        "Id": 397
+    },
+    {
+        "Player": "Larry Bird",
+        "FT": 3960,
+        "FTA": 4471,
+        "Percentage": 0.8857078953254306,
+        "Id": 1449
+    },
+    {
+        "Player": "Kevin Durant",
+        "FT": 7375,
+        "FTA": 8360,
+        "Percentage": 0.882177033492823,
+        "Id": 201142
+    },
+    {
+        "Player": "Dirk Nowitzki",
+        "FT": 7240,
+        "FTA": 8239,
+        "Percentage": 0.8787474208034955,
+        "Id": 1717
+    },
+    {
+        "Player": "Devin Booker",
+        "FT": 3626,
+        "FTA": 4149,
+        "Percentage": 0.8739455290431429,
+        "Id": 1626164
+    },
+    {
+        "Player": "Trae Young",
+        "FT": 3245,
+        "FTA": 3718,
+        "Percentage": 0.8727810650887574,
+        "Id": 1629027
+    },
+    {
+        "Player": "Chris Paul",
+        "FT": 4858,
+        "FTA": 5580,
+        "Percentage": 0.8706093189964158,
+        "Id": 101108
+    },
+    {
+        "Player": "Shai Gilgeous-Alexander",
+        "FT": 2907,
+        "FTA": 3369,
+        "Percentage": 0.8628673196794301,
+        "Id": 1628983
+    },
+    {
+        "Player": "Jamal Crawford",
+        "FT": 3694,
+        "FTA": 4286,
+        "Percentage": 0.8618758749416705,
+        "Id": 2037
+    },
+    {
+        "Player": "James Harden",
+        "FT": 8247,
+        "FTA": 9569,
+        "Percentage": 0.8618455428989445,
+        "Id": 201935
+    },
+    {
+        "Player": "Sam Cassell",
+        "FT": 3567,
+        "FTA": 4144,
+        "Percentage": 0.8607625482625483,
+        "Id": 208
+    },
+    {
+        "Player": "Paul George",
+        "FT": 3548,
+        "FTA": 4160,
+        "Percentage": 0.8528846153846154,
+        "Id": 202331
+    },
+    {
+        "Player": "Magic Johnson",
+        "FT": 4960,
+        "FTA": 5850,
+        "Percentage": 0.8478632478632478,
+        "Id": 77142
+    },
+    {
+        "Player": "Jimmy Butler",
+        "FT": 5009,
+        "FTA": 5936,
+        "Percentage": 0.8438342318059299,
+        "Id": 202710
+    },
+    {
+        "Player": "DeMar DeRozan",
+        "FT": 6601,
+        "FTA": 7839,
+        "Percentage": 0.8420716928179615,
+        "Id": 201942
+    },
+    {
+        "Player": "Lou Williams",
+        "FT": 4042,
+        "FTA": 4803,
+        "Percentage": 0.8415573599833437,
+        "Id": 101150
+    },
+    {
+        "Player": "Kevin Johnson",
+        "FT": 3943,
+        "FTA": 4691,
+        "Percentage": 0.840545725858026,
+        "Id": 134
+    },
+    {
+        "Player": "Karl-Anthony Towns",
+        "FT": 2914,
+        "FTA": 3474,
+        "Percentage": 0.8388025331030512,
+        "Id": 1626157
+    },
+    {
+        "Player": "Oscar Robertson",
+        "FT": 7694,
+        "FTA": 9185,
+        "Percentage": 0.8376701143168209,
+        "Id": 600015
+    },
+    {
+        "Player": "Kobe Bryant",
+        "FT": 8378,
+        "FTA": 10011,
+        "Percentage": 0.8368794326241135,
+        "Id": 977
+    },
+    {
+        "Player": "Michael Jordan",
+        "FT": 7327,
+        "FTA": 8772,
+        "Percentage": 0.8352713178294574,
+        "Id": 893
+    },
+    {
+        "Player": "Kevin Love",
+        "FT": 3609,
+        "FTA": 4358,
+        "Percentage": 0.828132170720514,
+        "Id": 201567
+    },
+    {
+        "Player": "Joel Embiid",
+        "FT": 3786,
+        "FTA": 4573,
+        "Percentage": 0.827902908375246,
+        "Id": 203954
+    },
+    {
+        "Player": "Manu Gin\u00f3bili",
+        "FT": 3380,
+        "FTA": 4089,
+        "Percentage": 0.82660797260944,
+        "Id": 1938
+    },
+    {
+        "Player": "John Stockton",
+        "FT": 4788,
+        "FTA": 5796,
+        "Percentage": 0.8260869565217391,
+        "Id": 304
+    },
+    {
+        "Player": "Mike Conley",
+        "FT": 2987,
+        "FTA": 3617,
+        "Percentage": 0.8258225048382638,
+        "Id": 201144
+    },
+    {
+        "Player": "Nikola Joki\u0107",
+        "FT": 2987,
+        "FTA": 3622,
+        "Percentage": 0.8246824958586416,
+        "Id": 203999
+    },
+    {
+        "Player": "Deron Williams",
+        "FT": 2878,
+        "FTA": 3502,
+        "Percentage": 0.8218161050828098,
+        "Id": 101114
+    },
+    {
+        "Player": "Bradley Beal",
+        "FT": 2854,
+        "FTA": 3475,
+        "Percentage": 0.821294964028777,
+        "Id": 203078
+    },
+    {
+        "Player": "Kyle Lowry",
+        "FT": 3651,
+        "FTA": 4478,
+        "Percentage": 0.8153193389906208,
+        "Id": 200768
+    },
+    {
+        "Player": "Carmelo Anthony",
+        "FT": 6320,
+        "FTA": 7764,
+        "Percentage": 0.8140133951571354,
+        "Id": 2546
+    },
+    {
+        "Player": "Jerry West",
+        "FT": 7160,
+        "FTA": 8801,
+        "Percentage": 0.8135439154641518,
+        "Id": 78497
+    },
+    {
+        "Player": "Dominique Wilkins",
+        "FT": 6031,
+        "FTA": 7438,
+        "Percentage": 0.8108362463027695,
+        "Id": 1122
+    },
+    {
+        "Player": "Paul Pierce",
+        "FT": 6918,
+        "FTA": 8578,
+        "Percentage": 0.8064816973653532,
+        "Id": 1718
+    },
+    {
+        "Player": "Jeff Green",
+        "FT": 2806,
+        "FTA": 3490,
+        "Percentage": 0.8040114613180516,
+        "Id": 201145
+    },
+    {
+        "Player": "Gilbert Arenas",
+        "FT": 2879,
+        "FTA": 3584,
+        "Percentage": 0.8032924107142857,
+        "Id": 2240
+    },
+    {
+        "Player": "Joe Johnson",
+        "FT": 2783,
+        "FTA": 3468,
+        "Percentage": 0.802479815455594,
+        "Id": 2207
+    },
+    {
+        "Player": "Jalen Rose",
+        "FT": 2770,
+        "FTA": 3457,
+        "Percentage": 0.8012727798669367,
+        "Id": 147
+    },
+    {
+        "Player": "Rudy Gay",
+        "FT": 3116,
+        "FTA": 3898,
+        "Percentage": 0.7993842996408415,
+        "Id": 200752
+    },
+    {
+        "Player": "Chris Bosh",
+        "FT": 4466,
+        "FTA": 5591,
+        "Percentage": 0.7987837596136648,
+        "Id": 2547
+    },
+    {
+        "Player": "Anthony Davis",
+        "FT": 4426,
+        "FTA": 5577,
+        "Percentage": 0.7936166397704859,
+        "Id": 203076
+    },
+    {
+        "Player": "Kevin Garnett",
+        "FT": 4887,
+        "FTA": 6190,
+        "Percentage": 0.7894991922455573,
+        "Id": 708
+    },
+    {
+        "Player": "Stephon Marbury",
+        "FT": 3768,
+        "FTA": 4804,
+        "Percentage": 0.7843463780183181,
+        "Id": 950
+    },
+    {
+        "Player": "Allen Iverson",
+        "FT": 6375,
+        "FTA": 8168,
+        "Percentage": 0.780484818805093,
+        "Id": 947
+    },
+    {
+        "Player": "Elgin Baylor",
+        "FT": 5763,
+        "FTA": 7391,
+        "Percentage": 0.7797321066161548,
+        "Id": 76127
+    },
+    {
+        "Player": "Julius Erving",
+        "FT": 3844,
+        "FTA": 4950,
+        "Percentage": 0.7765656565656566,
+        "Id": 76681
+    },
+    {
+        "Player": "Marc Gasol",
+        "FT": 2813,
+        "FTA": 3625,
+        "Percentage": 0.776,
+        "Id": 201188
+    },
+    {
+        "Player": "John Wall",
+        "FT": 2691,
+        "FTA": 3468,
+        "Percentage": 0.7759515570934256,
+        "Id": 202322
+    },
+    {
+        "Player": "Monta Ellis",
+        "FT": 2675,
+        "FTA": 3463,
+        "Percentage": 0.7724516315333526,
+        "Id": 101145
+    },
+    {
+        "Player": "Russell Westbrook",
+        "FT": 6011,
+        "FTA": 7788,
+        "Percentage": 0.7718284540318439,
+        "Id": 201566
+    },
+    {
+        "Player": "Moses Malone",
+        "FT": 8531,
+        "FTA": 11090,
+        "Percentage": 0.7692515779981965,
+        "Id": 77449
+    },
+    {
+        "Player": "Grant Hill",
+        "FT": 4228,
+        "FTA": 5498,
+        "Percentage": 0.7690069116042197,
+        "Id": 255
+    },
+    {
+        "Player": "Richard Jefferson",
+        "FT": 3562,
+        "FTA": 4639,
+        "Percentage": 0.767837896098297,
+        "Id": 2210
+    },
+    {
+        "Player": "Dwyane Wade",
+        "FT": 5708,
+        "FTA": 7463,
+        "Percentage": 0.7648398767251775,
+        "Id": 2548
+    },
+    {
+        "Player": "Zach Randolph",
+        "FT": 3507,
+        "FTA": 4592,
+        "Percentage": 0.7637195121951219,
+        "Id": 2216
+    },
+    {
+        "Player": "Isiah Thomas",
+        "FT": 4036,
+        "FTA": 5316,
+        "Percentage": 0.7592174567343868,
+        "Id": 78318
+    },
+    {
+        "Player": "Julius Randle",
+        "FT": 2953,
+        "FTA": 3906,
+        "Percentage": 0.7560163850486431,
+        "Id": 203944
+    },
+    {
+        "Player": "Pau Gasol",
+        "FT": 4755,
+        "FTA": 6311,
+        "Percentage": 0.753446363492315,
+        "Id": 2200
+    },
+    {
+        "Player": "Tony Parker",
+        "FT": 3400,
+        "FTA": 4525,
+        "Percentage": 0.7513812154696132,
+        "Id": 2225
+    },
+    {
+        "Player": "Tracy McGrady",
+        "FT": 3882,
+        "FTA": 5202,
+        "Percentage": 0.7462514417531718,
+        "Id": 1503
+    },
+    {
+        "Player": "Karl Malone",
+        "FT": 9787,
+        "FTA": 13188,
+        "Percentage": 0.742114043069457,
+        "Id": 252
+    },
+    {
+        "Player": "Patrick Ewing",
+        "FT": 5392,
+        "FTA": 7289,
+        "Percentage": 0.7397448209630951,
+        "Id": 121
+    },
+    {
+        "Player": "LeBron James",
+        "FT": 8649,
+        "FTA": 11735,
+        "Percentage": 0.7370259906263315,
+        "Id": 2544
+    },
+    {
+        "Player": "Paul Millsap",
+        "FT": 3085,
+        "FTA": 4190,
+        "Percentage": 0.7362768496420048,
+        "Id": 200794
+    },
+    {
+        "Player": "David Robinson",
+        "FT": 6035,
+        "FTA": 8201,
+        "Percentage": 0.7358858675771247,
+        "Id": 764
+    },
+    {
+        "Player": "Charles Barkley",
+        "FT": 6349,
+        "FTA": 8643,
+        "Percentage": 0.7345828994562074,
+        "Id": 787
+    },
+    {
+        "Player": "Gary Payton",
+        "FT": 3265,
+        "FTA": 4480,
+        "Percentage": 0.7287946428571429,
+        "Id": 56
+    },
+    {
+        "Player": "Kareem Abdul-Jabbar",
+        "FT": 6712,
+        "FTA": 9304,
+        "Percentage": 0.7214101461736887,
+        "Id": 76003
+    },
+    {
+        "Player": "Metta World Peace",
+        "FT": 2572,
+        "FTA": 3596,
+        "Percentage": 0.7152391546162402,
+        "Id": 1897
+    },
+    {
+        "Player": "Hakeem Olajuwon",
+        "FT": 5423,
+        "FTA": 7621,
+        "Percentage": 0.7115864059834668,
+        "Id": 165
+    },
+    {
+        "Player": "Andre Iguodala",
+        "FT": 2831,
+        "FTA": 3994,
+        "Percentage": 0.7088132198297447,
+        "Id": 2738
+    },
+    {
+        "Player": "Scottie Pippen",
+        "FT": 3122,
+        "FTA": 4437,
+        "Percentage": 0.7036285778679288,
+        "Id": 937
+    },
+    {
+        "Player": "Tim Duncan",
+        "FT": 5896,
+        "FTA": 8468,
+        "Percentage": 0.6962683042040624,
+        "Id": 1495
+    },
+    {
+        "Player": "Blake Griffin",
+        "FT": 3137,
+        "FTA": 4508,
+        "Percentage": 0.6958740017746229,
+        "Id": 201933
+    },
+    {
+        "Player": "Giannis Antetokounmpo",
+        "FT": 5028,
+        "FTA": 7263,
+        "Percentage": 0.6922759190417183,
+        "Id": 203507
+    },
+    {
+        "Player": "Dikembe Mutombo",
+        "FT": 3391,
+        "FTA": 4960,
+        "Percentage": 0.6836693548387097,
+        "Id": 87
+    },
+    {
+        "Player": "Chris Webber",
+        "FT": 2534,
+        "FTA": 3906,
+        "Percentage": 0.6487455197132617,
+        "Id": 185
+    },
+    {
+        "Player": "Rudy Gobert",
+        "FT": 2671,
+        "FTA": 4176,
+        "Percentage": 0.6396072796934866,
+        "Id": 203497
+    },
+    {
+        "Player": "Dwight Howard",
+        "FT": 5361,
+        "FTA": 9455,
+        "Percentage": 0.5670015864621893,
+        "Id": 2730
+    },
+    {
+        "Player": "Bill Russell",
+        "FT": 3148,
+        "FTA": 5614,
+        "Percentage": 0.560741004631279,
+        "Id": 78049
+    },
+    {
+        "Player": "Shaquille O'Neal",
+        "FT": 5935,
+        "FTA": 11252,
+        "Percentage": 0.5274617845716317,
+        "Id": 406
+    },
+    {
+        "Player": "Wilt Chamberlain",
+        "FT": 6057,
+        "FTA": 11862,
+        "Percentage": 0.5106221547799696,
+        "Id": 76375
+    }
+]

@@ -10,13 +10,14 @@ import FTSummary from "./components/FTSummary";
 import { AuthProvider } from "./components/contexts/authContext";
 import { useRoutes } from "react-router-dom";
 import Leaderboard from "./components/Leaderboard";
+import Welcome from "./components/Welcome";
 
 
 function App() {
   const routesArray = [
     {
       path: "*",
-      element: <Login />,
+      element: <Welcome />,
     },
     {
       path: "/login",

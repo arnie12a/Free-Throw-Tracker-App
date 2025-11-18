@@ -26,12 +26,13 @@ export default function Leaderboard() {
     const handleFilter = () => {
         const range = 1;
         const filtered = allPlayers.filter(player =>
-            Math.abs((player['FT%']*100).toFixed(2) - userFTPercentage) <= range
+            Math.abs((player.Percentage * 100).toFixed(2) - userFTPercentage) <= range
         );
         setPlayers(filtered);
         setCurrentPage(1);
         setIsFiltered(true);
     };
+    
 
     const handleReset = () => {
         setPlayers(allPlayers);
@@ -40,8 +41,9 @@ export default function Leaderboard() {
     };
 
     const filterPlayers = players.filter(user =>
-        `${user.PLAYER}`.toLowerCase().includes(searchTerm.toLowerCase())
+        `${user.Player}`.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    
 
     const getUserFreeThrowPercentage = async () => {
         const specificUID = currentUser.uid;
@@ -54,6 +56,7 @@ export default function Leaderboard() {
     const getImageUrl = (id) => {
         return `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${id}.png`;
     };
+    
 
     const handleOpenModal = (player) => {
         setSelectedPlayer(player);
@@ -67,7 +70,7 @@ export default function Leaderboard() {
 
     useEffect(() => {
         getUserFreeThrowPercentage();
-        fetch('/nbaPlayerFTCareerData.json')
+        fetch('/playersFreeThrowStats.json')
             .then(response => response.json())
             .then(data => {
                 setPlayers(data);
@@ -114,16 +117,18 @@ export default function Leaderboard() {
                 {currentPlayers.length > 0 ? (
                     currentPlayers.map(player => (
                         <div
-                            key={player.PLAYER}
+                            key={player.Player}
                             className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer"
+                            onClick={() => handleOpenModal(player)}
                         >
-                            <img src={getImageUrl(player.index)} alt={player.PLAYER} className="w-full h-48 object-cover rounded-t-lg" />
+                            <img src={getImageUrl(player.Id)} alt={player.Player} className="w-full h-48 object-cover rounded-t-lg" />
                             <div className="bg-gradient-to-r from-orange-400 to-gray-400 p-4">
-                                <h2 className="text-xl font-semibold text-white">{player.PLAYER}</h2>
-                                <p className="text-white">Free Throw Percentage: {(player['FT%']*100).toFixed(2)}%</p>
+                                <h2 className="text-xl font-semibold text-white">{player.Player}</h2>
+                                <p className="text-white">Free Throw Percentage: {(player.Percentage * 100).toFixed(2)}%</p>
                             </div>
                         </div>
                     ))
+                    
                 ) : (
                     <p className="text-gray-700 text-center col-span-3">No players found</p>
                 )}
