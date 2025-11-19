@@ -4,6 +4,25 @@ import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   Paper, Pagination, Dialog, DialogTitle, DialogContent, DialogActions, Button, Avatar
 } from '@mui/material';
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend
+} from "chart.js";
+
+ChartJS.register(
+  LineElement,
+  PointElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend
+);
 
 
 
@@ -16,6 +35,9 @@ export default function Welcome() {
   const [playersPerPage] = useState(6);
   const [showModal, setShowModal] = useState(false);
   const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [seasonType, setSeasonType] = useState("regular");
+    const [metric, setMetric] = useState("PTS");
+
 
   // Load JSON files
   useEffect(() => {
@@ -34,10 +56,20 @@ export default function Welcome() {
       });
   }, []);
 
+  // resets pagination when searching for player
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+  
+
   // Filter by search
-  const filteredPlayers = players.filter(player =>
-    player.Player.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredPlayers = players.filter((player) => {
+    const fullName = player.Player?.toLowerCase() || "";
+    const term = searchTerm.toLowerCase();
+  
+    return fullName.includes(term);
+  });
+  
 
   // Pagination
   const indexOfLastPlayer = currentPage * playersPerPage;
@@ -86,14 +118,39 @@ export default function Welcome() {
       FT_PCT: (totals.FT_PCT / numSeasons * 100).toFixed(1) + '%',   // average FT%
     };
   };
+
+    const seasonArray =
+    seasonType === "regular"
+        ? regularSeasonData[selectedPlayer?.Id] || []
+        : postSeasonData[selectedPlayer?.Id] || [];
+
+    const chartSeasons = seasonArray.map((s) => s.SEASON_ID);
+
+    const chartValues = seasonArray.map((s) => {
+    switch (metric) {
+        case "PTS": return s.PTS;
+        case "AST": return s.AST;
+        case "REB": return s.REB;
+        case "FG%": return (s.FG_PCT * 100).toFixed(1);
+        case "3P%": return (s.FG3_PCT * 100).toFixed(1);
+        case "FT%": return (s.FT_PCT * 100).toFixed(1);
+        default: return 0;
+    }
+    });
+
   
   
 
   return (
     <div className="container mx-auto p-4 sm:p-6 bg-gray-100 pt-16">
-        <h1 className="text-xl sm:text-3xl font-bold mb-6 text-center">
+        <h1 className="text-xl sm:text-3xl font-bold mb-2 text-center">
             Compare Your Shooting With The NBA Greats
         </h1>
+
+        <p className="text-center text-gray-600 text-sm sm:text-base mb-6">
+            Tap on any NBA player to explore their trends and career stats.
+        </p>
+
 
       <input
         type="text"
@@ -153,97 +210,81 @@ export default function Welcome() {
       {/* Modal with season stats */}
       <Dialog open={showModal} onClose={handleCloseModal} fullWidth maxWidth="md">
         {selectedPlayer && (
-          <>
+            <>
             <DialogTitle>{selectedPlayer.Player}</DialogTitle>
+
             <DialogContent>
-              <img
+
+                <img
                 src={getImageUrl(selectedPlayer.Id)}
                 alt={selectedPlayer.Player}
-                style={{ marginBottom: '16px', borderRadius: '8px', width: '150px' }}
-              />
+                style={{ marginBottom: "16px", borderRadius: "8px", width: "150px" }}
+                />
 
-              <h3>Regular Season Stats</h3>
-              <Table size="small">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Season</TableCell>
-                    <TableCell align="right">GP</TableCell>
-                    <TableCell align="right">PTS</TableCell>
-                    <TableCell align="right">AST</TableCell>
-                    <TableCell align="right">REB</TableCell>
-                    <TableCell align="right">FG%</TableCell>
-                    <TableCell align="right">3P%</TableCell>
-                    <TableCell align="right">FT%</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {regularSeasonData[selectedPlayer.Id]?.map((season, idx) => (
-                    <TableRow key={idx}>
-                      <TableCell>{season.SEASON_ID}</TableCell>
-                      <TableCell align="right">{season.GP}</TableCell>
-                      <TableCell align="right">{season.PTS}</TableCell>
-                      <TableCell align="right">{season.AST}</TableCell>
-                      <TableCell align="right">{season.REB}</TableCell>
-                      <TableCell align="right">{(season.FG_PCT * 100).toFixed(1)}%</TableCell>
-                      <TableCell align="right">{(season.FG3_PCT * 100).toFixed(1)}%</TableCell>
-                      <TableCell align="right">{(season.FT_PCT * 100).toFixed(1)}%</TableCell>
-                    </TableRow>
-                  ))}
-                  {regularSeasonData[selectedPlayer.Id] && (
-                    <TableRow sx={{ backgroundColor: '#f0f0f0' }}>
-                    <TableCell><strong>Totals</strong></TableCell>
-                    {Object.values(aggregateStats(regularSeasonData[selectedPlayer.Id])).map((val, idx) => (
-                        <TableCell key={idx} align="right"><strong>{val}</strong></TableCell>
-                    ))}
-                    </TableRow>
-                )}
-                </TableBody>
-              </Table>
+                {/* ---- NEW: Toggle Buttons ---- */}
+                <div className="flex gap-4 mb-4">
+                <Button
+                    variant={seasonType === "regular" ? "contained" : "outlined"}
+                    onClick={() => setSeasonType("regular")}
+                >
+                    Regular Season
+                </Button>
 
-              <h3 style={{ marginTop: '20px' }}>Post Season Stats</h3>
-              <Table size="small">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Season</TableCell>
-                    <TableCell align="right">GP</TableCell>
-                    <TableCell align="right">PTS</TableCell>
-                    <TableCell align="right">AST</TableCell>
-                    <TableCell align="right">REB</TableCell>
-                    <TableCell align="right">FG%</TableCell>
-                    <TableCell align="right">3P%</TableCell>
-                    <TableCell align="right">FT%</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {postSeasonData[selectedPlayer.Id]?.map((season, idx) => (
-                    <TableRow key={idx}>
-                      <TableCell>{season.SEASON_ID}</TableCell>
-                      <TableCell align="right">{season.GP}</TableCell>
-                      <TableCell align="right">{season.PTS}</TableCell>
-                      <TableCell align="right">{season.AST}</TableCell>
-                      <TableCell align="right">{season.REB}</TableCell>
-                      <TableCell align="right">{(season.FG_PCT * 100).toFixed(1)}%</TableCell>
-                      <TableCell align="right">{(season.FG3_PCT * 100).toFixed(1)}%</TableCell>
-                      <TableCell align="right">{(season.FT_PCT * 100).toFixed(1)}%</TableCell>
-                    </TableRow>
-                  ))}
-                  {postSeasonData[selectedPlayer.Id] && (
-                    <TableRow sx={{ backgroundColor: '#f0f0f0' }}>
-                    <TableCell><strong>Totals</strong></TableCell>
-                    {Object.values(aggregateStats(postSeasonData[selectedPlayer.Id])).map((val, idx) => (
-                        <TableCell key={idx} align="right"><strong>{val}</strong></TableCell>
-                    ))}
-                    </TableRow>
-                )}
-                </TableBody>
-              </Table>
+                <Button
+                    variant={seasonType === "post" ? "contained" : "outlined"}
+                    onClick={() => setSeasonType("post")}
+                >
+                    Postseason
+                </Button>
+                </div>
+
+                {/* ---- Metric Toggle ---- */}
+                <div className="flex gap-3 mb-6 overflow-x-auto">
+                {["PTS", "AST", "REB", "FG%", "3P%", "FT%"].map((m) => (
+                    <Button
+                    key={m}
+                    variant={metric === m ? "contained" : "outlined"}
+                    onClick={() => setMetric(m)}
+                    >
+                    {m}
+                    </Button>
+                ))}
+                </div>
+
+                {/* ---- Line Chart ---- */}
+                <Line
+                data={{
+                    labels: chartSeasons, // array of season labels from computed data
+                    datasets: [
+                    {
+                        label: `${selectedPlayer.Player} ${metric}`,
+                        data: chartValues, // computed metric values
+                        borderWidth: 3,
+                        tension: 0.3
+                    }
+                    ]
+                }}
+                options={{
+                    responsive: true,
+                    plugins: {
+                    legend: { display: true }
+                    },
+                    scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                    }
+                }}
+                />
             </DialogContent>
+
             <DialogActions>
-              <Button onClick={handleCloseModal}>Close</Button>
+                <Button onClick={handleCloseModal}>Close</Button>
             </DialogActions>
-          </>
+            </>
         )}
-      </Dialog>
+        </Dialog>
+
     </div>
   );
 }
