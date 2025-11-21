@@ -91,38 +91,68 @@ export default function Welcome() {
   const getImageUrl = (id) =>
     `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${id}.png`;
 
-  const aggregateStats = (seasons) => {
+  const getAggregatedMetrics = (seasons) => {
     if (!seasons || seasons.length === 0) return null;
   
-    // Totals for counting stats
-    const totals = seasons.reduce((acc, s) => {
-      acc.GP += s.GP;
-      acc.PTS += s.PTS;   // total points (already per season total if your JSON is totals)
-      acc.AST += s.AST;
-      acc.REB += s.REB;
-      acc.FG_PCT += s.FG_PCT;
-      acc.FG3_PCT += s.FG3_PCT;
-      acc.FT_PCT += s.FT_PCT;
-      return acc;
-    }, { GP:0, PTS:0, AST:0, REB:0, FG_PCT:0, FG3_PCT:0, FT_PCT:0 });
+    let totalPTS = 0, totalAST = 0, totalREB = 0;
+    let totalGP = 0;
+    let totalFTM = 0, totalFTA = 0;
+  
+    // Percentages averaged per season, not per game
+    let totalFGPct = 0, total3PPct = 0;
+  
+    seasons.forEach(s => {
+      totalPTS += s.PTS;
+      totalAST += s.AST;
+      totalREB += s.REB;
+      totalGP += s.GP;
+  
+      // FT calculation
+      totalFTM += s.FTM;
+      totalFTA += s.FTA;
+  
+      // FG% and 3P% are season percentages averaged equally
+      totalFGPct += s.FG_PCT;
+      total3PPct += s.FG3_PCT;
+    });
   
     const numSeasons = seasons.length;
   
     return {
-      GP: totals.GP,
-      PTS: totals.PTS,   // total points across all seasons
-      AST: totals.AST,   // total assists
-      REB: totals.REB,   // total rebounds
-      FG_PCT: (totals.FG_PCT / numSeasons * 100).toFixed(1) + '%',   // average FG%
-      FG3_PCT: (totals.FG3_PCT / numSeasons * 100).toFixed(1) + '%', // average 3P%
-      FT_PCT: (totals.FT_PCT / numSeasons * 100).toFixed(1) + '%',   // average FT%
+      ppg: (totalPTS / totalGP).toFixed(1),
+      apg: (totalAST / totalGP).toFixed(1),
+      rpg: (totalREB / totalGP).toFixed(1),
+      fgPct: ((totalFGPct / numSeasons) * 100).toFixed(1) + "%",
+      threePct: ((total3PPct / numSeasons) * 100).toFixed(1) + "%",
+      ftPct: totalFTA > 0 ? ((totalFTM / totalFTA) * 100).toFixed(1) + "%" : "N/A"
     };
   };
+  
+
+  const getPerGameValue = (season, metric) => {
+    if (!season || !season.GP) return null;
+  
+    switch (metric) {
+      case "PTS":
+        return (season.PTS / season.GP).toFixed(1);
+      case "AST":
+        return (season.AST / season.GP).toFixed(1);
+      case "REB":
+        return (season.REB / season.GP).toFixed(1);
+      default:
+        return null;
+    }
+  };
+  
+  
 
     const seasonArray =
     seasonType === "regular"
         ? regularSeasonData[selectedPlayer?.Id] || []
         : postSeasonData[selectedPlayer?.Id] || [];
+      
+    const aggregated = getAggregatedMetrics(seasonArray);
+
 
     const chartSeasons = seasonArray.map((s) => s.SEASON_ID);
 
@@ -215,11 +245,46 @@ export default function Welcome() {
 
             <DialogContent>
 
-                <img
+            <div className="flex gap-6 items-start mb-6">
+  
+              {/* Player Photo */}
+              <img
                 src={getImageUrl(selectedPlayer.Id)}
                 alt={selectedPlayer.Player}
-                style={{ marginBottom: "16px", borderRadius: "8px", width: "150px" }}
-                />
+                style={{ borderRadius: "8px", width: "150px" }}
+              />
+
+              {/* Aggregated Stats Box */}
+              {aggregated && (
+                <div className="bg-gray-100 p-4 rounded-lg shadow w-full max-w-sm">
+                  <h3 className="font-semibold text-lg mb-3">
+                    {seasonType === "regular" ? "Regular Season Averages" : "Postseason Averages"}
+                  </h3>
+
+                  <div className="grid grid-cols-2 gap-3">
+
+                    {/* Column 1: Per Game Stats */}
+                    <div className="flex flex-col gap-2">
+                      <p><strong>PPG:</strong> {aggregated.ppg}</p>
+                      <p><strong>APG:</strong> {aggregated.apg}</p>
+                      <p><strong>RPG:</strong> {aggregated.rpg}</p>
+                    </div>
+
+                    {/* Column 2: Percentages */}
+                    <div className="flex flex-col gap-2">
+                      <p><strong>FG%:</strong> {aggregated.fgPct}</p>
+                      <p><strong>3P%:</strong> {aggregated.threePct}</p>
+                      <p><strong>FT%:</strong> {aggregated.ftPct}</p>
+                    </div>
+
+                  </div>
+                </div>
+              )}
+
+
+            </div>
+
+
 
                 {/* ---- NEW: Toggle Buttons ---- */}
                 <div className="flex gap-4 mb-4">
@@ -265,16 +330,40 @@ export default function Welcome() {
                     ]
                 }}
                 options={{
-                    responsive: true,
-                    plugins: {
-                    legend: { display: true }
-                    },
-                    scales: {
+                  responsive: true,
+                  plugins: {
+                    legend: { display: true },
+                
+                    tooltip: {
+                      callbacks: {
+                        label: function (context) {
+                          const seasonIndex = context.dataIndex;
+                          const seasonData = seasonArray[seasonIndex];
+                          const value = context.parsed.y;
+                
+                          // Values already shown
+                          let label = `${context.dataset.label}: ${value}`;
+                
+                          // Add per-game averages ONLY for PTS, AST, REB
+                          if (["PTS", "AST", "REB"].includes(metric)) {
+                            const perGame = getPerGameValue(seasonData, metric);
+                            if (perGame !== null) {
+                              label += ` (Avg: ${perGame} per game)`;
+                            }
+                          }
+                
+                          return label;
+                        }
+                      }
+                    }
+                  },
+                  scales: {
                     y: {
-                        beginAtZero: false
+                      beginAtZero: false
                     }
-                    }
+                  }
                 }}
+                
                 />
             </DialogContent>
 
